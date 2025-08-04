@@ -19,7 +19,7 @@
   "dependencies": {
     "@enonic/js-utils": "^1",
     "@enonic/react-components": "^5.0.1",
-    "cross-env": "^7.0.3",
+    "cross-env": "^10.0.0",
     "dayjs": "^1.11.13",
     "node-fetch": "^3",
     "prop-types": "^15",
