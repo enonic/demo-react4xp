@@ -38,8 +38,7 @@ export function get(request: Request) {
         request
     });
 
-    // Render page
-    const id = `react4xp_${content._id}`;
+    // Render component
     return render(
         'App',
         data,
