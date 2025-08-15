@@ -45,8 +45,7 @@ export function get(request: Request) {
         data,
         request,
         {
-            body: `<div id="${id}"></div>`,
-            id
+            wrapper: false
         }
     );
 }
