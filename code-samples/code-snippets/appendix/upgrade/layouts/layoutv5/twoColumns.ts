@@ -23,3 +23,4 @@ export function get(request: Enonic.Xp.Http.Request) {
             hydrate: false,
         }
     );
+}

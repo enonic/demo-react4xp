@@ -35,16 +35,33 @@ To do this we need to do the following:
 include::{snippet}appendix/upgrade/example.xml[]
 ----
 
-. Move the example component to the parts folder, where we update it by wrapping it in a `Part` tag instead of `div`.
-Then we add extraProps to it, this is important because react4xp v6 uses this to add necessary props to the parts component so it is possible to view and edit it within the page editor.
+. Move the example component to the `parts/example` folder and update as follows.
 +
 .src/main/resources/react4xp/components/parts/example/example.tsx
 [code,TypeScript]
 ----
 include::{snippet}appendix/upgrade/example.tsx[]
 ----
++
+Notice how the Example component receives `ComponentProps<PartData>` type props.
+This is going to be true for any other component as well, except that `PartData`, specifying type of the component field, will be `LayoutData` for layouts, or `PageData` for pages:
++
+[code,TypeScript]
+----
+interface ComponentProps<T extends ComponentData = ComponentData> {
+    meta: MetaData;                         // <1>
+    component: T;                           // <2>
+    data?: Record<string, unknown>;         // <3>
+    common?: Record<string, unknown>;       // <4>
+}
+----
 
-. Instead of fetching in get(), create a processor that returns its props—React4xp will forward them (plus its own metadata) into <Part> via extraProps.
+<1> Runtime metadata, such as the current content path, id and type as well as request mode.
+<2> Enonic XP component data that contains type, descriptor and some extra data based on the type (i.e. regions for layouts and pages).
+<3> Component data fetched by the associated data processor, if any.
+<4> Common data fetched by the common processor, if any.
++
+. Now, instead of fetching in get(), create a processor that returns its data and React4xp will forward it to your view along with some additional data like meta and component.
 +
 .src/main/resources/react4xp/components/parts/example/exampleProcessor.ts
 [code,TypeScript]
@@ -97,8 +114,10 @@ include::{snippet}appendix/upgrade/pages/pagev5/default.xml[]
 
 This is how we migrate it to a react4xp v6 component:
 
-First let's handle the controller which becomes a processor, the most important prop to pass from the processor is the regionsData.
-Notice how we change `regionsData` to `regions`, this is because the new Regions React component is expecting it along with componentRegistry.
+First let's handle the controller which becomes a processor, the most important prop to pass from the processor used to be the regionsData.
+We can still get regions from component and return it, but this is not necessary anymore!
+
+IMPORTANT: Component gets passed to the view automatically now, so you don't have to define a processor function if it's only regions you want to access.
 
 .src/main/resources/react4xp/components/page/PageProcessor.ts
 [code,TypeScript]
@@ -106,7 +125,7 @@ Notice how we change `regionsData` to `regions`, this is because the new Regions
 include::{snippet}appendix/upgrade/pages/pagev6/PageProcessor.ts[]
 ----
 
-Next we need to change out the part `default.tsx` with a component `Page.tsx`, which is very similar except that we pass `regions` to the `Regions` react component.
+Next we need to change out the part `default.tsx` with a component `Page.tsx`, which is very similar except that we pass `component` to the `Regions` react component, because it contains regions now.
 
 .src/main/resources/react4xp/components/page/Page.tsx
 [code,TypeScript]
@@ -153,16 +172,16 @@ Now we have a fully functional page component that is using the new regions and 
 Lastly we need to migrate the layout, this is done in a similar way to the page.
 
 Your current layout part might look something like this:
-.src/main/resources/site/layouts/twoColumns/twoColumns.tsx
 
+.src/main/resources/site/layouts/twoColumns/twoColumns.tsx
 [code,typeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.tsx[]
 ----
 
 with a controller like this:
-.src/main/resources/site/layouts/twoColumns/twoColumns.ts
 
+.src/main/resources/site/layouts/twoColumns/twoColumns.ts
 [code,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.ts[]
@@ -184,7 +203,8 @@ Similar to the page, we need to implement a processor, and a component.
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumnProcessor.ts[]
 ----
 
-The Layout component is depending on the `Regions` like the page, so we need to pass the `regions` prop to it.
+The Layout component is depending on regions like the page, but let's use `Region` built-in component this time to render every region manually.
+We need to pass list of components as data to each `Region` component:
 
 .src/main/resources/react4xp/components/layouts/TwoColumn.tsx
 [code,TypeScript]
@@ -192,7 +212,7 @@ The Layout component is depending on the `Regions` like the page, so we need to 
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.tsx[]
 ----
 
-We are keeping one more prop for layout, we use this `tags: 'section'` to target the layout with our css module.
+NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
 
 .src/main/resources/components/layouts/twoColumn.css
 [code,css]
@@ -224,6 +244,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumns.xml[]
 
 Now we have a fully functional layout component that is using the new regions and component registry.
 
+// TODO: seems not done to me ?
 (Migrate thymeleaf etc, minimal example) 0
 
 And just like that we have not only upgraded the old component, but also made it compatible with the new ones!

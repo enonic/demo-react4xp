@@ -1,3 +1,4 @@
+import '@enonic/react-components/utils/initPublicPath';
 import Footer from "/react4xp/components/common/Footer";
 import '../components/globalStyles.css'
 import {AppProps} from '/types/AppProps';

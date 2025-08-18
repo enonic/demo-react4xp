@@ -1,8 +1,9 @@
 import Hello from '/lib/myReactComponents/Hello';
 import dayjs from 'dayjs';
 import React, {useState} from 'react';
+import type {ComponentProps, PartData} from '@enonic/react-components';
 
-export const Example = (props: any) => {
+export const Example = (props: ComponentProps<PartData>) => {
 
     const [count, setCount] = useState(0);
 
