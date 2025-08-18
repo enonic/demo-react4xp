@@ -5,9 +5,8 @@ import {helloProcessor} from './components/hello/HelloProcessor';
 import {factboxProcessor} from "./components/macro/FactboxProcessor";
 
 export const dataFetcher = new DataFetcher();
+
 dataFetcher.addContentType('portal:site', {processor: helloProcessor});
 dataFetcher.addCommon({processor: commonProcessor});
 dataFetcher.addContentType('com.enonic.app.hmdb:person', {processor: personProcessor});
-
-// @ts-ignore update type in addMacro
 dataFetcher.addMacro('factbox', {processor: factboxProcessor});
