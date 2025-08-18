@@ -1,15 +1,15 @@
-import {Layout} from '@enonic/react-components';
+import {type ComponentProps, type LayoutData, Region} from '@enonic/react-components';
 import dayjs from 'dayjs';
-import React from 'react'
 import styles from './TwoColumn.module.css';
 
 
-export const TwoColumnLayout = (props: any,) => {
+export const TwoColumnLayout = ({component, meta, data}: ComponentProps<LayoutData>) => {
 
-    return (
-        <>
-            <Layout className={styles[props.tags]} {...props}/>
-            <div>Layout:{dayjs().format()}</div>
-        </>
-    );
+    return <>
+        <div className={styles.row + ' ' + styles[data.tags as string]}>
+            <Region data={component.regions.left.components} meta={meta} name="left"/>
+            <Region data={component.regions.right.components} meta={meta} name="right"/>
+        </div>
+        <div>Layout:{dayjs().format()}</div>
+    </>;
 };

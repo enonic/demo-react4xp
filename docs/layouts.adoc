@@ -34,6 +34,9 @@ include::{sourcedir}react4xp/components/layouts/TwoColumn.module.css[]
 include::{snippet}layout/componentRegistry.tsx[]
 ----
 +
+NOTE: Notice we didn't need to create a processor for the layout, because React4xp passes all the necessary data as component to our view.
+But we can still create it with `DataFetcher.addLayout()` method if we want to do some processing.
++
 . *The result*:
 By combining layout, part and text we are starting to see the potential of the page editor:
 image:layout-filled.png[title="2-column layout with text",width=900px]

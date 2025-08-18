@@ -1,14 +1,12 @@
-import {Regions,} from '@enonic/react-components';
+import {Regions, type ComponentProps, type PageData} from '@enonic/react-components';
 import dayjs from 'dayjs';
-import React from 'react'
 import styles from './Page.module.css';
 
-export const Page = (props: any) => {
-
+export const Page = ({data, common, meta, component}: ComponentProps<PageData>) => {
 
     return (
-        <div className={styles[props.name]}>
-            <Regions {...props} />
+        <div className={styles[data.name as string]}>
+            <Regions common={common} meta={meta} component={component}/>
             <div>Page: {dayjs().format()}</div>
         </div>
     );

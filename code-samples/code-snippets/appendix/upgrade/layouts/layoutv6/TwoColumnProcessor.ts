@@ -6,7 +6,7 @@ export const layoutProcessor: ComponentProcessor<'com.enonic.app.react4xp:TwoCol
     const {regions} = component as LayoutComponent;
 
     return {
-        regions: regions,
+        regions,
         tags: 'section'
     };
 };
