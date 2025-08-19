@@ -516,16 +516,16 @@ To do this we need to do the following:</p>
 </div>
 </li>
 <li>
-<p>Move the example component to the parts folder, where we update it by wrapping it in a <code>Part</code> tag instead of <code>div</code>.
-Then we add extraProps to it, this is important because react4xp v6 uses this to add necessary props to the parts component so it is possible to view and edit it within the page editor.</p>
+<p>Move the example component to the <code>parts/example</code> folder and update as follows.</p>
 <div class="listingblock">
 <div class="title">src/main/resources/react4xp/components/parts/example/example.tsx</div>
 <div class="content">
 <pre>import Hello from '/lib/myReactComponents/Hello';
 import dayjs from 'dayjs';
 import React, {useState} from 'react';
+import type {ComponentProps, PartData} from '@enonic/react-components';
 
-export const Example = (props: any) =&gt; {
+export const Example = (props: ComponentProps&lt;PartData&gt;) =&gt; {
 
     const [count, setCount] = useState(0);
 
@@ -540,15 +540,50 @@ export const Example = (props: any) =&gt; {
 export default Example;</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Notice how the Example component receives <code>ComponentProps&lt;PartData&gt;</code> type props.
+This is going to be true for any other component as well, except that <code>PartData</code>, specifying type of the component field, will be <code>LayoutData</code> for layouts, or <code>PageData</code> for pages:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>interface ComponentProps&lt;T extends ComponentData = ComponentData&gt; {
+    meta: MetaData;                         <i class="conum" data-value="1"></i><b>(1)</b>
+    component: T;                           <i class="conum" data-value="2"></i><b>(2)</b>
+    data?: Record&lt;string, unknown&gt;;         <i class="conum" data-value="3"></i><b>(3)</b>
+    common?: Record&lt;string, unknown&gt;;       <i class="conum" data-value="4"></i><b>(4)</b>
+}</pre>
+</div>
+</div>
 </li>
+</ol>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Runtime metadata, such as the current content path, id and type as well as request mode.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Enonic XP component data that contains type, descriptor and some extra data based on the type (i.e. regions for layouts and pages).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Component data fetched by the associated data processor, if any.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Common data fetched by the common processor, if any.
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Instead of fetching in get(), create a processor that returns its props—React4xp will forward them (plus its own metadata) into &lt;Part&gt; via extraProps.</p>
+<p>Now, instead of fetching in get(), create a processor that returns its data and React4xp will forward it to your view along with some additional data like meta and component.</p>
 <div class="listingblock">
 <div class="title">src/main/resources/react4xp/components/parts/example/exampleProcessor.ts</div>
 <div class="content">
 <pre>import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
 
-export const partProcessor: ComponentProcessor&lt;'com.enonic.app.react4xp:example'&gt; = (props) =&gt; {
+export const exampleProcessor: ComponentProcessor&lt;'com.enonic.app.react4xp:example'&gt; = (props) =&gt; {
     return {};
 };</pre>
 </div>
@@ -575,7 +610,7 @@ componentRegistry.addPart('com.enonic.app.react4xp:example', {View: Example});</
 <div class="title">src/main/resources/react4xp/dataFetcher.ts</div>
 <div class="content">
 <pre>import {DataFetcher} from '/lib/enonic/react4xp';
-import {partProcessor} from './components/parts/example/exampleProcessor';
+import {exampleProcessor} from './components/parts/example/exampleProcessor';
 
 ...
 
@@ -583,11 +618,14 @@ export const dataFetcher = new DataFetcher();
 
 ...
 
-dataFetcher.addPart('com.enonic.app.react4xp:example', {processor: partProcessor});</pre>
+dataFetcher.addPart('com.enonic.app.react4xp:example', {processor: exampleProcessor});</pre>
 </div>
 </div>
 </li>
 </ol>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -687,8 +725,20 @@ export function get(request: Enonic.Xp.Http.Request) {
 <p>This is how we migrate it to a react4xp v6 component:</p>
 </div>
 <div class="paragraph">
-<p>First let&#8217;s handle the controller which becomes a processor, the most important prop to pass from the processor is the regionsData.
-Notice how we change <code>regionsData</code> to <code>regions</code>, this is because the new Regions React component is expecting it along with componentRegistry.</p>
+<p>First let&#8217;s handle the controller which becomes a processor, the most important prop to pass from the processor used to be the regionsData.
+We can still get regions from component and return it, but this is not necessary anymore!</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Component gets passed to the view automatically now, so you don&#8217;t have to define a processor function if it&#8217;s only regions you want to access.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/react4xp/components/page/PageProcessor.ts</div>
@@ -697,9 +747,8 @@ Notice how we change <code>regionsData</code> to <code>regions</code>, this is b
 import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
 
 export const pageProcessor: ComponentProcessor&lt;'com.enonic.app.react4xp:Page'&gt; = (props) =&gt; {
-    const component = props.component as PageComponent;
+    const {regions} = props.component as PageComponent;
 
-    const regions = component?.regions || {};
     return {
         regions,
         name: "main"
@@ -708,22 +757,20 @@ export const pageProcessor: ComponentProcessor&lt;'com.enonic.app.react4xp:Page'
 </div>
 </div>
 <div class="paragraph">
-<p>Next we need to change out the part <code>default.tsx</code> with a component <code>Page.tsx</code>, which is very similar except that we pass <code>regions</code> to the <code>Regions</code> react component.</p>
+<p>Next we need to change out the part <code>default.tsx</code> with a component <code>Page.tsx</code>, which is very similar except that we pass <code>component</code> to the <code>Regions</code> react component, because it contains regions now.</p>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/react4xp/components/page/Page.tsx</div>
 <div class="content">
-<pre>import {Regions,} from '@enonic/react-components';
+<pre>import {Regions, type ComponentProps, type PageData} from '@enonic/react-components';
 import dayjs from 'dayjs';
-import React from 'react'
 import styles from './Page.module.css';
 
-export const Page = (props: any) =&gt; {
-
+export const Page = ({data, common, meta, component}: ComponentProps&lt;PageData&gt;) =&gt; {
 
     return (
-        &lt;div className={styles[props.name]}&gt;
-            &lt;Regions {...props} /&gt;
+        &lt;div className={styles[data.name as string]}&gt;
+            &lt;Regions common={common} meta={meta} component={component}/&gt;
             &lt;div&gt;Page: {dayjs().format()}&lt;/div&gt;
         &lt;/div&gt;
     );
@@ -805,10 +852,10 @@ dataFetcher.addPage('com.enonic.app.react4xp:Page', {processor: pageProcessor});
 <p>Lastly we need to migrate the layout, this is done in a similar way to the page.</p>
 </div>
 <div class="paragraph">
-<p>Your current layout part might look something like this:
-.src/main/resources/site/layouts/twoColumns/twoColumns.tsx</p>
+<p>Your current layout part might look something like this:</p>
 </div>
 <div class="listingblock">
+<div class="title">src/main/resources/site/layouts/twoColumns/twoColumns.tsx</div>
 <div class="content">
 <pre>import {Regions} from '@enonic/react-components';
 import dayjs from 'dayjs';
@@ -827,10 +874,10 @@ export default (props: Parameters&lt;typeof Regions&gt;[0]) =&gt; {
 </div>
 </div>
 <div class="paragraph">
-<p>with a controller like this:
-.src/main/resources/site/layouts/twoColumns/twoColumns.ts</p>
+<p>with a controller like this:</p>
 </div>
 <div class="listingblock">
+<div class="title">src/main/resources/site/layouts/twoColumns/twoColumns.ts</div>
 <div class="content">
 <pre>import {render} from '/lib/enonic/react4xp';
 import {getComponent} from '/lib/xp/portal';
@@ -856,7 +903,8 @@ export function get(request: Enonic.Xp.Http.Request) {
         {
             hydrate: false,
         }
-    );</pre>
+    );
+}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -890,37 +938,47 @@ export const layoutProcessor: ComponentProcessor&lt;'com.enonic.app.react4xp:Two
     const {regions} = component as LayoutComponent;
 
     return {
-        regions: regions,
+        regions,
         tags: 'section'
     };
 };</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The Layout component is depending on the <code>Regions</code> like the page, so we need to pass the <code>regions</code> prop to it.</p>
+<p>The Layout component is depending on regions like the page, but let&#8217;s use <code>Region</code> built-in component this time to render every region manually.
+We need to pass list of components as data to each <code>Region</code> component:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/react4xp/components/layouts/TwoColumn.tsx</div>
 <div class="content">
-<pre>import {Layout} from '@enonic/react-components';
+<pre>import {type ComponentProps, type LayoutData, Region} from '@enonic/react-components';
 import dayjs from 'dayjs';
-import React from 'react'
 import styles from './TwoColumn.module.css';
 
 
-export const TwoColumnLayout = (props: any,) =&gt; {
+export const TwoColumnLayout = ({component, meta, data}: ComponentProps&lt;LayoutData&gt;) =&gt; {
 
-    return (
-        &lt;&gt;
-            &lt;Layout className={styles[props.tags]} {...props}/&gt;
-            &lt;div&gt;Layout:{dayjs().format()}&lt;/div&gt;
-        &lt;/&gt;
-    );
+    return &lt;&gt;
+        &lt;div className={styles.row + ' ' + styles[data.tags as string]}&gt;
+            &lt;Region data={component.regions.left.components} meta={meta} name="left"/&gt;
+            &lt;Region data={component.regions.right.components} meta={meta} name="right"/&gt;
+        &lt;/div&gt;
+        &lt;div&gt;Layout:{dayjs().format()}&lt;/div&gt;
+    &lt;/&gt;;
 };</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>We are keeping one more prop for layout, we use this <code>tags: 'section'</code> to target the layout with our css module.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Notice how we used data fetcher result stored in <code>data</code> field to access the <code>tags</code> property.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/components/layouts/twoColumn.css</div>
@@ -996,9 +1054,6 @@ dataFetcher.addLayout('com.enonic.app.react4xp:TwoColumns', {processor: layoutPr
 <p>Now we have a fully functional layout component that is using the new regions and component registry.</p>
 </div>
 <div class="paragraph">
-<p>(Migrate thymeleaf etc, minimal example) 0</p>
-</div>
-<div class="paragraph">
 <p>And just like that we have not only upgraded the old component, but also made it compatible with the new ones!</p>
 </div>
 </div>
@@ -1006,7 +1061,7 @@ dataFetcher.addLayout('com.enonic.app.react4xp:TwoColumns', {processor: layoutPr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:06 UTC
 </div>
 </div>
 </body>

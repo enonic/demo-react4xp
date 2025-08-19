@@ -450,6 +450,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#why">Why?</a></li>
 </ul>
 </li>
+<li><a href="#jsxPath">What is the jsxPath?</a></li>
+<li><a href="#from_source_file_location_to_jsxpath">From source file location to jsxPath</a></li>
+<li><a href="#overview_in_entries_json">Overview in entries.json</a></li>
+<li><a href="#name_not_path">Name, not path</a></li>
 </ul>
 </div>
 </div>
@@ -458,12 +462,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="entries"><a class="link" href="#entries">What is an entry?</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4xp is structured around <em>entries</em>.</p>
+<p>React4xp is not limited to a single "React app", it may actually support multiple React instances on a single page.</p>
 </div>
 <div class="paragraph">
-<p>It&#8217;s actually a webpack term, but in React4xp we use the word entry for <strong>a React component that can be accessed by React4xp</strong> in an XP controller. They are the <em>only</em> react files that React4xp can use directly.</p>
+<p>In. React4XP we call these <code>entries</code>. It&#8217;s actually a webpack term, but in React4xp we use the word entry for <strong>a React component that can be called by React4xp</strong> in an XP controller. They are the only react files that React4xp can use directly.</p>
 </div>
-<div id="mentalmodel" class="paragraph">
+<div class="paragraph">
 <p>Think of entries as <strong>"bridge elements"</strong>:</p>
 </div>
 <div class="paragraph">
@@ -618,10 +622,88 @@ export default props =&gt; &lt;HookButton {...props} /&gt;;</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="jsxPath"><a class="link" href="#jsxPath">What is the jsxPath?</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each entry is identified by its own <em>jsxPath</em>.</p>
+</div>
+<div class="paragraph">
+<p>Short and brutal: the jsxPath is a name string generated from the path and filename of the compiled asset after building, relative to <em>/build/resources/main/r4xAssets/</em> - without file extension.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="from_source_file_location_to_jsxpath"><a class="link" href="#from_source_file_location_to_jsxpath">From source file location to jsxPath</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>During development though, these 3 rules are probably easier:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in <a href="../hello-react.ahtml#first_helloreact_jsx">the first example</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout controller.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>But if you need to access an entry with a particular name or from a different folder (from anywhere in the compiled JAR, actually), here&#8217;s <strong>how to find the jsxPath of an entry</strong>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>If an entry&#8217;s source file is a TSX/JSX under <em>/src/main/resources/</em> <strong><em>site/</em></strong>, the jsxPath is the source file&#8217;s path relative to <em>/src/main/resources/</em> - unix-style and without file extension.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>So the jsxPath will start with <code>site/&#8230;&#8203;</code> etc (and the asset will be compiled into a folder below <em>/build/resources/main/r4xAssets/</em> <strong><em>site/</em></strong>, and so on).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Or, using the setup from the starter, you can also put your entries under <em>src/main/resources/</em> <strong><em>react4xp/entries</em></strong>. Then the jsxPath (and compiled-asset path) will be relative to <em>/entries/</em> instead.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Actually, you can control this with the <code>entryDirs</code> property in your local <a href="https://github.com/enonic/enonic-react4xp/blob/master/examples/react4xp.config.js"><em>react4xp.config.js</em></a>. The starter has added <code>entryDirs:['entries']</code> here, but this is a comma-separated list of folder names relative to <em>src/main/resources/react4xp/</em>. Remember, if you add more entryDirs or replace <code>entries</code>, the jsxPaths will always be relative to those new entryDirs, so beware of name collisions.</p>
+</li>
+<li>
+<p><strong>For example:</strong> add <code>../myComponents</code> to entryDirs: <code>entryDirs:['entries','../myComponents']</code>. Since entryDirs and <code>../</code> are relative to <em>src/main/resources/react4xp/</em>, the new entry source folder is <em>src/main/resources/myComponents/</em>. Now new TSX/JSX files can be put there, and get a jsxPath relative to that. So the entry <em>src/main/resources/myComponents/</em> <strong><em>app/myEntry.jsx</em></strong> will get the jsxPath <code>"app/myEntry"</code>, and will be compiled to this entry asset: <em>/build/resources/main/r4xAssets/app/myEntry.js</em>.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview_in_entries_json"><a class="link" href="#overview_in_entries_json">Overview in entries.json</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you&#8217;re ever unsure: after building, the <strong>jsxPaths of all the available entries</strong> are stored in <em>build/resources/main/r4xAssets/entries.json</em>.</p>
+</div>
+<div class="paragraph">
+<p>This file is generated by webpack during build. It&#8217;s also used by the runtime, so it <strong>should not be deleted or edited</strong>!</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="name_not_path"><a class="link" href="#name_not_path">Name, not path</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>JsxPaths are not actually file system paths, but <strong>static name strings</strong>. So avoid shortcuts and relative references like <code>../</code>, etc.</p>
+</div>
+<div class="paragraph">
+<p>See also: <a href="chunks.ahtml">chunks</a>.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:05 UTC
 </div>
 </div>
 </body>

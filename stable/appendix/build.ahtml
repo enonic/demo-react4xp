@@ -441,62 +441,75 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#build_arguments">Build arguments</a>
+<li><a href="#development_build">Development build</a></li>
+<li><a href="#production_build">Production build</a>
 <ul class="sectlevel2">
-<li><a href="#NODE_ENV">Development mode</a></li>
-<li><a href="#VERBOSE">Verbosity</a></li>
+<li><a href="#server_simulation">Server simulation</a></li>
 </ul>
 </li>
 <li><a href="#react4xp.config.js">react4xp.config.js</a>
 <ul class="sectlevel2">
-<li><a href="#adding_react4xp_config_js">Adding react4xp.config.js</a></li>
 <li><a href="#entryDirs">entryDirs</a></li>
 <li><a href="#chunkDirs">chunkDirs</a></li>
 </ul>
 </li>
-<li><a href="#webpack.config.react4xp.js">webpack.config.react4xp.js</a>
-<ul class="sectlevel2">
-<li><a href="#webpack_caching">Webpack caching</a></li>
-</ul>
-</li>
+<li><a href="#webpack.config.react4xp.js">webpack.config.react4xp.js</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="build_arguments"><a class="link" href="#build_arguments">Build arguments</a></h2>
+<div id="preamble">
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="NODE_ENV"><a class="link" href="#NODE_ENV">Development mode</a></h3>
 <div class="paragraph">
-<p>Use the gradle commandline flag <code>-Pdev</code> or <code>-Pdevelopment</code> to enable building in development mode.</p>
+<p>React4XP build setup and configuration options</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="development_build"><a class="link" href="#development_build">Development build</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The development build continuously compiles your changes, and avoids minifying of assets to make debugging easier:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project gradle build deploy -Pdev</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic dev</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="production_build"><a class="link" href="#production_build">Production build</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>This switches between React4xp <strong>build</strong> modes (not to be confused with XP&#8217;s <a href="https://developer.enonic.com/docs/enonic-cli/stable/dev#start">run modes</a>).</p>
+<p>A standard build will produce a production optimized version of the applicaiton, including minified assets and source maps. Simply run the following command:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>production</code>: assets are compiled more compact (and faster), with source maps</p>
-</li>
-<li>
-<p><code>development</code>: assets are compiled for more human-readability, without minification, making errors easier to track down.</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project build</code></pre>
 </div>
-<div class="paragraph">
-<p>Default value is <code>production</code>.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+For more verbose output you may specify -i or --info. However, this requires that you use the full build command: <code>enonic project gradle build -i</code>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
-<h3 id="VERBOSE"><a class="link" href="#VERBOSE">Verbosity</a></h3>
+<h3 id="server_simulation"><a class="link" href="#server_simulation">Server simulation</a></h3>
 <div class="paragraph">
-<p>Use the gradle commandline flag -i or --info to enable a more verbose output when compiling React4xp components and globals.</p>
+<p>You may test how how your application will perform on a server by launching your sandbox in production mode. In this mode, assets will be served with optimized cached headers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic sandbox start --prod</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -506,72 +519,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>Several aspects of React4xp can be configured with a file <em>react4xp.config.js</em>. When using the React4XP starter this should automatically be available in your project.</p>
-</div>
-<div class="sect2">
-<h3 id="adding_react4xp_config_js"><a class="link" href="#adding_react4xp_config_js">Adding react4xp.config.js</a></h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you&#8217;re using the <a href="https://market.enonic.com/starters/react4xp-starter">React4XP starter</a> or your project is based on it, you may skip this section:
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>Put <em>react4xp.config.js</em> at the root of your XP project. A template can be copied from <a href="https://github.com/enonic/enonic-react4xp/blob/master/examples/react4xp.config.js">here</a>, or from <em>node_modules/@enonic/react4xp/examples/react4xp.config.js</em> after installing the React4xp NPM package.</p>
-</div>
-<div class="paragraph">
-<p><strong>In order to take effect, it must be handled by gradle during the build:</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Add this to your <em>build.gradle</em>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">task react4xp(type: NpmTask, dependsOn: npmInstall) {
-  args = [
-    'run',
-    'build:react4xp' // This script must exist in the package.json file
-  ]
-  description 'Compile react4xp resources'
-  environment = [
-    'R4X_APP_NAME': "${appName}",
-    'R4X_BUILD_LOG_LEVEL': gradle.startParameter.logLevel.toString(),
-    'R4X_DIR_PATH_ABSOLUTE_PROJECT': project.projectDir.toString(),
-    'NODE_ENV': project.hasProperty('dev') || project.hasProperty('development') ? 'development' : 'production'
-  ]
-  group 'react4xp'
-  // It also watches package.json and package-lock.json :)
-  inputs.dir 'node_modules/@enonic/react4xp'
-  inputs.dir 'src/main/resources'
-  outputs.dir 'build/resources/main'
-}
-jar.dependsOn 'react4xp'</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>This will not only make sure <em>react4xp.config.js</em> is handled, but also give a full react4xp build setup.</p>
-</div>
-</li>
-<li>
-<p>Add this to your <em>package.json</em>:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-json" data-lang="json">{
-  "scripts": {
-    "build:react4xp": "npm explore @enonic/react4xp -- npm run build:react4xp",
-  }
-}</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect2">
 <h3 id="entryDirs"><a class="link" href="#entryDirs">entryDirs</a></h3>
@@ -644,7 +591,7 @@ jar.dependsOn 'react4xp'</code></pre>
 <h2 id="webpack.config.react4xp.js"><a class="link" href="#webpack.config.react4xp.js">webpack.config.react4xp.js</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4xp uses Webpack to build. The starter comes with a minimal set of webpack rules built-in, for compiling react components in TSX/JSX files into vanilla JS.</p>
+<p>React4xp uses RSpack/Webpack to build. The starter comes with a minimal set of webpack rules built-in, for compiling react components in TSX/JSX files into vanilla JS.</p>
 </div>
 <div class="paragraph">
 <p>If you need to change/expand this setup, simply place a custom <code>webpack.config.react4xp.js</code> in your project folder.</p>
@@ -712,34 +659,12 @@ jar.dependsOn 'react4xp'</code></pre>
 </tr>
 </table>
 </div>
-<div class="sect2">
-<h3 id="webpack_caching"><a class="link" href="#webpack_caching">Webpack caching</a></h3>
-<div class="paragraph">
-<p>To improve the speed of incremental builds, you may also enable webpack caching.</p>
-</div>
-<div class="listingblock">
-<div class="title">webpack.config.react4xp.js</div>
-<div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">module.exports = function(env, config) {
-		if (process.env.NODE_ENV === 'development') {
-		config.cache = {
-			type: 'filesystem'
-		}
-	}
-  return config;
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Read more <a href="https://webpack.js.org/configuration/cache/" class="bare">https://webpack.js.org/configuration/cache/</a></p>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:05 UTC
 </div>
 </div>
 </body>

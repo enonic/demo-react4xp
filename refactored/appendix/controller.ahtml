@@ -581,7 +581,8 @@ return output;</code></pre>
 <div class="listingblock">
 <div class="title">/src/main/resources/react4xp/entries/App.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-React" data-lang="React">import Footer from "/react4xp/components/common/Footer";
+<pre class="highlight"><code class="language-React" data-lang="React">import '@enonic/react-components/utils/initPublicPath';
+import Footer from "/react4xp/components/common/Footer";
 import '../components/globalStyles.css'
 import type {MetaData} from '@enonic/react-components';
 import {BaseComponent} from '@enonic/react-components';
@@ -706,7 +707,7 @@ Most of these static assets are content-hashed, and optimized for client-side ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:06 UTC
 </div>
 </div>
 </body>

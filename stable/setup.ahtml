@@ -443,9 +443,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#install_enonic_cli">Install Enonic CLI</a></li>
 <li><a href="#create_a_sandbox">Create a sandbox</a></li>
-<li><a href="#create_the_app">Create the app</a></li>
+<li><a href="#create-starter">Create application</a></li>
 <li><a href="#project_structure">Project structure</a></li>
-<li><a href="#start_building">Start building</a></li>
+<li><a href="#dev_mode">Dev mode</a></li>
 </ul>
 </div>
 </div>
@@ -502,23 +502,23 @@ To upgrade, use <code>enonic latest</code>. If there are new versions you will s
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>enonic sandbox create r4xptutorial -t essentials -f</pre>
+<pre>enonic sandbox create r4xptutorial -t hmdb -f</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will create and start a sandbox containg <code>essential</code> applications.</p>
+<p>This will create and start a sandbox containing relevant applications, including the Headless Movie DB sample dataset.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="create_the_app"><a class="link" href="#create_the_app">Create the app</a></h2>
+<h2 id="create-starter"><a class="link" href="#create-starter">Create application</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>From a <strong>new terminal window</strong>, run the following command to create the application.</p>
+<p>From a <strong>new terminal window</strong>, run the following command to create the application that will contain the React4XP front-end.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>enonic create my.first.r4xp -r starter-react4xp -s r4xptutorial -f</pre>
+<pre>enonic project create my.first.r4xp -r starter-react4xp -s r4xptutorial -f</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -541,61 +541,69 @@ To upgrade, use <code>enonic latest</code>. If there are new versions you will s
 <h2 id="project_structure"><a class="link" href="#project_structure">Project structure</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You will not get a typical Enonic project structure. The biggest news are <code>react4xp.config.js</code> and the folder <code>src/main/resources/react4xp/</code>.</p>
+<p>You will now get a typical Enonic app file structure. Below we&#8217;re highlighting some of the most interesting files and folders:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-files" data-lang="files">build.gradle <i class="conum" data-value="1"></i><b>(1)</b>
-package.json
-react4xp.config.js <i class="conum" data-value="2"></i><b>(2)</b>
+<pre class="highlight"><code class="language-files" data-lang="files">package.json
+react4xp.config.js <i class="conum" data-value="1"></i><b>(1)</b>
 src/
   main/
     resources/
-      react4xp/ <i class="conum" data-value="3"></i><b>(3)</b>
+      react4xp/ <i class="conum" data-value="2"></i><b>(2)</b>
+        dataFetcher.ts <i class="conum" data-value="3"></i><b>(3)</b>
+        componentRegistry.tsx <i class="conum" data-value="4"></i><b>(4)</b>
+        components/
         entries/
-        shared/
-      site/ <i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+          App.tsx <i class="conum" data-value="5"></i><b>(5)</b>
+      site/ <i class="conum" data-value="6"></i><b>(6)</b>
+        app.ts <i class="conum" data-value="7"></i><b>(7)</b>
+      types/ <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Core build files, will contain references to <code>lib-react4xp</code> library and the <code>@enonic/react4xp</code> npm package.</td>
+<td>React4XP settings</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>React4xp <a href="appendix/build.ahtml">build configuration</a>, here you may add additional globals and tune common React4xp properties.</td>
+<td>React components must be placed within this folder</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Optionally place React components in these folders. They will be covered in detail throughout the tutorial.</td>
+<td>Fetches props for CMS components</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Standard site/ folder</td>
+<td>Mapping React components to CMS component</td>
 </tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
 <tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The short takeaqay is that you can put your TSX/JSX source files in <code>react4xp/entries/</code> or witin the <code>site/</code> structure directly.
-</td>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Main React component</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Optionally place CMS schemas here</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Boostrapping controller</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>TypeScript types (optional)</td>
 </tr>
 </table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="start_building"><a class="link" href="#start_building">Start building</a></h2>
+<h2 id="dev_mode"><a class="link" href="#dev_mode">Dev mode</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Assuming you did not change any of the values when creating the app, run the following commmands:</p>
+<p>Assuming you did not change any of the default values when creating the app, run the following commmands:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -604,17 +612,26 @@ enonic dev</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will build and deploy the application to your sandbox.</p>
+<p>This will perform an initial build, and deploy the application to the sandbox.</p>
 </div>
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>Once you see the following lines, the application has been built and deployed to the sandbox:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>BUILD SUCCESSFUL in 1m 27s
+8 actionable tasks: 7 executed, 1 up-to-date</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Look for a line like this in the sandbox log to verify that the app has started:</p>
+<p>In the sandbox log, this shows that app is running:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -628,15 +645,27 @@ enonic dev</pre>
 <div class="paragraph">
 <p>Because the sandbox is running in dev mode, any changes to the code wihin your app will instantly be picked up.</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Dive deeper by learning more about React4XP&#8217;s <a href="appendix/build.ahtml">build system</a>.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>Now you&#8217;re ready to get started with the first lesson: <a href="hello-react.ahtml">Hello React</a>.</p>
+<p>In the next chapter, you&#8217;ll get familiar with <a href="hello.ahtml">basic React4XP rendering</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:05 UTC
 </div>
 </div>
 </body>

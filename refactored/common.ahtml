@@ -694,7 +694,8 @@ export default Footer;</code></pre>
 <div class="listingblock">
 <div class="title">react4xp/entries/App.tsx</div>
 <div class="content">
-<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import Footer from "/react4xp/components/common/Footer";
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import '@enonic/react-components/utils/initPublicPath';
+import Footer from "/react4xp/components/common/Footer";
 import '../components/globalStyles.css'
 import {AppProps} from '/types/AppProps';
 import type {MetaData} from '@enonic/react-components';
@@ -719,6 +720,19 @@ App.displayName = 'App';
 
 export default App;</code></pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+One thing to note here is import of <code>@enonic/react-components/utils/initPublicPath</code>.
+It sets public path for React4xp to be able to lazy load client components in the environments that don&#8217;t support automatic public path detection.
+</td>
+</tr>
+</table>
 </div>
 </li>
 </ol>
@@ -825,7 +839,7 @@ You now have a stylish site with a footer component on all pages. The footer als
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:06 UTC
 </div>
 </div>
 </body>

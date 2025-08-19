@@ -1,58 +1,60 @@
 {
   "menuItems": [
     {
-      "title": "1 - Project setup",
+      "title": "Intro",
+      "document": "index"
+    },
+    {
+      "title": "1 - Sandbox",
       "document": "setup"
     },
     {
-      "title": "2 - Hello React",
-      "document": "hello-react"
+      "title": "2 - Hello",
+      "document": "hello"
     },
     {
-      "title": "3 - Editorial data",
-      "document": "editorial-data-and-props"
+      "title": "3 - Common",
+      "document": "common"
     },
     {
-      "title": "4 - Page components",
-      "document": "pages-parts-and-regions"
+      "title": "4 - Content rendering",
+      "document": "content-type"
     },
     {
-      "title": "5 - File structure",
-      "document": "source-file-structure"
+      "title": "5 - Rich text",
+      "document": "rich-text"
     },
     {
-      "title": "6 - Custom flow syntax",
-      "document": "custom-flow-syntax"
+      "title": "6 - Pages",
+      "document": "pages"
     },
     {
-      "title": "7 - Imports and chunks",
-      "document": "imports-and-dependency-chunks"
+      "title": "7 - Parts",
+      "document": "parts"
     },
     {
-      "title": "Advanced topics",
-      "document": "advanced",
-      "menuItems": [
-        {
-          "title": "Client side rendering",
-          "document": "advanced/client-side"
-        },
-        {
-          "title": "Webapps",
-          "document": "advanced/standalone"
-        }
-      ]
+      "title": "8 - Layouts",
+      "document": "layouts"
+    },
+    {
+      "title": "9 - Page templates",
+      "document": "page-templates"
+    },
+    {
+      "title": "Demo",
+      "document": "demo"
     },
     {
       "title": "Appendix",
       "document": "appendix",
       "menuItems": [
         {
-          "title": "Build",
-          "document": "appendix/build"
+          "title": "App.ts",
+          "document": "appendix/controller"
         },
         {
-          "title": "Dependency chunks",
-          "document": "appendix/chunks"
+          "title": "Build",
+          "document": "appendix/build"
         },
         {
           "title": "Configuration",
@@ -63,16 +65,30 @@
           "document": "appendix/entries"
         },
         {
-          "title": "JsxPath",
-          "document": "appendix/jsxpath"
+          "title": "Hydration",
+          "document": "appendix/hydration"
+        },
+        {
+          "title": "Chunks",
+          "document": "appendix/chunks"
         },
         {
           "title": "API",
           "document": "appendix/api"
         },
         {
-          "title": "Upgrade",
-          "document": "appendix/upgrade"
+          "title": "Release Notes",
+          "document": "release"
+        },
+        {
+          "title": "Upgrade notes",
+          "document": "appendix/upgrade",
+          "menuItems": [
+            {
+              "title": "Legacy mode",
+              "document": "appendix/partial-upgrade"
+            }
+          ]
         }
       ]
     }

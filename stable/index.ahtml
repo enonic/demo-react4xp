@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<title>React4XP - Building React sites with the Enonic framework</title>
+<title>React4XP - React sites with the Enonic framework</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,14 +437,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>React4XP - Building React sites with the Enonic framework</h1>
+<h1>React4XP - React sites with the Enonic framework</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#tutorial_overview">Tutorial overview</a></li>
+<li><a href="#what_is_react4xp">What is React4XP</a></li>
+<li><a href="#tutorial">Tutorial</a></li>
 <li><a href="#dive_deeper">Dive deeper</a></li>
-<li><a href="#issues">Issues?</a></li>
+<li><a href="#get_in_touch">Get in touch!</a></li>
 </ul>
 </div>
 </div>
@@ -452,12 +452,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Hands on introduction to the React4XP framework - rendering components with JSX/TSX</p>
+<p>Build, deploy and run server-side rendered React websites with Enonic.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
+<h2 id="what_is_react4xp"><a class="link" href="#what_is_react4xp">What is React4XP</a></h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -467,73 +467,86 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>It is recommended that you have completed the <a href="https://developer.enonic.com/start">My First Site</a> tutorial, as well as having a some knowledge of <a href="https://reactjs.org/tutorial/tutorial.html">React</a> before you dive into this tutorial.</p>
+<p>Basic <a href="https://reactjs.org/tutorial/tutorial.html">React</a> and <a href="https://developer.enonic.com/start">Enonic</a> knowledge is recommended before you dive into this tutorial.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/react4xp.svg" alt="react4xp" width="256px" title="React4xp logo"></span></p>
-</div>
-<div class="paragraph">
-<p>React4XP facilitates advanced use of React when rendering pages with the Enonic framework.</p>
+<p>React4XP is designed for React devs looking to use Enonic&#8217;s JS framework and natively, rather than introducing a 3rd party front-end framework like <a href="https://developer.enonic.com/docs/next.xp">Next.js</a> in the stack.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>enables you to use TSX/JSX as a templating language, similar to other XP templating engines</p>
+<p>100% TSX/JSX rendering - Single React app</p>
 </li>
 <li>
-<p>supports isomorphic server side and client side rendering with hydration</p>
+<p>Based on the <a href="https://www.npmjs.com/package/@enonic/react-components">Enonic React component NPM</a></p>
 </li>
 <li>
-<p>handles build flow with automated optimized asset serving</p>
+<p>Works with CMS Schemas across multiple namespaces/apps</p>
 </li>
 <li>
-<p>is modular and flexible enough to cover many advanced use cases</p>
+<p>Isomorphic server side and client side rendering through hydration</p>
+</li>
+<li>
+<p>Supports Enonic page templates and components</p>
+</li>
+<li>
+<p>Fast and continuous builds</p>
+</li>
+<li>
+<p>Production builds and static asset handling</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="tutorial_overview"><a class="link" href="#tutorial_overview">Tutorial overview</a></h2>
+<h2 id="tutorial"><a class="link" href="#tutorial">Tutorial</a></h2>
 <div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>After <a href="setup.ahtml">getting set up</a>, you start with <strong>three basic lessons</strong>:</p>
+<p><strong>tl;dr</strong> Try the <a href="demo.ahtml">React4XP demo</a> instead.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="900px" title="React4xp front-end rendring the Headless Movie DB"></span></p>
+</div>
+<div class="paragraph">
+<p>In this tutorial you will complete the following steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="hello-react.ahtml">Hello React: server and clientside</a>: Meet the React4xp library and display a react component from content studio - first serverside rendered, then clientside.</p>
+<p>Set up the Enonic SDK and sample content</p>
 </li>
 <li>
-<p><a href="editorial-data-and-props.ahtml">Editorial data and props</a>: Use props to pass data - for example editorial data from XP - into the react component.</p>
+<p>Create a new application based on the React4xp starter</p>
 </li>
 <li>
-<p><a href="pages-parts-and-regions.ahtml">XP Pages, Parts, Regions and Content</a>: Taking more advantage of the page-building powers in Content Studio - react rendering from any XP controller.</p>
+<p>Render content based on type</p>
+</li>
+<li>
+<p>Render pages using different components</p>
+</li>
+<li>
+<p>Use page templates</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The following five lessons present a more <strong>advanced use cases</strong>:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="source-file-structure.ahtml">Free source file structure</a>: Which react components are available to React4xp (called <em>entries</em>), and how to reference them.</p>
-</li>
-<li>
-<p><a href="custom-flow-syntax.ahtml">Custom flow syntax</a>: A more detailed and explicit syntax, for when your controller needs more control.</p>
-</li>
-<li>
-<p><a href="imports-and-dependency-chunks.ahtml">Imports, chunks, config, webpack</a>: Importing things into your entries, and controlling the compilation rules and output.</p>
-</li>
-<li>
-<p><a href="advanced.ahtml">The advanced section</a> dives deeper into client-side rendering and using React4XP when building Enonic webapps.</p>
-</li>
-</ul>
+<p>Get started by <a href="setup.ahtml">setting up the developer environment</a>.</p>
 </div>
 </div>
 </div>
@@ -541,12 +554,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="dive_deeper"><a class="link" href="#dive_deeper">Dive deeper</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Have an urge for details beyond the basic tutorial, check out the <a href="appendix.ahtml">Appendix section</a>.</p>
+<p>Beyond the tutorial, visit the <a href="appendix.ahtml">Appendix section</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="issues"><a class="link" href="#issues">Issues?</a></h2>
+<h2 id="get_in_touch"><a class="link" href="#get_in_touch">Get in touch!</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Questions, bug reports or suggestions are welcome!</p>
@@ -554,13 +567,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/enonic/lib-react4xp/issues?q=is%3Aissue+is%3Aopen+label%3Abug">Known bugs we&#8217;re working on</a> - and a few workarounds</p>
+<p><a href="https://discuss.enonic.com">The Enonic Forum</a></p>
 </li>
 <li>
-<p><a href="https://github.com/enonic/lib-react4xp/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement">Future improvements, requested features</a></p>
+<p><a href="https://slack.enonic.com/react4xp">Enonic&#8217;s React4XP Slack channel</a></p>
 </li>
 <li>
-<p><a href="https://discuss.enonic.com">The Enonic Forums</a></p>
+<p><a href="https://github.com/enonic/feature-requests">Feature requests for Enonic</a></p>
+</li>
+<li>
+<p><a href="https://github.com/enonic/lib-react4xp/issues?q=is%3Aissue+is%3Aopen+label%3Abug">Issues we&#8217;re working on</a></p>
 </li>
 </ul>
 </div>
@@ -569,7 +585,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:05 UTC
 </div>
 </div>
 </body>

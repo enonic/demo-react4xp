@@ -519,7 +519,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="signature"><a class="link" href="#signature">Signature</a></h3>
 <div class="paragraph">
-<p>The signature is analogous to Thymeleaf&#8217;s familiar <code>render(view, model)</code>. But there are two extra parameters and a full XP response object is returned:</p>
+<p>The signature is analogous to thymeleaf&#8217;s familiar <code>render(view, model)</code>. But there are two extra parameters, and a full XP response object is returned:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -606,7 +606,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>HTML to serve as container for the react content. Can be a hardcoded string, come from a thymeleaf/mustache/XSLT render, or any source.  When server-side rendering, the rendered output will be inserted into the matching-<code>id</code> element inside here (replacing whatever was already in that element), and everything (container <code>body</code> with rendered content in it) is returned as one HTML string. When client-side rendering, this insertion happens in the browser.</p>
 </div>
 <div class="paragraph">
-<p>If no <code>body</code> is supplied, an empty <code>&lt;div&gt;</code> element with an ID matching <code>id</code> is generated and used as a container.</p>
+<p>If no <code>body</code> is supplied, an empty <code>&lt;div&gt;</code> element with an ID matching <code>id</code> is generated and used as container.</p>
 </div>
 <div class="paragraph">
 <p>If a <code>body</code> is supplied but it doesn&#8217;t contain any element with a matching <code>id</code>, an extra matching-<code>id</code> <code>&lt;div&gt;</code> element will be generated and inserted into <code>body</code> - as a child of the root element of <code>body</code> and after any other content that&#8217;s already there.</p>
@@ -633,7 +633,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.ssr'] or true</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Switch between clientside and serverside rendering, on this particular rendering. Other renderings are not affected, even within the same controller or using the same entry more than once.</p>
+<p>Switch between clientside and servierside rendering, on this particular rendering. Other renderings are not affected, even within the same controller or using the same entry more than once.</p>
 </div>
 <div class="paragraph">
 <p>If <code>false</code> / falsy or omitted, you get serverside rendering and the returned object will contain an HTML representation of the react component with the initial <code>props</code>, and page contributions will make the client call <code>.hydrate</code>.</p>
@@ -650,7 +650,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">server | absolute</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.urlType'] or server</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>URL type. Either server (server-relative URL) or absolute. The default is server. Available from <code>React4xp-5.1.0</code>.</p>
+<p>URL type. Either server (server-relative URL) or absolute. Default is server. Available from <code>React4xp-5.1.0</code>.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -695,7 +695,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageContributions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Regular <a href="https://developer.enonic.com/docs/xp/stable/framework/contributions">XP page contributions</a>. Includes everything the browser needs to activate (or client-side render) the react component: script tags with URLs to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset, and an activating client-wrapper call. URLs point to React4xp&#8217;s optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
+<p>Regular <a href="https://developer.enonic.com/docs/xp/stable/cms/contributions">XP page contributions</a>. Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating client-wrapper call. Urls point to React4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -728,7 +728,7 @@ React4xp.render(entry, props, request, options); // ...etc etc</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>Also, when <code>request</code> is used, <code>.render</code> will output <strong>error messages from SSR</strong> in error containers and browser consoles (except in live view mode, where error containers and browser logs are more generic: shown without the specific messages).</p>
+<p>Also, when <code>request</code> is used, <code>.render</code> will output <strong>error messages from SSR</strong> in error containers and browser consoles (except in live view mode, where error containers and browser log are more generic: shown without the specific messages).</p>
 </div>
 </div>
 <div class="sect3">
@@ -763,7 +763,7 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 <h2 id="react4xp_object"><a class="link" href="#react4xp_object">React4xp object: custom flow</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>More flexible and controllable than <code>React4xp.render</code>: create a data-holding react4xp object with the React4xp constructor, manipulate it or extract data from it, combine it with other objects, and then later render it to an HTML body string and/or page contributions, separately. This is actually what <code>React4xp.render</code> does behind the scenes.</p>
+<p>More flexible and controllable than <code>React4xp.render</code>: create a data-holding react4xp object with the React4xp contructor, manipulate it or extract data from it, combine with other objects, and then later render it to an HTML body string and/or page contributions, separately. This is actually what <code>React4xp.render</code> does behind the scenes.</p>
 </div>
 <div class="paragraph">
 <p>Call the two rendering methods from the same react4xp object. Remember, if using <code>hydrate</code>, <code>ssr</code> and/or <code>request</code> options, they should usually be the same value across the two corresponding calls. A typical (compact) usage example:</p>
@@ -1078,7 +1078,7 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <p>Does <em>not</em> render page contributions. Combine with a corresponding <a href="#render_pgcontr">renderPageContributions</a> call from the same data object, or the rendering will not be active in the browser.</p>
 </div>
 <div class="paragraph">
-<p>&#8594; See the <a href="../custom-flow-syntax.ahtml">custom flow syntax</a> examples.</p>
+<p>&#8594; See the <a href="custom-flow-syntax.ahtml">custom flow syntax</a> examples.</p>
 </div>
 </td>
 </tr>
@@ -1142,7 +1142,7 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.ssr'] or true</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Switch between clientside and serverside rendering, on this particular rendering.</p>
+<p>Switch between clientside and servierside rendering, on this particular rendering.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1260,7 +1260,7 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageContributions</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object: valid <a href="https://developer.enonic.com/docs/xp/stable/framework/contributions">XP page contributions</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object: valid <a href="https://developer.enonic.com/docs/xp/stable/cms/contributions">XP page contributions</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">empty object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>If you already have some page contributions you want to add to the output of this rendering, add them here. These added page contributions will be added <em>before</em> the ones that will be rendered (within each section <code>headBegin</code>, <code>bodyEnd</code> etc).</p>
@@ -1279,7 +1279,7 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.ssr'] or true</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Switch between clientside and serverside rendering, on this particular rendering.</p>
+<p>Switch between clientside and servierside rendering, on this particular rendering.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1290,7 +1290,7 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <p>Including this here (<em>and</em> in the corresponding <a href="#render_body"><code>renderPageContributions</code></a> call) is the easiest way to handle <a href="#react4xp_object_request">view-context dependent behavior</a>.</p>
 </div>
 <div class="paragraph">
-<p>Other renderings are not affected, <em>even from the same data object</em> (so you usually want to ensure a different rendering from the same data object uses the same mode).</p>
+<p>Other renderings are not affected, <em>even from the same data object</em> (so you usually want to make sure a different rendering from the same data object uses the same mode).</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1302,10 +1302,10 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <p><strong>Returns:</strong></p>
 </div>
 <div class="paragraph">
-<p>A regular <a href="https://developer.enonic.com/docs/xp/stable/framework/contributions">XP page contributions</a> object, ready to be used as the <code>pageContributions</code> attribute in an <a href="https://developer.enonic.com/docs/xp/stable/framework/http#http-response">XP response object</a> from the controller.</p>
+<p>A regular <a href="https://developer.enonic.com/docs/xp/stable/cms/contributions">XP page contributions</a> object, ready to be used as the <code>pageContributions</code> attribute in an <a href="https://developer.enonic.com/docs/xp/stable/framework/http#http-response">XP response object</a> from the controller.</p>
 </div>
 <div class="paragraph">
-<p>Includes everything the browser needs to activate (or client-side render) the react component: script tags with URLs to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset, and an activating trigger call to the client wrapper. URLs point to react4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
+<p>Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating trigger call to the client wrapper. Urls point to react4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
 </div>
 <div class="paragraph">
 <p>With a serverside rendering (<code>options.ssr</code> is not false), the client will expect an existing target element with a pre-rendered entry in the response <code>body</code>, and call <code>hydrate</code>. If <code>options.ssr</code> is false, an empty target element is expected in the response <code>body</code>, and the rendering is left to the client with <code>render</code>.</p>
@@ -1315,7 +1315,7 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <div class="sect2">
 <h3 id="react4xp_object_request"><a class="link" href="#react4xp_object_request">Request and automated behavior</a></h3>
 <div class="paragraph">
-<p>The <a href="../custom-flow-syntax.ahtml">"custom flow"</a> (<code>.renderBody</code> in tandem with <code>.renderPageContributions</code>) is intended as a more low-level approach: less hand-holding, more control to the developer for cases where that&#8217;s needed.</p>
+<p>The <a href="custom-flow-syntax.ahtml">"custom flow"</a> (<code>.renderBody</code> in tandem with <code>.renderPageContributions</code>) is intended as a more low-level approach: less hand-holding, more control to the developer for cases where that&#8217;s needed.</p>
 </div>
 <div class="paragraph">
 <p>However, lib-react4xp version 1.6.0 introduced support for a <code>request</code> option parameter for these methods as well. The main idea is that <strong>using <code>request</code> in both calls will now automate some behavior</strong> the same way as calling <code>.render</code> with <code>request</code> (see <a href="#render_request">above</a>).</p>
@@ -1383,7 +1383,7 @@ This risks a missing/empty visualization inside Content Studio, since <code>ssr:
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Best case scenario: this might make a client-side rendered entry visible in Content Studio too. Worst case, it risks intervening with Content Studio&#8217;s UX or even breaking its functionality, depending on the code used/imported by the entry.
+Best case scenario: this might make a client-side rendered entry visible in Content Studio too. Worst case, it risks intervening with Content Studio&#8217;s UX, or even break its functionality, depending on the code used/imported by the entry.
 </td>
 </tr>
 </table>
@@ -1396,7 +1396,7 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 <div class="sect2">
 <h3 id="custom_flow_examples"><a class="link" href="#custom_flow_examples">Custom flow examples</a></h3>
 <div class="paragraph">
-<p>Custom flow usage is demonstrated <a href="../custom-flow-syntax.ahtml">here</a>.</p>
+<p>Custom flow usage in is demonstrated <a href="custom-flow-syntax.ahtml">here</a>.</p>
 </div>
 </div>
 </div>
@@ -1408,10 +1408,10 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 <p>The default running mode of React4xp is <a href="https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/">serverside rendering (SSR)</a> (although <code>ssr</code> can override this).</p>
 </div>
 <div class="paragraph">
-<p>In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp&#8217;s SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS, etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens in two different steps, using either <a href="#react4xp_render"><code>render</code></a> (which wraps both steps for convenience) or the <a href="#react4xp_object">"custom flow"</a>.</p>
+<p>In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp&#8217;s SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens to two different steps, using either <a href="#react4xp_render"><code>render</code></a> (which wraps both steps for convenience) or the <a href="#react4xp_object">"custom flow"</a>.</p>
 </div>
 <div class="paragraph">
-<p>The aim of react4xp is <a href="https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905">isomorphic rendering</a>: after the react component(s) are serverside rendered, they are activated (hydrated) in the browser, turning them into running, active react apps. It&#8217;s <em>the same react code</em> that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browser specific code from running on the server).</p>
+<p>The aim of react4xp is <a href="https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905">isomorphic rendering</a>: after the react component(s) are serverside rendered, they are activated (hydrated) in the browser, turning them into running, active react apps. It&#8217;s <em>the same react code</em> that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).</p>
 </div>
 <div class="sect2">
 <h3 id="renderers"><a class="link" href="#renderers">Renderers</a></h3>
@@ -1447,10 +1447,10 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>This causes some warmup time</strong> when starting your app: a noticeable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the <em>compiled</em> assets involved. This will happen on every restart of the app (and every <a href="#renderers">renderer</a> must be initialized, but they do this in parallel).</p>
+<p><strong>This causes some warmup time</strong> when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the <em>compiled</em> assets involved. This will happen on every restart of the app (and every <a href="#renderers">renderer</a> must be initialized, but they do this in parallel).</p>
 </div>
 <div class="paragraph">
-<p>But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready to run from memory, so repeated renderings after that (even with different props) are fast.</p>
+<p>But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.</p>
 </div>
 <div class="sect3">
 <h4 id="improving_warmup_time_for_development"><a class="link" href="#improving_warmup_time_for_development">Improving warmup time for development</a></h4>
@@ -1506,7 +1506,7 @@ exports.get = request =&gt; {
     const key = makeKey(props);
 
     // Now render is only called when the key is new.
-    // If the key is cached before, it just returns the output for that key.
+    // If the key is cached before, just returns the output for that key.
     return cache.get(
         key,
         () =&gt; React4xp.render(
@@ -1526,7 +1526,7 @@ exports.get = request =&gt; {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:05 UTC
 </div>
 </div>
 </body>

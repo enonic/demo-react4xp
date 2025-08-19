@@ -522,6 +522,19 @@ export const componentRegistry = new ComponentRegistry();
 componentRegistry.addLayout('com.enonic.app.hmdb:2-column', {View: TwoColumnLayout});</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Notice we didn&#8217;t need to create a processor for the layout, because React4xp passes all the necessary data as component to our view.
+But we can still create it with <code>DataFetcher.addLayout()</code> method if we want to do some processing.
+</td>
+</tr>
+</table>
+</div>
 </li>
 <li>
 <p><strong>The result</strong>:
@@ -570,7 +583,7 @@ Create a new <code>folder</code> within the site structure, click the preview fi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-07-21 08:33:50 UTC
+Last updated 2025-08-19 10:08:06 UTC
 </div>
 </div>
 </body>
