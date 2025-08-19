@@ -30,7 +30,7 @@ To do this we need to do the following:
 . Make an xml file for it so XP knows that it exists, here we can also give it a good description.
 +
 .src/main/resources/site/parts/example/example.xml
-[code,xml]
+[source,xml]
 ----
 include::{snippet}appendix/upgrade/example.xml[]
 ----
@@ -38,7 +38,7 @@ include::{snippet}appendix/upgrade/example.xml[]
 . Move the example component to the `parts/example` folder and update as follows.
 +
 .src/main/resources/react4xp/components/parts/example/example.tsx
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/example.tsx[]
 ----
@@ -46,7 +46,7 @@ include::{snippet}appendix/upgrade/example.tsx[]
 Notice how the Example component receives `ComponentProps<PartData>` type props.
 This is going to be true for any other component as well, except that `PartData`, specifying type of the component field, will be `LayoutData` for layouts, or `PageData` for pages:
 +
-[code,TypeScript]
+[source,TypeScript]
 ----
 interface ComponentProps<T extends ComponentData = ComponentData> {
     meta: MetaData;                         // <1>
@@ -64,7 +64,7 @@ interface ComponentProps<T extends ComponentData = ComponentData> {
 . Now, instead of fetching in get(), create a processor that returns its data and React4xp will forward it to your view along with some additional data like meta and component.
 +
 .src/main/resources/react4xp/components/parts/example/exampleProcessor.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/exampleProcessor.ts[]
 ----
@@ -72,13 +72,13 @@ include::{snippet}appendix/upgrade/exampleProcessor.ts[]
 . Add it to the componentRegistry and dataFetcher with the same descriptor as in previous task.
 +
 .src/main/resources/react4xp/componentRegistry.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/componentRegistry.tsx[]
 ----
 +
 .src/main/resources/react4xp/dataFetcher.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/dataFetcher.ts[]
 ----
@@ -90,7 +90,7 @@ include::{snippet}appendix/upgrade/dataFetcher.ts[]
 Your current page part might look something like this:
 
 .src/main/resources/site/pages/default/default.tsx
-[code,typeScript]
+[source,typeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev5/default.tsx[]
 ----
@@ -98,7 +98,7 @@ include::{snippet}appendix/upgrade/pages/pagev5/default.tsx[]
 with a controller like this:
 
 .src/main/resources/site/pages/default/default.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev5/default.ts[]
 ----
@@ -107,7 +107,7 @@ And an xml like this:
 
 .src/main/resources/site/pages/default/default.xml
 
-[code,xml]
+[source,xml]
 ----
 include::{snippet}appendix/upgrade/pages/pagev5/default.xml[]
 ----
@@ -120,7 +120,7 @@ We can still get regions from component and return it, but this is not necessary
 IMPORTANT: Component gets passed to the view automatically now, so you don't have to define a processor function if it's only regions you want to access.
 
 .src/main/resources/react4xp/components/page/PageProcessor.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/PageProcessor.ts[]
 ----
@@ -128,7 +128,7 @@ include::{snippet}appendix/upgrade/pages/pagev6/PageProcessor.ts[]
 Next we need to change out the part `default.tsx` with a component `Page.tsx`, which is very similar except that we pass `component` to the `Regions` react component, because it contains regions now.
 
 .src/main/resources/react4xp/components/page/Page.tsx
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/Page.tsx[]
 ----
@@ -136,7 +136,7 @@ include::{snippet}appendix/upgrade/pages/pagev6/Page.tsx[]
 In this example there is also a css module that is used to style the page.
 
 .src/main/resources/react4xp/components/page/Page.module.css
-[code,css]
+[source,css]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/Page.module.css[]
 ----
@@ -145,7 +145,7 @@ For XP to see it we need to keep the xml file, but we will change the name to `P
 This way we can call on it using a descriptor in the component registry and data fetcher.
 
 .src/main/resources/site/pages/Page/Page.xml
-[code,xml]
+[source,xml]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/Page.xml[]
 ----
@@ -153,13 +153,13 @@ include::{snippet}appendix/upgrade/pages/pagev6/Page.xml[]
 Let's add it to componentRegistry and dataFetcher, this is done in the same way as we did with the part.
 
 .src/main/resources/react4xp/componentRegistry.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/componentRegistry.tsx[]
 ----
 
 .src/main/resources/react4xp/dataFetcher.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/dataFetcher.ts[]
 ----
@@ -174,7 +174,7 @@ Lastly we need to migrate the layout, this is done in a similar way to the page.
 Your current layout part might look something like this:
 
 .src/main/resources/site/layouts/twoColumns/twoColumns.tsx
-[code,typeScript]
+[source,typeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.tsx[]
 ----
@@ -182,7 +182,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.tsx[]
 with a controller like this:
 
 .src/main/resources/site/layouts/twoColumns/twoColumns.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.ts[]
 ----
@@ -190,7 +190,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.ts[]
 And an xml like this:
 
 .src/main/resources/site/layouts/twoColumns/twoColumns.xml
-[code,xml]
+[source,xml]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.xml[]
 ----
@@ -198,7 +198,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.xml[]
 Similar to the page, we need to implement a processor, and a component.
 
 .src/main/resources/react4xp/components/layouts/TwoColumnProcessor.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumnProcessor.ts[]
 ----
@@ -207,7 +207,7 @@ The Layout component is depending on regions like the page, but let's use `Regio
 We need to pass list of components as data to each `Region` component:
 
 .src/main/resources/react4xp/components/layouts/TwoColumn.tsx
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.tsx[]
 ----
@@ -215,7 +215,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.tsx[]
 NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
 
 .src/main/resources/components/layouts/twoColumn.css
-[code,css]
+[source,css]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.module.css[]
 ----
@@ -223,13 +223,13 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.module.css[]
 We need to add the layout to the component registry and data fetcher, this is done in the same way as we did with the part and page.
 
 .src/main/resources/react4xp/componentRegistry.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/componentRegistry.tsx[]
 ----
 
 .src/main/resources/react4xp/dataFetcher.ts
-[code,TypeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/dataFetcher.ts[]
 ----
@@ -237,7 +237,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/dataFetcher.ts[]
 And finally we need to update the xml file to match the descriptor, this is done in the same way as the page.
 
 .src/main/resources/site/layouts/TwoColumn/TwoColumn.xml
-[code,xml]
+[source,xml]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumns.xml[]
 ----

@@ -7,7 +7,7 @@ The app controller is responsible for bootstrapping all important elements of Re
 [[site-mapping]]
 == Site mapping
 
-React4XP runs on top of XP's site engine. By adding a React4XP application to a site, it is injected into request pipeline - where it hijackes the rendering. 
+React4XP runs on top of XP's site engine. By adding a React4XP application to a site, it is injected into request pipeline - where it hijackes the rendering.
 
 This happes because the application declares a "catch all" pattern mapping in `site.xml`.
 
@@ -31,7 +31,7 @@ The controller is by default located `/src/main/resources/site/controllers/app.t
 const content = getContent();
 const {
   componentProps,
-  response 
+  response
 } = dataFetcher.execute({
   content,
   request,
@@ -59,12 +59,12 @@ const htmlBody = `<!DOCTYPE html><html lang="en">
 [source,TypeScript]
 ----
 const output = render(
-  'App', // 1
-  props, // 2
+  'App', // <1>
+  props, // <2>
   request,
   {
-    body: htmlBody, // 3
-    id: react4xpId, // 4
+    body: htmlBody, // <3>
+    id: react4xpId, // <4>
   }
 );
 
