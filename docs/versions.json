@@ -9,13 +9,13 @@
       "checkout": "4.x"
     },
     {
+      "label": "5.x",
+      "checkout": "5.x"
+    },
+    {
       "label": "stable",
       "checkout": "master",
       "latest": true
-    },
-    {
-      "label": "refactored",
-      "checkout": "issue-77"
     }
   ]
 }
