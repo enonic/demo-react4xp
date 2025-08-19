@@ -1,0 +1,80 @@
+{
+  "menuItems": [
+    {
+      "title": "1 - Project setup",
+      "document": "setup"
+    },
+    {
+      "title": "2 - Hello React",
+      "document": "hello-react"
+    },
+    {
+      "title": "3 - Editorial data",
+      "document": "editorial-data-and-props"
+    },
+    {
+      "title": "4 - Page components",
+      "document": "pages-parts-and-regions"
+    },
+    {
+      "title": "5 - File structure",
+      "document": "source-file-structure"
+    },
+    {
+      "title": "6 - Custom flow syntax",
+      "document": "custom-flow-syntax"
+    },
+    {
+      "title": "7 - Imports and chunks",
+      "document": "imports-and-dependency-chunks"
+    },
+    {
+      "title": "Advanced topics",
+      "document": "advanced",
+      "menuItems": [
+        {
+          "title": "Client side rendering",
+          "document": "advanced/client-side"
+        },
+        {
+          "title": "Webapps",
+          "document": "advanced/standalone"
+        }
+      ]
+    },
+    {
+      "title": "Appendix",
+      "document": "appendix",
+      "menuItems": [
+        {
+          "title": "Build",
+          "document": "appendix/build"
+        },
+        {
+          "title": "Dependency chunks",
+          "document": "appendix/chunks"
+        },
+        {
+          "title": "Configuration",
+          "document": "appendix/config"
+        },
+        {
+          "title": "Entries",
+          "document": "appendix/entries"
+        },
+        {
+          "title": "JsxPath",
+          "document": "appendix/jsxpath"
+        },
+        {
+          "title": "API",
+          "document": "appendix/api"
+        },
+        {
+          "title": "Upgrade",
+          "document": "appendix/upgrade"
+        }
+      ]
+    }
+  ]
+}
