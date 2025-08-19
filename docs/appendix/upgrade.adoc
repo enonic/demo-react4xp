@@ -244,7 +244,4 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumns.xml[]
 
 Now we have a fully functional layout component that is using the new regions and component registry.
 
-// TODO: seems not done to me ?
-(Migrate thymeleaf etc, minimal example) 0
-
 And just like that we have not only upgraded the old component, but also made it compatible with the new ones!
