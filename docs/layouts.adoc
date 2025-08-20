@@ -38,7 +38,8 @@ NOTE: Notice we didn't need to create a processor for the layout, because React4
 But we can still create it with `DataFetcher.addLayout()` method if we want to do some processing.
 +
 . *The result*:
-By combining layout, part and text we are starting to see the potential of the page editor:
+By combining layout, part and text we are starting to see the potential of the page editor.
+Navigate to Movies folder:
 image:layout-filled.png[title="2-column layout with text",width=900px]
 
 

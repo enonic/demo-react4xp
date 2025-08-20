@@ -4,7 +4,7 @@ import {PartComponent} from '@enonic-types/core';
 
 export const childListProcessor: ComponentProcessor<'com.enonic.app.hmdb:child-list'> = (params) => {
     const component = params.component as PartComponent;
-    const sortOrder: any = component.config.sorting;
+    const sortOrder = component.config.sorting as string;
 
     const result = getChildren({
         key: params.content._id,

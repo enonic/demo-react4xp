@@ -1,10 +1,25 @@
-import {RichText, type ComponentProps} from '@enonic/react-components';
+import {RichText, type ComponentProps, RichTextData} from '@enonic/react-components';
 import React from 'react'
 import styles from './Person.module.css';
 
+interface PersonData
+    extends Record<string, unknown> {
+    displayName: string;
+    birthDate: string;
+    photo?: {
+        imageUrl: string;
+        title: string;
+    }
+    restPhotos?: {
+        imageUrl: string;
+        title: string;
+    }[];
+    bio?: RichTextData;
+}
+
 export const Person = (props: ComponentProps) => {
     const {meta, common, component} = props;
-    const {displayName, photo, restPhotos, bio, birthDate} = props.data as any;
+    const {displayName, photo, restPhotos, bio, birthDate} = props.data as PersonData;
     return (
         <div className={styles.person}>
             <h1>{displayName}</h1>
