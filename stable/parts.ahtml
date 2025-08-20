@@ -474,9 +474,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 import React from "react";
 import styles from "./ChildList.module.css";
 
+interface ChildListData
+    extends Record&lt;string, unknown&gt; {
+    names: string[];
+    paths: string[];
+}
+
 export const ChildList = (props: ComponentProps) =&gt; {
 
-    const {names, paths} = props.data as any;
+    const {names, paths} = props.data as ChildListData;
 
     if (!names?.length) {
         return &lt;ul className={styles.list}&gt;
@@ -505,7 +511,7 @@ import {PartComponent} from '@enonic-types/core';
 
 export const childListProcessor: ComponentProcessor&lt;'com.enonic.app.hmdb:child-list'&gt; = (params) =&gt; {
     const component = params.component as PartComponent;
-    const sortOrder: any = component.config.sorting;
+    const sortOrder = component.config.sorting as string;
 
     const result = getChildren({
         key: params.content._id,
@@ -679,7 +685,7 @@ dataFetcher.addPart('com.enonic.app.hmdb:heading', {processor: headingProcessor}
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-08-19 10:09:21 UTC
+Last updated 2025-08-20 15:50:02 UTC
 </div>
 </div>
 </body>
