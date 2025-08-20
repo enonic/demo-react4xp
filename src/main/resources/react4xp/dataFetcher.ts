@@ -18,6 +18,4 @@ dataFetcher.addPart('com.enonic.app.hmdb:movie-details', {processor: movieProces
 dataFetcher.addPart('com.enonic.app.hmdb:child-list', {processor: childListProcessor});
 dataFetcher.addContentType('com.enonic.app.hmdb:playlist', {processor: playlistProcessor});
 dataFetcher.addContentType('com.enonic.app.hmdb:article', {processor: articleProcessor});
-
-// @ts-ignore update type in addMacro
 dataFetcher.addMacro('factbox', {processor: factboxProcessor});

@@ -2,9 +2,15 @@ import type {ComponentProps} from '@enonic/react-components';
 import React from "react";
 import styles from "./ChildList.module.css";
 
+interface ChildListData
+    extends Record<string, unknown> {
+    names: string[];
+    paths: string[];
+}
+
 export const ChildList = (props: ComponentProps) => {
 
-    const {names, paths} = props.data as any;
+    const {names, paths} = props.data as ChildListData;
 
     if (!names?.length) {
         return <ul className={styles.list}>

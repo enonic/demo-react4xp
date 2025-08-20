@@ -4,15 +4,20 @@ import {toArray} from "/react4xp/utils/arrayUtils";
 import type {Content} from '@enonic-types/lib-content';
 import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
 
+interface CastMember
+    extends Record<string, unknown> {
+    actor: string;
+}
+
 function fetchAdditionalPhotos(photoIds: string[]) {
     return photoIds.map(photoId => {
         if (photoId) {
-        const photoContent = getContentByKey<Content>({key: photoId});
-        return {
-            _id: photoContent._id,
-            title: photoContent.displayName,
-            imageUrl: imageUrl({id: photoContent._id, scale: 'block(340, 220)'}) // Image scaled for remaining photos
-        };
+            const photoContent = getContentByKey<Content>({key: photoId});
+            return {
+                _id: photoContent._id,
+                title: photoContent.displayName,
+                imageUrl: imageUrl({id: photoContent._id, scale: 'block(340, 220)'}) // Image scaled for remaining photos
+            };
         }
     });
 }
@@ -37,7 +42,7 @@ export const movieProcessor: ComponentProcessor<'com.enonic.app.hmdb:movie-detai
 
     const restPhotos = fetchAdditionalPhotos(remainingPhotoIds);
 
-    const cast = toArray<any>(data.cast).map(castMember => {
+    const cast = toArray<CastMember>(data.cast as CastMember | CastMember[]).map(castMember => {
         const actorContent = getContentByKey<Content>({key: castMember.actor});
 
 

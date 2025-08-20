@@ -3,6 +3,34 @@ import React from 'react';
 import {REQUEST_MODE} from '../../constants'
 import styles from './Movie.module.css';
 
+interface Photo {
+    imageUrl: string;
+    title: string;
+}
+
+interface MovieData
+    extends Record<string, unknown> {
+    restPhotos?: Photo[];
+    trailer?: string;
+    name?: string;
+    photo?: Photo;
+    website?: string;
+    release?: string;
+    cast: {
+        actorName: string;
+        character: string;
+        photoUrl: string;
+        castUrl: string;
+    }[];
+    director?: {
+        name: string;
+        photo: string;
+        url: string;
+    };
+    subtitle?: string;
+    abstract?: string;
+}
+
 export const Movie = (props: ComponentProps) => {
     const {
         restPhotos,
@@ -15,14 +43,10 @@ export const Movie = (props: ComponentProps) => {
         director,
         subtitle,
         abstract,
-        meta
-    } = {
-        ...props.data as any,
-        meta: props.meta
-    };
+    } = props.data as MovieData;
 
     if (!abstract?.length) {
-        if (meta.mode !== REQUEST_MODE.EDIT) { return <h1>Movie details</h1>}
+        if (props.meta.mode !== REQUEST_MODE.EDIT) { return <h1>Movie details</h1>}
         return;
     }
 
