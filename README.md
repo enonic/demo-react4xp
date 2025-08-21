@@ -1,3 +1,3 @@
-# doc-react4xp
+# demo-react4xp
 
-Introduction and technical docs for react4xp: https://developer.enonic.com/templates/react4xp
+Tutorial and demo app for React4xp: https://developer.enonic.com/docs/react4xp
