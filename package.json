@@ -73,7 +73,7 @@
     "babel": "^6",
     "babel-loader": "^9",
     "browser-sync": "^3",
-    "concurrently": "^9.1.0",
+    "concurrently": "^9.2.1",
     "css-loader": "^7",
     "glob": "^11",
     "npm-run-all": "^4",
