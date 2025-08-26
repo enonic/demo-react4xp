@@ -25,9 +25,9 @@ Follow these steps to make your application a front-end for the Headless Movie D
 +
 image:hmdb.png[title="HMDB welcome page",width=900px]
 +
-. Add your brand new "React4XP" application to the site. After saving, the preview will refresh, to reveal something like this:
+. Add your brand new `React4XP Starter` application to the site. After saving, the preview will refresh, to reveal something like this:
 +
-image:hello.png[title="React4XP starter page",width=900px]
+image:hello.png[title="React4XP Starter page",width=900px]
 
 The component was initially rendered on the server, then <<appendix/hydration#, hydrated>> to spin up as a client-side React component.
 
