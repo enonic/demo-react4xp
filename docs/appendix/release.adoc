@@ -16,7 +16,7 @@ React4XP now renders pages as a single React app (aka entry), vs one React app/e
 
 This also means that the <Region> component (part of @enonic/react-components) has been changed, and is now a pure React component, handling the rendering of it's sub-components directly, rather than relying on the Site engine engine's placeholder and iterative rendering technique.
 
-The latter is a breaking change. However, React4XP is still able to render multiple entries on a page (i.e. only render your parts with React4XP) if needed. Check out the <<appendix/legacy#, legacy mode upgrade>>.
+The latter is a breaking change. However, React4XP is still able to render multiple entries on a page (i.e. only render your parts with React4XP) if needed. Check out the xref:legacy-upgrade.adoc# [legacy mode upgrade].
 
 == Optimized asset serving
 React4XP automatically hashes and serves static assets with optmized cache headers. This way, clients will only need to download files that have changed since their last visit. Assets are automatically cached in CDN if it is available.
@@ -37,4 +37,4 @@ React4XP is fully compatible with https://market.enonic.com/vendors/enonic/boost
 
 == Upgrading
 
-To migrate a legacy React4XP application we have written detailed <<appendix/upgrade#, upgrade notes>>.
+To migrate a legacy React4XP application we have written detailed xref:upgrade.adoc# [upgrade notes].

@@ -86,7 +86,7 @@
           "menuItems": [
             {
               "title": "Legacy mode",
-              "document": "appendix/partial-upgrade"
+              "document": "appendix/legacy-upgrade"
             }
           ]
         }
