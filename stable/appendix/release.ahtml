@@ -489,7 +489,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>This also means that the &lt;Region&gt; component (part of @enonic/react-components) has been changed, and is now a pure React component, handling the rendering of it&#8217;s sub-components directly, rather than relying on the Site engine engine&#8217;s placeholder and iterative rendering technique.</p>
 </div>
 <div class="paragraph">
-<p>The latter is a breaking change. However, React4XP is still able to render multiple entries on a page (i.e. only render your parts with React4XP) if needed. Check out the <a href="legacy-upgrade.ahtml# ">legacy mode upgrade</a>.</p>
+<p>The latter is a breaking change. However, React4XP is still able to render multiple entries on a page (i.e. only render your parts with React4XP) if needed. Check out the <a href="legacy-upgrade.adoc ">legacy mode upgrade</a>.</p>
 </div>
 </div>
 </div>
@@ -544,14 +544,14 @@ Remember, you may still bundle both CMS model and front-end in the same app.
 <h2 id="upgrading"><a class="link" href="#upgrading">Upgrading</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To migrate a legacy React4XP application we have written detailed <a href="upgrade.ahtml# ">upgrade notes</a>.</p>
+<p>To migrate a legacy React4XP application we have written detailed <a href="upgrade.adoc ">upgrade notes</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-09-04 11:03:47 UTC
+Last updated 2025-09-04 11:06:05 UTC
 </div>
 </div>
 </body>
