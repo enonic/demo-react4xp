@@ -544,14 +544,14 @@ Remember, you may still bundle both CMS model and front-end in the same app.
 <h2 id="upgrading"><a class="link" href="#upgrading">Upgrading</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To migrate a legacy React4XP application we have written detailed <a href="#upgrade">upgrade notes</a>.</p>
+<p>To migrate a legacy React4XP application we have written detailed <a href="#appendix/upgrade">upgrade notes</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2025-09-04 10:39:03 UTC
+Last updated 2025-09-04 10:41:29 UTC
 </div>
 </div>
 </body>
