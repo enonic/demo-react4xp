@@ -78,7 +78,7 @@
     "glob": "^11",
     "npm-run-all": "^4",
     "rimraf": "^6",
-    "sass": "^1.90.0",
+    "sass": "^1.93.0",
     "sass-loader": "^16.0.4",
     "tslib": "^2.8.1",
     "tsup": "^8",
