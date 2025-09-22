@@ -82,7 +82,7 @@
     "sass-loader": "^16.0.4",
     "tslib": "^2.8.1",
     "tsup": "^8",
-    "typescript": "^5.7.2",
+    "typescript": "^5.9.2",
     "typescript-plugin-css-modules": "^5.2.0"
   },
   "homepage": "https://github.com/enonic/starter-react4xp#readme",
