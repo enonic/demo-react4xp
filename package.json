@@ -79,7 +79,7 @@
     "npm-run-all": "^4",
     "rimraf": "^6",
     "sass": "^1.93.3",
-    "sass-loader": "^16.0.4",
+    "sass-loader": "^16.0.6",
     "tslib": "^2.8.1",
     "tsup": "^8",
     "typescript": "^5.9.3",
