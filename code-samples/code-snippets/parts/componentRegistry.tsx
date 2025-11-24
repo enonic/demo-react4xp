@@ -1,3 +1,4 @@
+import {ComponentRegistry} from '@enonic/react-components';
 import {ChildList} from './components/parts/ChildList';
 
 ...
