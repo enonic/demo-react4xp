@@ -27,7 +27,7 @@ Once the solution is ready, launch `XP Admin` -> `Content Studio`.
 +
 Edit the `Headless Movie DB` site, add the `React4XP Demo` application and press btn:[Save]
 +
-You should how see the new front-end in Content Studio.
+You should now see the new front-end in Content Studio.
 +
 . Publish the changes
 +
@@ -50,7 +50,7 @@ Congratulations, you just deployed a live a React site powered by Enonic! 🚀
 
 == Alternative 2 - Local instance
 
-Follow the steps below to build and run the demo an a local Enonic developer environment:
+Follow the steps below to build and run the demo on a local Enonic developer environment:
 
 . *Install Enonic CLI* if you have not already done this
 +

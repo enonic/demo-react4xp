@@ -25,7 +25,7 @@ TIP: For more verbose output you may specify -i or --info. However, this require
 
 === Server simulation
 
-You may test how how your application will perform on a server by launching your sandbox in production mode. In this mode, assets will be served with optimized cached headers:
+You may test how your application will perform on a server by launching your sandbox in production mode. In this mode, assets will be served with optimized cached headers:
 
 [source,bash]
 ----
