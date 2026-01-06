@@ -70,7 +70,7 @@ We are not entirely done yet, as the Footer component requires some props, in or
 
 == Static asset
 
-To make thigs a bit more interesting, the Footer will render the React4XP logo. This means we will need a URL to a static file.
+To make things a bit more interesting, the Footer will render the React4XP logo. This means we will need a URL to a static file.
 
 TIP: The logo already exists in `resources/assets/react4xp.svg`
 
