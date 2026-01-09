@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "@enonic/js-utils": "^1",
-    "@enonic/react-components": "6.1.0-A1",
+    "@enonic/react-components": "^6.1.0",
     "clsx": "^2.1.1",
     "core-js": "^3.47.0",
     "cross-env": "^10.1.0",
@@ -108,7 +108,7 @@
     "watch": "./gradlew -t deploy"
   },
   "engines": {
-    "node": ">= 20.13.1",
-    "npm": ">= 10.5.2"
+    "node": ">= 22.15.1",
+    "npm": ">= 10.9.2"
   }
 }
