@@ -3,10 +3,10 @@
 
 Standard configuration options for your React4XP-based application
 
-Like any other Enonic application, you may provide a standard configuration file, and place in in the XP config folder. i.e. $XP_HOME/config/<app.name>.cfg
+Like any other Enonic application, you may provide a standard configuration file, and place it in the XP config folder. i.e. $XP_HOME/config/<app.name>.cfg
 
 == R4XP tuning
-The React4XP starter provies a few standard configuration options (in addition to the configuration options you define yourself). Here they are:
+The React4XP starter provides a few standard configuration options (in addition to the configuration options you define yourself). Here they are:
 
 
 .myr4xpapp.cfg

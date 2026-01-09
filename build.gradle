@@ -13,7 +13,7 @@ repositories {
 
 node {
     download = true
-    version = '20.13.1'
+    version = '22.15.1'
 }
 
 app {
@@ -33,7 +33,7 @@ dependencies {
     include 'com.enonic.lib:lib-asset:1.0.3'
     include 'com.enonic.lib:lib-thymeleaf:2.1.1'
     include 'com.enonic.lib:lib-guillotine:6.2.1'
-    include 'com.enonic.lib:lib-react4xp:6.0.1'
+    include 'com.enonic.lib:lib-react4xp:6.1.0-B1'
 }
 
 sourceSets {

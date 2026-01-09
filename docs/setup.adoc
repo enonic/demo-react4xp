@@ -68,12 +68,12 @@ src/
 <4> Mapping React components to CMS component
 <5> Main React component
 <6> Optionally place CMS schemas here
-<7> Boostrapping controller
+<7> Bootstrapping controller
 <8> TypeScript types (optional)
 
 == Dev mode
 
-Assuming you did not change any of the default values when creating the app, run the following commmands:
+Assuming you did not change any of the default values when creating the app, run the following commands:
 
   cd r4xp
   enonic dev
@@ -92,7 +92,7 @@ In the sandbox log, this shows that app is running:
   2019-04-09 13:40:40,765 INFO ... Application [my.first.r4xp] installed successfully
 ====
 
-Because the sandbox is running in dev mode, any changes to the code wihin your app will instantly be picked up.
+Because the sandbox is running in dev mode, any changes to the code within your app will instantly be picked up.
 
 TIP: Dive deeper by learning more about React4XP's <<appendix/build#, build system>>.
 

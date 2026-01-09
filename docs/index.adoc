@@ -28,7 +28,7 @@ React4XP is designed for React devs looking to use Enonic's JS framework and nat
 *tl;dr* Try the <<demo#, React4XP demo>> instead.
 ====
 
-image:r4xp-demo.png[title="React4xp front-end rendring the Headless Movie DB",900px]
+image:r4xp-demo.png[title="React4xp front-end rendering the Headless Movie DB",900px]
 
 In this tutorial you will complete the following steps:
 

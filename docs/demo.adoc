@@ -27,11 +27,11 @@ Once the solution is ready, launch `XP Admin` -> `Content Studio`.
 +
 Edit the `Headless Movie DB` site, add the `React4XP Demo` application and press btn:[Save]
 +
-You should how see the new front-end in Content Studio.
+You should now see the new front-end in Content Studio.
 +
 . Publish the changes
 +
-image:r4xp-demo.png[title="React4xp front-end rendring the Headless Movie DB", 1390px]
+image:r4xp-demo.png[title="React4xp front-end rendering the Headless Movie DB", 1390px]
 
 
 *Optionally expose the site on a public URL* by following the steps below:
@@ -50,7 +50,7 @@ Congratulations, you just deployed a live a React site powered by Enonic! 🚀
 
 == Alternative 2 - Local instance
 
-Follow the steps below to build and run the demo an a local Enonic developer environment:
+Follow the steps below to build and run the demo on a local Enonic developer environment:
 
 . *Install Enonic CLI* if you have not already done this
 +
@@ -66,7 +66,7 @@ Launch `XP admin` -> `Content Studio`.
 +
 Edit the `Headless Movie DB` site, add the `React4XP Demo` application and press btn:[Save]
 +
-image:r4xp-demo.png[title="React4xp front-end rendring the Headless Movie DB", 1390px]
+image:r4xp-demo.png[title="React4xp front-end rendering the Headless Movie DB", 1390px]
 +
 TIP: The live version of the site can be found on http://localhost:8080/site/hmdb/master/hmdb[http://localhost:8080/site/hmdb/master/hmdb^]
 
