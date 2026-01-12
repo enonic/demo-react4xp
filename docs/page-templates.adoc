@@ -62,7 +62,7 @@ image:page-template.png[title="Movie details part",width=900px]
 
 The page that is used for rendering movies exists in the "Templates/" folder within your site. Try editing the `Movie` page template in Content Studio by adding other layouts and parts to see what happens.
 
-TIP: Hard-coded content type components, like the `Person` component we created initially has presedence over editorial page templates. As such, creating a page template for `Person` will not affect the actual rendering.
+TIP: Hard-coded content type components, like the `Person` component we created initially has precedence over editorial page templates. As such, creating a page template for `Person` will not affect the actual rendering.
 
 == Wrap up
 

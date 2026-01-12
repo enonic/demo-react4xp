@@ -38,7 +38,7 @@ TIP: Click `Preview` and try pressing the button for some React action.
 
 What just happened?
 
-By adding the application to the site, it is injected into Enonic's standard rendering - aka the Site Engine. Here, it basically hijacks the rendering - taking presdence over HMDB's built-in preview.
+By adding the application to the site, it is injected into Enonic's standard rendering - aka the Site Engine. Here, it basically hijacks the rendering - taking precedence over HMDB's built-in preview.
 
 Let's have a look at the code:
 
@@ -84,7 +84,7 @@ The dataFetcher will only invoke a processor if needed, in our case when a conte
 [source,TypeScript]
 ----
 import {DataFetcher} from '/lib/enonic/react4xp';
-import {helloProcessor} from './components/HelloProcessor';
+import {helloProcessor} from './components/hello/HelloProcessor';
 
 export const dataFetcher = new DataFetcher();
 
@@ -101,7 +101,7 @@ Back to the Hello React component. Similar to the dataFetcher, this must be adde
 [source,TypeScript]
 ----
 import {ComponentRegistry} from '@enonic/react-components';
-import {Hello} from './components/Hello';
+import {Hello} from './components/hello/Hello';
 
 export const componentRegistry = new ComponentRegistry();
 

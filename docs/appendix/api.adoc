@@ -124,7 +124,7 @@ React4xp.render(entry, props, request, options); // ...etc etc
 
 If `request` is supplied, viewing context is detected from `request.mode`: is rendering happening inside or outside of Content Studio edit mode?
 
-- *Inside Content Studio edit mode*, `.render` will always select serverside rendering (no matter what `ssr` is) and skip JS dependency assets and the clientside `render`/`hydrate` trigger (but still still supply other dependencies, such as CSS). This ensures that a static HTML placeholder rendering is visible inside Content Studio's edit mode, but keeps react from being activated. This is by design: preventing the possibility that react code might intervene with the UX of Content Studio itself.
+- *Inside Content Studio edit mode*, `.render` will always select serverside rendering (no matter what `ssr` is) and skip JS dependency assets and the clientside `render`/`hydrate` trigger (but still supply other dependencies, such as CSS). This ensures that a static HTML placeholder rendering is visible inside Content Studio's edit mode, but keeps react from being activated. This is by design: preventing the possibility that react code might intervene with the UX of Content Studio itself.
 
 - *Outside Content Studio edit mode*, the rendering will be activated as a react app (i.e. all pageContributions are rendered). Also, `ssr` is used, so if this is `false`, serverside rendering is skipped. The ``and `render` is called in the client instead of `hydrate`.
 

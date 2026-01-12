@@ -14,7 +14,7 @@ React4XP is now fully aligned with the https://market.enonic.com/starters/typesc
 == Single React app
 React4XP now renders pages as a single React app (aka entry), vs one React app/entry per component in version 5. This allows for a cleaner React developer experience, and more flexibility.
 
-This also means that the <Region> component (part of @enonic/react-components) has been changed, and is now a pure React component, handling the rendering of it's sub-components directly, rather than relying on the Site engine engine's placeholder and iterative rendering technique.
+This also means that the <Region> component (part of @enonic/react-components) has been changed, and is now a pure React component, handling the rendering of its sub-components directly, rather than relying on the Site engine's placeholder and iterative rendering technique.
 
 The latter is a breaking change. However, React4XP is still able to render multiple entries on a page (i.e. only render your parts with React4XP) if needed. Check out the xref:legacy-upgrade.adoc# [legacy mode upgrade].
 

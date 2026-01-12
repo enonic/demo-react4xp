@@ -20,15 +20,15 @@
   ],
   "dependencies": {
     "@enonic/js-utils": "^1",
-    "@enonic/react-components": "^6.0.0",
+    "@enonic/react-components": "^6.1.0",
     "clsx": "^2.1.1",
     "core-js": "^3.47.0",
     "cross-env": "^10.1.0",
     "dayjs": "^1.11.19",
     "node-fetch": "^3",
     "prop-types": "^15",
-    "react": "^18",
-    "react-dom": "^18"
+    "react": "^19",
+    "react-dom": "^19"
   },
   "devDependencies": {
     "@babel/cli": "^7.28.3",
@@ -58,7 +58,7 @@
     "@enonic-types/lib-node": "^7.16.1",
     "@enonic-types/lib-portal": "^7.16.0",
     "@enonic-types/lib-project": "^7.16.0",
-    "@enonic-types/lib-react4xp": "^6.0.1",
+    "@enonic-types/lib-react4xp": "6.1.0",
     "@enonic-types/lib-repo": "^7.16.1",
     "@enonic-types/lib-scheduler": "^7.16.1",
     "@enonic-types/lib-schema": "^7.15.4",
@@ -66,10 +66,10 @@
     "@enonic-types/lib-value": "^7.16.1",
     "@enonic-types/lib-vhost": "^7.16.1",
     "@enonic-types/lib-websocket": "^7.15.4",
-    "@enonic/react4xp": "^6.0.2",
+    "@enonic/react4xp": "6.1.0",
     "@swc/core": "^1.15.7",
     "@types/css-modules": "^1.0.5",
-    "@types/react": "^18",
+    "@types/react": "^19",
     "babel": "^6",
     "babel-loader": "^10",
     "browser-sync": "^3",
@@ -108,7 +108,7 @@
     "watch": "./gradlew -t deploy"
   },
   "engines": {
-    "node": ">= 20.13.1",
-    "npm": ">= 10.5.2"
+    "node": ">= 22.15.1",
+    "npm": ">= 10.9.2"
   }
 }
