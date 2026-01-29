@@ -776,7 +776,7 @@ componentRegistry.addContentType('com.enonic.app.hmdb:person', {View: Person});<
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-12 09:36:34 UTC
+Last updated 2026-01-29 16:43:36 UTC
 </div>
 </div>
 </body>

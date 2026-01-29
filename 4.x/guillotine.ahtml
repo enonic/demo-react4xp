@@ -485,7 +485,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>&#8203;<br></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/guillotine.jpg" alt="guillotine" width="600px" title="React4xp goes headless"></span></p>
+<p><span class="image"><img src="media/guillotine-api.png" alt="guillotine api" width="600px" title="React4xp goes headless"></span></p>
 </div>
 <div class="paragraph">
 <p>&#8203;<br></p>
@@ -2230,7 +2230,7 @@ This section is not a vital part of the rest of this or the next chapter. Feel f
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-01-12 09:36:33 UTC
+Last updated 2026-01-29 16:43:34 UTC
 </div>
 </div>
 </body>
