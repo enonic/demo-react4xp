@@ -4,7 +4,7 @@
 
 {zwsp} +
 
-image:guillotine.jpg[title="React4xp goes headless", width=600px]
+image:guillotine-api.png[title="React4xp goes headless", width=600px]
 
 {zwsp} +
 
