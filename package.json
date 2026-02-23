@@ -39,7 +39,7 @@
     "@babel/plugin-transform-arrow-functions": "^7",
     "@babel/preset-env": "^7",
     "@babel/preset-react": "^7.28.5",
-    "@enonic-types/global": "^7.16.1",
+    "@enonic-types/global": "^7.16.2",
     "@enonic-types/lib-admin": "^7.16.1",
     "@enonic-types/lib-app": "^7.16.1",
     "@enonic-types/lib-asset": "^1.0.3",
