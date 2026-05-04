@@ -53,6 +53,10 @@
           "document": "appendix/controller"
         },
         {
+          "title": "Macros",
+          "document": "appendix/macro-data"
+        },
+        {
           "title": "Build",
           "document": "appendix/build"
         },
