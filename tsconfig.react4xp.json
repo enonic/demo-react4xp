@@ -12,8 +12,8 @@
 		"jsx": "react",
 		"lib": [
 			"DOM", // console
-			"ES2015",
-			// See note above target
+          "ES2022"
+          // See note above target
 			// "ES2016",
 			// "ES2017",
 			// "ES2018",
@@ -22,9 +22,9 @@
 			// "ES2021",
 			// "ES2022",
 		],
-		"module": "ES2015", // Graal-JS supports ESM?
-		"moduleResolution": "node",
-		"paths": {
+      "module": "ES2022",
+      "moduleResolution": "bundler",
+      "paths": {
 			// Development: TODO Should be removed before merging to master branch!
 			// "@enonic-types/core": ["../xp/modules/lib/core/index.d.ts"],
 			// "@enonic/react-components/*": ["../npm-react-components/src/*.ts"],
@@ -34,7 +34,7 @@
 			// So one can import local files using absolute path same as
 			// * react4xp resolves during build time
 			// * and Enonic XP resolves during runtime
-			"/*": ["./src/main/resources/*"], // This works during type checking
+			"/*": ["./src/main/resources/*"] // This works during type checking
 		},
 
 		"noLib": false,
@@ -44,15 +44,8 @@
 		// TypeScript still type checks the code you specifically
 		// refer to in your application's source code.
 		"skipLibCheck": true,
+      "target": "ES2022"
 
-		// As of 2023-03-15 GraalJS support ES2022
-		// https://github.com/oracle/graaljs/blob/master/docs/user/JavaScriptCompatibility.md
-		// But Almost every modern browser is still missing features from ES2017-ES2020
-		// https://stackoverflow.com/questions/61835971/es7-es8-es9-es10-es11-browser-support
-		// Since the output can be used both server-side (GraalJS) and
-		// client-side (modern browsers) we have to use the "lowest" supported version.
-		"target": "ES2015",
-
-		// "types": [],
+      // "types": [],
 	},
 }
