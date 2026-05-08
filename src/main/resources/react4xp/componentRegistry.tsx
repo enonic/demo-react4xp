@@ -15,11 +15,11 @@ export const componentRegistry = new ComponentRegistry();
 
 componentRegistry.addMacro('factbox', {View: Factbox});
 //componentRegistry.addContentType('portal:site', { View: Hello }); // <1>
-componentRegistry.addPart('tutorial.nxp:heading', {View: Heading}); // <2>
-componentRegistry.addPage('tutorial.nxp:main', {View: Page}); // <3>
-componentRegistry.addContentType('tutorial.nxp:person', {View: Person}); // <4>
-componentRegistry.addPart('tutorial.nxp:movie-details', {View: Movie}); // <5>
-componentRegistry.addLayout('tutorial.nxp:2-column', {View: TwoColumnLayout}); // <6>
-componentRegistry.addPart('tutorial.nxp:child-list', {View: ChildList}); // <7>
-componentRegistry.addContentType('tutorial.nxp:playlist', {View: Playlist}); // <8>
-componentRegistry.addContentType('tutorial.nxp:article', {View: Article}); // <9>
+componentRegistry.addPart('com.enonic.app.hmdb:heading', {View: Heading}); // <2>
+componentRegistry.addPage('com.enonic.app.hmdb:main', {View: Page}); // <3>
+componentRegistry.addContentType('com.enonic.app.hmdb:person', {View: Person}); // <4>
+componentRegistry.addPart('com.enonic.app.hmdb:movie-details', {View: Movie}); // <5>
+componentRegistry.addLayout('com.enonic.app.hmdb:2-column', {View: TwoColumnLayout}); // <6>
+componentRegistry.addPart('com.enonic.app.hmdb:child-list', {View: ChildList}); // <7>
+componentRegistry.addContentType('com.enonic.app.hmdb:playlist', {View: Playlist}); // <8>
+componentRegistry.addContentType('com.enonic.app.hmdb:article', {View: Article}); // <9>
