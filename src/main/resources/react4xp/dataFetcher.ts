@@ -8,6 +8,7 @@ import {childListProcessor} from './components/parts/ChildListProcessor';
 import {headingProcessor} from './components/parts/HeadingProcessor';
 import {movieProcessor} from "./components/parts/MovieProcessor";
 import {factboxProcessor} from "./components/macro/FactboxProcessor";
+import {paragraphProcessor} from '/react4xp/components/parts/ParagraphProcessor';
 
 export const dataFetcher = new DataFetcher();
 //dataFetcher.addContentType('portal:site', { processor: helloProcessor });
@@ -19,3 +20,4 @@ dataFetcher.addPart('com.enonic.app.hmdb:child-list', {processor: childListProce
 dataFetcher.addContentType('com.enonic.app.hmdb:playlist', {processor: playlistProcessor});
 dataFetcher.addContentType('com.enonic.app.hmdb:article', {processor: articleProcessor});
 dataFetcher.addMacro('factbox', {processor: factboxProcessor});
+dataFetcher.addPart('com.enonic.app.hmdb:paragraph', {processor: paragraphProcessor});
