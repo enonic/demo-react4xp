@@ -9,9 +9,9 @@ import {Page} from './components/page/Page';
 import {ChildList} from './components/parts/ChildList';
 import {Heading} from './components/parts/Heading';
 import {Movie} from './components/parts/Movie';
+import Paragraph from '/react4xp/components/parts/Paragraph';
 
 export const componentRegistry = new ComponentRegistry();
-
 
 componentRegistry.addMacro('factbox', {View: Factbox});
 //componentRegistry.addContentType('portal:site', { View: Hello }); // <1>
@@ -23,3 +23,5 @@ componentRegistry.addLayout('com.enonic.app.hmdb:2-column', {View: TwoColumnLayo
 componentRegistry.addPart('com.enonic.app.hmdb:child-list', {View: ChildList}); // <7>
 componentRegistry.addContentType('com.enonic.app.hmdb:playlist', {View: Playlist}); // <8>
 componentRegistry.addContentType('com.enonic.app.hmdb:article', {View: Article}); // <9>
+componentRegistry.addPart('com.enonic.app.hmdb:paragraph', {View: Paragraph}); // <10>
+
