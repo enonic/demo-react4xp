@@ -9,16 +9,19 @@ The app controller is responsible for bootstrapping all important elements of Re
 
 React4XP runs on top of XP's site engine. By adding a React4XP application to a site, it is injected into request pipeline - where it hijackes the rendering.
 
-This happes because the application declares a "catch all" pattern mapping in `site.xml`.
+This happens because the application declares a "catch all" pattern mapping in `site.yaml`.
 
-./src/main/resources/site/site.xml
-[source,XML]
+./src/main/resources/cms/site.yaml
+[source,YAML]
 ----
-include::../../src/main/resources/site/site.xml[]
+include::../../src/main/resources/cms/site.yaml[]
 ----
 
-<1> Pattern mapping to catch all requests
+<1> Pattern mapping that catches all requests except the react4xp routes (`invertPattern: true`)
 <2> Enables drag'n drop support in the visual page editor
+<3> Mounts APIs to site
+
+On Enonic XP 8, mounting the `react4xp` and `asset` APIs is required wherever React4XP renders - see <<api#mount-api, Mount the API>>.
 
 == Controller
 
