@@ -20,6 +20,23 @@ Instructions on how to install the library locally or insert it into your projec
 const React4xp = require('/lib/enonic/react4xp');
 ----
 
+[[mount-api]]
+=== Mount the API
+
+NOTE: Required from Enonic XP 8.
+
+React4XP serves its compiled assets and SSR endpoints through a dedicated `react4xp` API.
+From XP 8, that API must be explicitly *mounted* in the descriptor of every context that renders React4XP - otherwise the browser cannot load the assets and rendering fails.
+
+Add the `react4xp` API to the `apis` list of the `site` descriptor:
+
+.Site - src/main/resources/cms/site.yaml
+[source,yaml]
+----
+apis:
+  - "react4xp"
+----
+
 [[react4xp_render]]
 == React4xp.render
 

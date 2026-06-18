@@ -1,11 +1,11 @@
 kind: "Site"
 mappings:
-  - controller: "/cms/app.js"
+  - controller: "/cms/app.js" # <1>
     order: 10
     pattern: "/.*"
-  - controller: "/cms/component.js"
+  - controller: "/cms/component.js" # <2>
     service: "component"
     order: 10
-apis:
+apis: # <3>
   - "asset"
   - "react4xp"
