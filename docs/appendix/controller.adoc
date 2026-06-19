@@ -21,7 +21,7 @@ include::../../src/main/resources/cms/site.yaml[]
 <2> Enables drag'n drop support in the visual page editor
 <3> Mounts APIs to site
 
-On Enonic XP 8, mounting the `react4xp` and `asset` APIs is required wherever React4XP renders - see <<api#mount-api, Mount the API>>.
+On Enonic XP 8, mounting the `react4xp` API is required wherever React4XP renders - see <<api#mount-api, Mount the API>>.
 
 == Controller
 
