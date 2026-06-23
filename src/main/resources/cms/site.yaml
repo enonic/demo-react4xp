@@ -2,7 +2,7 @@ kind: "Site"
 mappings:
   - controller: "/cms/app.js" # <1>
     order: 10
-    pattern: "/r4xp5.*"
+    pattern: "/r4xp5(/.*)?"
     invertPattern: true
   - controller: "/cms/component.js" # <2>
     service: "component"
