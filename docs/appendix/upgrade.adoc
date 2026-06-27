@@ -43,6 +43,7 @@ include::{snippet}appendix/upgrade/example.xml[]
 include::{snippet}appendix/upgrade/example.tsx[]
 ----
 +
+You'll need to run `npm install dayjs` for this to work.
 Notice how the Example component receives `ComponentProps<PartData>` type props.
 This is going to be true for any other component as well, except that `PartData`, specifying type of the component field, will be `LayoutData` for layouts, or `PageData` for pages:
 +
@@ -214,7 +215,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.tsx[]
 
 NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
 
-.src/main/resources/components/layouts/twoColumn.css
+.src/main/resources/components/layouts/twoColumn.module.css
 [source,css]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.module.css[]
