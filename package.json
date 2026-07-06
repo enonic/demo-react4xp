@@ -19,7 +19,7 @@
     "Espen Norderud"
   ],
   "dependencies": {
-    "@enonic/js-utils": "^1",
+    "@enonic/js-utils": "^2",
     "@enonic/react-components": "^6.1.1",
     "clsx": "^2.1.1",
     "core-js": "^3.49.0",
