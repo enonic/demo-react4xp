@@ -8,3 +8,4 @@ mappings:
     order: 10
 apis:
   - "asset"
+  - "react4xp"
