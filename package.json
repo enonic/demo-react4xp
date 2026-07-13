@@ -64,7 +64,7 @@
     "@enonic-types/lib-schema": "^7.16.4",
     "@enonic-types/lib-task": "^8.0.3",
     "@enonic-types/lib-value": "^7.16.5",
-    "@enonic-types/lib-vhost": "^7.16.5",
+    "@enonic-types/lib-vhost": "^7.16.7",
     "@enonic-types/lib-websocket": "^8.0.3",
     "@enonic/react4xp": "6.1.0",
     "@swc/core": "^1.15.43",
