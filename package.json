@@ -53,7 +53,7 @@
     "@enonic-types/lib-export": "^7.16.5",
     "@enonic-types/lib-grid": "^7.16.3",
     "@enonic-types/lib-i18n": "^7.16.5",
-    "@enonic-types/lib-io": "^7.16.3",
+    "@enonic-types/lib-io": "^7.16.7",
     "@enonic-types/lib-mail": "^7.16.2",
     "@enonic-types/lib-node": "^8.0.3",
     "@enonic-types/lib-portal": "^7.16.5",
