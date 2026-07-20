@@ -539,6 +539,49 @@ NOTE: Best case scenario: this might make a client-side rendered entry visible i
 
 Custom flow usage in is demonstrated <<custom-flow-syntax#, here>>.
 
+[[processhtml]]
+== processHtml
+
+Transforms raw rich text HTML (typically the value of an `HtmlArea` input) into the `RichTextData` format consumed by the `RichText` component from `@enonic/react-components` - resolving links, sizing images and preparing macros for rendering.
+Typically used inside a data processor, like in the <<../pages#, Pages>> chapter.
+
+=== Signature
+
+[source,typescript]
+----
+import {processHtml} from '/lib/enonic/react4xp';
+
+const data = processHtml(params);
+----
+
+=== Parameters
+
+The `params` object accepts the same parameters as XP's link:https://developer.enonic.com/docs/xp/stable/api/lib-portal#processhtml[portal.processHtml^], plus `dataFetcher` and `component`:
+
+[%header,cols="1%,1%,98%a"]
+[frame="none"]
+[grid="none"]
+|===
+| Name   | Type   | Description
+| `value` | string, mandatory | The raw HTML string to process.
+| `dataFetcher` | DataFetcher, mandatory | The dataFetcher instance - inside a processor, pass `params.dataFetcher` along.
+| `component` | component object, optional | The component currently being processed (`params.component`).
+| `imageWidths` | number[], optional | Widths (in pixels) of scaled image variants to generate, used for the `srcset` attribute of images.
+| `imageSizes` | string, optional | Value for the `sizes` attribute of images, mapping media conditions to the image widths above.
+| `type` | server \| absolute, optional | URL type of the processed links. Either server (server-relative URL, default) or absolute.
+|===
+
+=== Returns
+
+Returns a `RichTextData` object, ready to be passed to the `data` prop of the `RichText` react component.
+
+=== Example
+
+.src/main/resources/react4xp/components/parts/ParagraphProcessor.ts
+[source,typescript]
+----
+include::../../src/main/resources/react4xp/components/parts/ParagraphProcessor.ts[]
+----
 
 [[ssr]]
 == SSR engine

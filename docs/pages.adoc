@@ -80,7 +80,7 @@ include::{snippet}pages/componentRegistry-paragraph.tsx[]
 include::{sourcedir}react4xp/components/parts/ParagraphProcessor.ts[]
 ----
 +
-NOTE: `processHtml` function from `lib-react4xp` transforms raw data into the <<rich-text#, RichText>> format.
+NOTE: <<appendix/api#processhtml, `processHtml`>> function from `lib-react4xp` transforms raw data into the <<rich-text#, RichText>> format.
 +
 . *Register its dataFetcher* by adding following lines to the dataFetcher file:
 +

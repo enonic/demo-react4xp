@@ -48,9 +48,13 @@ Several aspects of React4xp can be configured with a file _react4xp.config.js_. 
 entryDirs: ['myComponents', '../otherComponents']
 ----
 
-By default, React4xp will look for (ie. sets up webpack to look for) .TSX/.JSX files to turn into <<entries#, entries>> below _src/main/resources/site/_.
+React4xp will look for (ie. sets up webpack to look for) .TSX/.JSX files to turn into <<entries#, entries>> below the folders listed in `entryDirs` (relative to _src/main/resources/react4xp/_).
+The starter sets `entryDirs: ['entries']`, so entries are picked up from _src/main/resources/react4xp/entries/_.
 
-Adding comma separated values under `entryDirs` adds _more_ folder names/paths (relative to _src/main/resources/react4xp/_) where TSX/JSX files will also become entries.
+Adding comma separated values under `entryDirs` adds _more_ folder names/paths where TSX/JSX files will also become entries.
+
+NOTE: In legacy XP 7 apps, React4xp also scanned _src/main/resources/site/_ for entries by default.
+XP 8 apps no longer have this folder (it was renamed to `cms/`, which is not scanned for entries).
 
 
 [[chunkDirs]]

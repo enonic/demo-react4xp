@@ -1,0 +1,7 @@
+kind: "Layout"
+title: "Two columns"
+description: "Upgraded Two columns controller"
+form: [ ]
+regions:
+  - "left"
+  - "right"

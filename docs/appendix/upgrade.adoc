@@ -6,20 +6,20 @@
 
 == Step by step
 
-This describes upgrading to the full feature set of react4xp 6 including migrating pages and layouts to react.
+This describes upgrading to the full feature set of react4xp 7 (for Enonic XP 8), including migrating pages and layouts to react.
 
 . Create an app using the link:../setup#create-starter[starter^] and give it a new name.
 . <<migrating-parts, Migrate>> each react component to the new app.
 . Migrate your <<migrate-page, page>> and <<migrate-layout, layout>> to react components
 . On Enonic XP 8, <<api#mount-api, mount the React4XP API>> in each descriptor that renders React4XP (site, admin tool, webapp).
-. link:./legacy#build-deploy[Deploy^] the application on your existing site.
+. link:./legacy-upgrade#build-deploy[Deploy^] the application on your existing site.
 
 You will now have one application with your schemas, and one containing your frontend.
 If you prefer having a single application, follow these steps:
 
 . Move the cms schemas and other files you want to keep to the new application.
 . Rename it to the same name as your old application.
-. Make a production build and link:./legacy#build-deploy[Deploy^] it.
+. Make a production build and link:./legacy-upgrade#build-deploy[Deploy^] it.
 . The old application can now be discarded.
 
 [[migrating-parts]]
@@ -28,12 +28,12 @@ If you prefer having a single application, follow these steps:
 Now let’s go a little bit deeper and use the example component as a part along with our new components.
 To do this we need to do the following:
 
-. Make an xml file for it so XP knows that it exists, here we can also give it a good description.
+. Make a YAML descriptor file for it so XP knows that it exists, here we can also give it a good description.
 +
-.src/main/resources/site/parts/example/example.xml
-[source,xml]
+.src/main/resources/cms/parts/example/example.yaml
+[source,YAML]
 ----
-include::{snippet}appendix/upgrade/example.xml[]
+include::{snippet}appendix/upgrade/example.yaml[]
 ----
 
 . Move the example component to the `parts/example` folder and update as follows.
@@ -72,7 +72,7 @@ include::{snippet}appendix/upgrade/exampleProcessor.ts[]
 
 . Add it to the componentRegistry and dataFetcher with the same descriptor as in previous task.
 +
-.src/main/resources/react4xp/componentRegistry.ts
+.src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/componentRegistry.tsx[]
@@ -91,7 +91,7 @@ include::{snippet}appendix/upgrade/dataFetcher.ts[]
 Your current page part might look something like this:
 
 .src/main/resources/site/pages/default/default.tsx
-[source,typeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev5/default.tsx[]
 ----
@@ -113,7 +113,7 @@ And an xml like this:
 include::{snippet}appendix/upgrade/pages/pagev5/default.xml[]
 ----
 
-This is how we migrate it to a react4xp v6 component:
+This is how we migrate it to a react4xp v7 component:
 
 First let's handle the controller which becomes a processor, the most important prop to pass from the processor used to be the regionsData.
 We can still get regions from component and return it, but this is not necessary anymore!
@@ -142,18 +142,18 @@ In this example there is also a css module that is used to style the page.
 include::{snippet}appendix/upgrade/pages/pagev6/Page.module.css[]
 ----
 
-For XP to see it we need to keep the xml file, but we will change the name to `Page.xml` and add a description to it.
+For XP to see it we need a descriptor file - in XP 8 this is a YAML file named `Page.yaml`.
 This way we can call on it using a descriptor in the component registry and data fetcher.
 
-.src/main/resources/site/pages/Page/Page.xml
-[source,xml]
+.src/main/resources/cms/pages/Page/Page.yaml
+[source,YAML]
 ----
-include::{snippet}appendix/upgrade/pages/pagev6/Page.xml[]
+include::{snippet}appendix/upgrade/pages/pagev6/Page.yaml[]
 ----
 
 Let's add it to componentRegistry and dataFetcher, this is done in the same way as we did with the part.
 
-.src/main/resources/react4xp/componentRegistry.ts
+.src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/pages/pagev6/componentRegistry.tsx[]
@@ -175,7 +175,7 @@ Lastly we need to migrate the layout, this is done in a similar way to the page.
 Your current layout part might look something like this:
 
 .src/main/resources/site/layouts/twoColumns/twoColumns.tsx
-[source,typeScript]
+[source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.tsx[]
 ----
@@ -215,7 +215,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.tsx[]
 
 NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
 
-.src/main/resources/components/layouts/twoColumn.css
+.src/main/resources/react4xp/components/layouts/TwoColumn.module.css
 [source,css]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.module.css[]
@@ -223,7 +223,7 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.module.css[]
 
 We need to add the layout to the component registry and data fetcher, this is done in the same way as we did with the part and page.
 
-.src/main/resources/react4xp/componentRegistry.ts
+.src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}appendix/upgrade/layouts/layoutv6/componentRegistry.tsx[]
@@ -235,12 +235,12 @@ include::{snippet}appendix/upgrade/layouts/layoutv6/componentRegistry.tsx[]
 include::{snippet}appendix/upgrade/layouts/layoutv6/dataFetcher.ts[]
 ----
 
-And finally we need to update the xml file to match the descriptor, this is done in the same way as the page.
+And finally we need to update the descriptor file to match the descriptor name, this is done in the same way as the page.
 
-.src/main/resources/site/layouts/TwoColumn/TwoColumn.xml
-[source,xml]
+.src/main/resources/cms/layouts/TwoColumn/TwoColumn.yaml
+[source,YAML]
 ----
-include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumns.xml[]
+include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumns.yaml[]
 ----
 
 Now we have a fully functional layout component that is using the new regions and component registry.

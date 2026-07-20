@@ -25,7 +25,8 @@ On Enonic XP 8, mounting the `react4xp` API is required wherever React4XP render
 
 == Controller
 
-The controller is by default located `/src/main/resources/site/controllers/app.ts`. It uses a traditional MVC approach:
+The controller is by default located `/src/main/resources/cms/app.ts`.
+It uses a traditional MVC approach:
 
 . Get component props using the dataFetcher
 +
@@ -103,14 +104,14 @@ TIP: The links have been shortened for better readability
   <meta charset="UTF-8">
   <script defer src=".../react4xp/globals.js"></script>                            // <1>
   <script defer src=".../react4xp/runtime.js"></script>                            // <2>
-  <script defer src=".../react4xp/hello-react.js"></script> // <3>
+  <script defer src=".../react4xp/App.js"></script>                                // <3>
   <script defer src=".../react4xp/client-QZN5J5VC.global.js"></script>             // <4>
-  <script data-react4xp-app-name="com.enonic.app.samples_react4xp" data-react4xp-ref="react4xpApp" type="application/json">{"command":"hydrate","devMode":false,"hasRegions":0,"isPage":1,"jsxPath":"site/pages/hello-react/hello-react","props":{}}</script> // <5>
+  <script data-react4xp-app-name="my.first.r4xp" data-react4xp-ref="react4xpApp" type="application/json">{"command":"hydrate","devMode":false,"hasRegions":0,"isPage":1,"jsxPath":"App","props":{}}</script> // <5>
 </head>
 <body class="xp-page">
 
     <div id="react4xpApp">
-        <div data-reactroot="">                                                                       // <6>
+        <div data-reactroot="">                                                    // <6>
             <h1>Hello React4XP</h1>
         </div>
     </div>
@@ -124,7 +125,7 @@ The result is the HTML string we passed to the  `render` request of our initial 
 
 <1> `globals.<contenthash>.js` is react and react-dom bundled together. For improved security, they are served from XP instead of a random CDN.
 <2> `runtime.js` containst chunked boilerplate code to run entries.
-<3> `hello-react.js` is the compiled version of _hello-react.tsx_
+<3> `App.js` is the compiled version of _App.tsx_
 <4> `client-QZN5J5VC.global.js` is the client-wrapper. TODO: What does it do?
 <5> Properties and props needed for the client-side rendering to work properly (pun intended)
 <6> The `<div id="react4xpApp">` target container, now filled with a server-side rendering of the react component
