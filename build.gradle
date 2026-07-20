@@ -1,59 +1,40 @@
 plugins {
     id 'maven-publish'
-    id 'com.enonic.xp.app' version '3.6.2'
-    id 'com.enonic.defaults' version '2.1.7'
+    id 'com.enonic.xp.app'
+    id 'com.enonic.defaults' version '2.1.6'
     id "com.github.node-gradle.node" version "7.1.0"
 }
 
 repositories {
     mavenLocal()
     mavenCentral()
-    xp.enonicRepo('dev')
+    xp.enonicRepo()
 }
 
 node {
     download = true
-    version = '22.15.1'
-}
-
-app {
-    name = "${appName}"
-    displayName = "${appDisplayName}"
-    vendorName = "${vendorName}"
-    vendorUrl = "${vendorUrl}"
-    systemVersion = "${xpVersion}"
+    version = '24.18.0'
 }
 
 dependencies {
-    include "com.enonic.xp:lib-content:${xpVersion}"
-    include "com.enonic.xp:lib-context:${xpVersion}"
-    include "com.enonic.xp:lib-portal:${xpVersion}"
+    include xplibs.content
+    include xplibs.context
+    include xplibs.portal
+    include xplibs.auth
 
     // The version numbers must be here (or dependabot will fail)
     include 'com.enonic.lib:lib-asset:2.0.1'
-    include 'com.enonic.lib:lib-thymeleaf:3.0.0'
-    include 'com.enonic.lib:lib-guillotine:6.2.1'
-    include 'com.enonic.lib:lib-react4xp:6.1.1'
-}
-
-sourceSets {
-  main {
-    resources {
-      ['.gitkeep','*.es6','*.jsx','*.scss','*.tsx'].each { ext ->
-        exclude "**/$ext"
-      }
-    }
-  }
+    include 'com.enonic.lib:lib-react4xp:7.0.0'
 }
 
 processResources {
-  // Files that are simply copied by gradle: png svg xml
-  exclude '**/.gitkeep'
-  exclude '**/*.jsx' // handled by @enonic/react4xp gradle files
-  exclude '**/*.sass' // handled by @enonic/react4xp gradle files
-  exclude '**/*.scss' // handled by @enonic/react4xp gradle files
-  exclude '**/*.tsx' // handled by @enonic/react4xp gradle files
-  exclude '**/*.ts' // handled by tsup
+    exclude '**/.gitkeep'
+    exclude '**/tsconfig.json'
+    exclude '**/*.ts' // handled by tsdown
+    exclude '**/*.tsx' // handled by @enonic/react4xp
+    exclude '**/*.jsx' // handled by @enonic/react4xp
+    exclude '**/*.scss'
+    exclude '**/*.sass'
 }
 
 tasks.withType(Copy).configureEach {
@@ -75,38 +56,17 @@ tasks.register('npmCheck', NpmTask) {
 
 check.dependsOn npmCheck
 
-// This task takes care of XP non-react (and therefore non-react4xp) ts files
-// under src/main/resources. This is independent of react4xp, so you can replace
-// this with your own build steps if you want.
-// IMPORTANT:
-// This task only handles .ts files under src/main/resources.
-// If you use your own logic to compile non-react XP files
-// (i.e. replace this task or add more to it),
-// you should usually make it ignore .tsx and .jsx files,
-// to ensure that those are handled only by the react4xp build
-// (node_modules/@enonic/react4xp/react4xp.gradle, aka. react4xpGradlePath)
-// and not compiled twice.
-tasks.register('buildXpResources', NpmTask) {
-    dependsOn( npmInstall )
-    args = ['run', 'build:xp:resources']
-    group 'enonic xp'
-    description 'tsup transpile Enonic XP TypeScript source files (important: ignoring TSX/JSX components since they are left to react4xp)'
+// tsdown: server .ts + client assets (NOT .tsx — those are react4xp's).
+tasks.register( 'npmBuild', NpmTask ) {
+    args = ['run', '--silent', 'build']
+    dependsOn npmInstall
+    environment = ['FORCE_COLOR'          : 'true',
+                   'LOG_LEVEL_FROM_GRADLE': gradle.startParameter.logLevel.toString(),
+                   'NODE_ENV'             : project.hasProperty( 'dev' ) || project.hasProperty( 'development' ) ? 'development' :
+                       'production']
+    inputs.dir 'src/main/resources'
     outputs.dir 'build/resources/main'
-    // This is just so gradle is able to do incremental builds:
-    inputs.files fileTree(dir: 'src/main/resources', exclude: [
-      '**/.gitkeep',
-      '**/*.cjs',
-      '**/*.es',
-      '**/*.jsx',
-      '**/*.html',
-      '**/*.png',
-      '**/*.sass',
-      '**/*.scss',
-      '**/*.svg',
-      '**/*.d.ts',
-      '**/*.tsx',
-      '**/*.xml'
-    ])
+    outputs.upToDateWhen { false }
 }
 
 tasks.register('react4xp', NpmTask) {
@@ -126,15 +86,7 @@ tasks.register('react4xp', NpmTask) {
     inputs.dir 'node_modules/@enonic/react4xp'
     inputs.dir 'src/main/resources'
     outputs.dir 'build/resources/main'
-    println "Environment set to: $envMode"
+    outputs.upToDateWhen { false }
 }
 
-tasks.register('dev', Exec) {
-    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
-        commandLine 'gradlew.bat', 'deploy', '-Penv=dev', '-t'
-    } else {
-        commandLine './gradlew', 'deploy', '-Penv=dev', '-t'
-    }
-}
-
-jar.dependsOn ( buildXpResources, react4xp )
+jar.dependsOn( npmBuild, react4xp )

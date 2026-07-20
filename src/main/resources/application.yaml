@@ -1,0 +1,5 @@
+kind: "Application"
+title: "React4XP Demo"
+description: "React4XP front-end for HMDB"
+vendorName: "Enonic"
+vendorUrl: "https://enonic.com"

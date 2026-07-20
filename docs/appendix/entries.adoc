@@ -25,7 +25,8 @@ On the XP/server side, you have the controllers with their backend XP flow, logi
 
 Entries are pretty much just standard TSX/JSX files, but they must follow *two requirements* (another <<entries_howto#, cheat sheet>>):
 
-1. is located either in a folder either below *_/site/_* or below one of the *entryDirs* folders listed in _react4xp.config.js_ (see also <<jsxpath#, jsxPath>>),
+1. is located in a folder below one of the *entryDirs* folders listed in _react4xp.config.js_ - the starter uses *_react4xp/entries/_* (see also <<jsxpath#, jsxPath>>).
+In legacy XP 7 apps, entries could also be placed below *_/site/_* - XP 8 apps no longer have this folder (it was renamed to `cms/`, which is not scanned for entries),
 2. and *default-exports a function*: `props?=>reactComponent` - a function that _may_ take a `props` argument (serializable JS object: no functions) and _must_ return a react component.
 
 [NOTE]
@@ -133,12 +134,14 @@ During development though, these 3 rules are probably easier:
 But if you need to access an entry with a particular name or from a different folder (from anywhere in the compiled JAR, actually), here's *how to find the jsxPath of an entry*:
 
 [start=2]
-. If an entry's source file is a TSX/JSX under _/src/main/resources/_ *_site/_*, the jsxPath is the source file's path relative to _/src/main/resources/_ - unix-style and without file extension.
-* So the jsxPath will start with `site/...` etc (and the asset will be compiled into a folder below _/build/resources/main/r4xAssets/_ *_site/_*, and so on).
-. Or, using the setup from the starter, you can also put your entries under _src/main/resources/_ *_react4xp/entries_*. Then the jsxPath (and compiled-asset path) will be relative to _/entries/_ instead.
+. Using the setup from the starter, put your entries under _src/main/resources/_ *_react4xp/entries_*.
+Then the jsxPath (and compiled-asset path) will be relative to _/entries/_.
 * Actually, you can control this with the `entryDirs` property in your local link:https://github.com/enonic/enonic-react4xp/blob/master/examples/react4xp.config.js[_react4xp.config.js_]. The starter has added `entryDirs:['entries']` here, but this is a comma-separated list of folder names relative to _src/main/resources/react4xp/_. Remember, if you add more entryDirs or replace `entries`, the jsxPaths will always be relative to those new entryDirs, so beware of name collisions.
 
 * *For example:* add `../myComponents` to entryDirs: `entryDirs:['entries','../myComponents']`. Since entryDirs and `../` are relative to _src/main/resources/react4xp/_, the new entry source folder is _src/main/resources/myComponents/_. Now new TSX/JSX files can be put there, and get a jsxPath relative to that. So the entry _src/main/resources/myComponents/_ *_app/myEntry.jsx_* will get the jsxPath `"app/myEntry"`, and will be compiled to this entry asset: _/build/resources/main/r4xAssets/app/myEntry.js_.
+. In legacy XP 7 apps only: if an entry's source file is a TSX/JSX under _/src/main/resources/_ *_site/_*, the jsxPath is the source file's path relative to _/src/main/resources/_ - unix-style and without file extension.
+* So the jsxPath will start with `site/...` etc (and the asset will be compiled into a folder below _/build/resources/main/r4xAssets/_ *_site/_*, and so on).
+XP 8 apps have no _site/_ folder, so this rule no longer applies to them.
 
 == Overview in entries.json
 

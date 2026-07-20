@@ -1,0 +1,6 @@
+kind: "Page"
+title: "Upgraded page"
+description: "Upgraded page component"
+form: [ ]
+regions:
+  - "main"

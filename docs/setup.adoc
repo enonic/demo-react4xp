@@ -57,7 +57,7 @@ src/
         components/
         entries/
           App.tsx // <5>
-      site/ // <6>
+      cms/ // <6>
         app.ts // <7>
       types/ // <8>
 ----
