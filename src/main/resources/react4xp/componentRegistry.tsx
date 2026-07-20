@@ -9,7 +9,7 @@ import {Page} from './components/page/Page';
 import {ChildList} from './components/parts/ChildList';
 import {Heading} from './components/parts/Heading';
 import {Movie} from './components/parts/Movie';
-import Paragraph from '/react4xp/components/parts/Paragraph';
+import {Paragraph} from '/react4xp/components/parts/Paragraph';
 
 export const componentRegistry = new ComponentRegistry();
 

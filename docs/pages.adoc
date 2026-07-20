@@ -43,26 +43,57 @@ Your dataFetcher should now look like this:
 ----
 include::{snippet}pages/dataFetcher.ts[]
 ----
-+
 
-
-== Working with pages
+== Defining a paragraph part
 
 The HMDB dataset already contains sample content with pages. By selecting the front-page in Content Studio, you should immediately see something like this:
 
 image:r4xp-demo.png[title="First page rendering with text component",width=1390px]
 
-By editing the front page, you will see that a page with a single region `main`, containing a single Text Component.
+That means that the page is now working, and contains a single component, the `Paragraph` part that we need to define too.
+
+NOTE: Deeper dive into parts and components will be covered in the <<parts#,next>> chapter.
+
+. **Create the part implementation**
++
+.src/react4xp/components/parts/Paragraph.tsx
+[source,TypeScript]
+----
+include::{sourcedir}/react4xp/components/parts/Paragraph.tsx[]
+----
++
+The `RichText` component (from the @enonic/react-components) takes care of resolving links, sizing images and rendering macros.
++
+. **Register the part** by adding following line to the componentRegistry file:
++
+./src/main/resources/componentRegistry.tsx
+[source,TypeScript,options="nowrap"]
+----
+include::{snippet}pages/componentRegistry-paragraph.tsx[]
+----
++
+. *Create the ParagraphProcessor*:
++
+./src/main/resources/react4xp/components/parts/ParagraphProcessor.ts
+[source,TypeScript]
+----
+include::{sourcedir}react4xp/components/parts/ParagraphProcessor.ts[]
+----
++
+NOTE: `processHtml` function from `lib-react4xp` transforms raw data into the <<rich-text#, RichText>> format.
++
+. *Register its dataFetcher* by adding following lines to the dataFetcher file:
++
+./src/main/resources/react4xp/dataFetcher.ts
+[source,TypeScript]
+----
+include::{snippet}pages/dataFetcher-paragraph.ts[]
+----
+
+If you edit the front page now, you will see a page with a region `main`, containing a single Paragraph part component.
 
 image:page.png[title="Editing front page",width=1389px]
 
-=== The Text Component
-
-Enonic provides a standard `Rich text component` that can be placed on pages. React4XP implements a default rendering of this special component.
-
-By selecting the component, in the list, or directly on the page you can start editing it.
-
-image:text-component.png[title="Editing the text component",width=1390px]
 
 === Custom components
 
