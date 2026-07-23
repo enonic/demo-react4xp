@@ -10,8 +10,13 @@
     },
     {
       "label": "stable",
-      "checkout": "master",
-      "latest": true
+      "checkout": "6.x",
+      "latest": true,
+      "displayName": "6.x"
+    },
+    {
+      "label": "next",
+      "checkout": "issue-911"
     }
   ]
 }
