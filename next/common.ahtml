@@ -618,7 +618,7 @@ const Footer = ({logoUrl}: FooterProps) =&gt; (
             &lt;p&gt;
                 &lt;span className={styles.rotateRight}&gt;©&lt;/span&gt;
                 {` ${new Date().getFullYear()}, Built with `}
-                &lt;a href="https://reactjs.org"&gt;React4XP&lt;/a&gt;
+                &lt;a href="https://developer.enonic.com/learn/react4xp"&gt;React4XP&lt;/a&gt;
             &lt;/p&gt;
         &lt;/div&gt;
         {logoUrl &amp;&amp; (
@@ -839,7 +839,7 @@ You now have a stylish site with a footer component on all pages. The footer als
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 09:03:31 UTC
+Last updated 2026-07-23 10:03:37 UTC
 </div>
 </div>
 </body>
