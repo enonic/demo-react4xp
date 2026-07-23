@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Cheat sheet: React4xp entries</title>
+<title>Server Side Rendering (SSR)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,22 +435,163 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-right">
 <div id="header">
-<h1>Cheat sheet: React4xp entries</h1>
+<h1>Server Side Rendering (SSR)</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#how_it_works">How it works</a></li>
+<li><a href="#renderers">Renderers</a></li>
+<li><a href="#warmup">Warmup time</a>
+<ul class="sectlevel2">
+<li><a href="#improving_warmup_time_for_development">Improving warmup time for development</a></li>
+</ul>
+</li>
+<li><a href="#performance">SSR performance</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="media/entries_cheatsheet.png" alt="entries cheatsheet" title="Downloadable cheat sheet: React4xp entries"></span></p>
+<p>By default React4XP will render your React components on the server, and send the resulting HTML to the browser</p>
 </div>
-<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how_it_works"><a class="link" href="#how_it_works">How it works</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><a href="entries.ahtml#mentalmodel">&#8592; Back</a></p>
+<p>The default running mode of React4xp is <a href="https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/">serverside rendering (SSR)</a> (although <code>ssr</code> can override this).</p>
+</div>
+<div class="paragraph">
+<p>In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp&#8217;s SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens to two different steps, using either <a href="library.ahtml#react4xp_render"><code>render</code></a> (which wraps both steps for convenience) or the <a href="library.ahtml#react4xp_object">"custom flow"</a>.</p>
+</div>
+<div class="paragraph">
+<p>The aim of react4xp is <a href="https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905">isomorphic rendering</a>: after the react component(s) are serverside rendered, they are activated (<a href="hydration.ahtml">hydrated</a>) in the browser, turning them into running, active react apps. It&#8217;s <em>the same react code</em> that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="renderers"><a class="link" href="#renderers">Renderers</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>React4xp handles multithreaded rendering. This is done by setting up a number of renderers where each one is ready to answer to rendering requests in parallel, independently.</p>
+</div>
+<div class="paragraph">
+<p>The number of renderer workers is <a href="config.ahtml#ssrMaxThreads">determined in java but can be overriden</a>.</p>
+</div>
+<div class="paragraph">
+<p>When a renderer runs into an error during SSR, that renderer is torn down and a new one is initialized (see warmup time below). This happens as far as possible during idle time.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="warmup"><a class="link" href="#warmup">Warmup time</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the renderers will load the <em>compiled assets</em> necessary for the rendering, into the engine memory:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>react and reactDOM (<code>globals.*.js</code>),</p>
+</li>
+<li>
+<p>packages from <em>node_modules</em> (<code>vendors.*.js</code>),</p>
+</li>
+<li>
+<p>dependency assets imported by the react components (aka. <a href="chunks.ahtml">chunks</a>),</p>
+</li>
+<li>
+<p>and finally, the <a href="entries.ahtml">entry assets</a> themselves.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>This causes some warmup time</strong> when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the <em>compiled</em> assets involved. This will happen on every restart of the app (and every <a href="#renderers">renderer</a> must be initialized, but they do this in parallel).</p>
+</div>
+<div class="paragraph">
+<p>But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.</p>
+</div>
+<div class="sect2">
+<h3 id="improving_warmup_time_for_development"><a class="link" href="#improving_warmup_time_for_development">Improving warmup time for development</a></h3>
+<div class="paragraph">
+<p>Since development can involve repeated app/server restarts, here is one way to improve initial loading time when developing large projects:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Don&#8217;t build React4xp components with <code>NODE_ENV = development</code>, but use <code>production</code> (which is the default - see <a href="build.ahtml#NODE_ENV">Build environment</a>). Assets built with <code>development</code> are much more verbose, and this size difference - although functionally equal - actually makes a difference.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>(Other optimizations and approaches are under consideration, to shorten the warmup time even more).</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="performance"><a class="link" href="#performance">SSR performance</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Apart from when assets are initialized during the engine <a href="#warmup">warmup</a>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a <a href="https://developer.enonic.com/docs/cache-library">cache</a> in the controller.</p>
+</div>
+<div class="paragraph">
+<p>Be sure to use any value that can change the rendering output - usually from <code>props</code> (and <code>options</code>?) or a subset of them - as a <strong>key</strong> in the cache.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">const cacheLib = require('/lib/cache');
+
+// Set the cache up with a size that's reasonable
+// for the most used props combinations
+// and the size of the rendered output HTML string:
+const cache = cacheLib.newCache({
+    size:   100,
+    expire: 3600
+});
+
+
+const makeKey = props =&gt; {
+    // ...return a string that's reliably determined by the relevant values from props
+};
+
+
+exports.get = request =&gt; {
+    const props = {
+        // ... build props from whatever sources are needed
+    };
+
+    const key = makeKey(props);
+
+    // Now render is only called when the key is new.
+    // If the key is cached before, just returns the output for that key.
+    return cache.get(
+        key,
+        () =&gt; React4xp.render(
+            myEntry,
+            props,
+            request,
+            options
+        )
+    );
+
+};</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 17:02:53 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

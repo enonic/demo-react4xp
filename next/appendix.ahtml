@@ -435,18 +435,88 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-right">
 <div id="header">
 <h1>Appendix</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#how_react4xp_is_distributed">How React4XP is distributed</a></li>
+<li><a href="#in_this_appendix">In this appendix</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>In this section you&#8217;ll find chapters that dive deeper into React4XP, such as build, configuration, entries and jsxPath - including the React4XP API.</p>
+<p>React4XP lets front-end developers build <strong>Enonic XP applications with React</strong>. React components are rendered <a href="appendix/ssr.ahtml">server-side</a> and then <a href="appendix/hydration.ahtml">hydrated</a> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This documentation covers <strong>React4XP 7.x</strong>, which builds on <strong>React 19</strong> and requires <strong>Enonic XP 8</strong>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="how_react4xp_is_distributed"><a class="link" href="#how_react4xp_is_distributed">How React4XP is distributed</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>React4XP comes in two parts:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>Library</strong> (<code>lib-react4xp</code>)</dt>
+<dd>
+<p>The Enonic XP library that does the rendering. It exposes the <code>render</code> and <code>processHtml</code> functions and the <code>React4xp</code> object - all documented in the <a href="appendix/library.ahtml">Library reference</a>. Available on <a href="https://market.enonic.com/vendors/enonic/react4xp-lib">Enonic Market</a> and <a href="https://github.com/enonic/lib-react4xp">GitHub</a>. Your React sources are compiled by the companion npm build tool <code>@enonic/react4xp</code> (<a href="https://www.npmjs.com/package/@enonic/react4xp">npm</a>).</p>
+</dd>
+<dt class="hdlist1"><strong>Starter</strong> (<code>starter-react4xp</code>)</dt>
+<dd>
+<p>A ready-to-run project that bundles the library, the <code>@enonic/react4xp</code> build integration, and a small demo - so <code>enonic project create</code> gives you a working React4XP setup in one step. Source on <a href="https://github.com/enonic/starter-react4xp">GitHub</a>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The demo bundled in the starter is the <strong>Headless Movie DB</strong>, a complete example application also published on <a href="https://market.enonic.com/vendors/enonic/headless-movie-site">Enonic Market</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="in_this_appendix"><a class="link" href="#in_this_appendix">In this appendix</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="appendix/library.ahtml">Library reference</a> - the <code>render</code> / <code>processHtml</code> functions and the <code>React4xp</code> object.</p>
+</li>
+<li>
+<p><a href="appendix/ssr.ahtml">SSR engine</a> and <a href="appendix/hydration.ahtml">Hydration</a> - how server- and client-side rendering work.</p>
+</li>
+<li>
+<p><a href="appendix/config.ahtml">Configuration</a>, <a href="appendix/build.ahtml">Build</a>, <a href="appendix/chunks.ahtml">Chunks</a> and <a href="appendix/entries.ahtml">Entries</a> - compilation and runtime internals.</p>
+</li>
+<li>
+<p><a href="appendix/controller.ahtml">App.ts</a> and <a href="appendix/macro-data.ahtml">Macros</a> - controllers and macro data.</p>
+</li>
+<li>
+<p><a href="appendix/release.ahtml">Release notes</a> and <a href="appendix/upgrade.ahtml">Upgrade notes</a>.</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

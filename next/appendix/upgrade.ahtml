@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Recommended upgrade</title>
+<title>Upgrading to React4XP 7.x</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,7 +437,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Recommended upgrade</h1>
+<h1>Upgrading to React4XP 7.x</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -453,7 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="step_by_step"><a class="link" href="#step_by_step">Step by step</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This describes upgrading to the full feature set of react4xp 7 (for Enonic XP 8), including migrating pages and layouts to react.</p>
+<p>This describes upgrading from R4XP 6.x to R4XP 7, which introduces compatibility with XP8.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -467,7 +467,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Migrate your <a href="#migrate-page">page</a> and <a href="#migrate-layout">layout</a> to react components</p>
 </li>
 <li>
-<p>On Enonic XP 8, <a href="api.ahtml#mount-api">mount the React4XP API</a> in each descriptor that renders React4XP (site, admin tool, webapp).</p>
+<p>On Enonic XP 8, <a href="library.ahtml#mount-api">mount the React4XP API</a> in each descriptor that renders React4XP (site, admin tool, webapp).</p>
 </li>
 <li>
 <p><a href="./legacy-upgrade#build-deploy" target="_blank" rel="noopener">Deploy</a> the application on your existing site.</p>
@@ -1058,7 +1058,7 @@ regions:
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

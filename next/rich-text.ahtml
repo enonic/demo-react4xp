@@ -460,7 +460,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="background"><a class="link" href="#background">Background</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Enonic boasts a <a href="https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea">rich text input type</a>.
+<p>Enonic boasts a <a href="https://developer.enonic.com/docs/cms/stable/schemas/form-items/htmlarea">rich text form item</a>.
 Unlike basic text fields, rich-text may contain more complex concepts such as tables, images, links and even custom components (aka macros).
 Each of these typically need custom processing during rendering. For instance to ensure contextually correct URLs, image sizes etc.</p>
 </div>
@@ -474,7 +474,7 @@ Each of these typically need custom processing during rendering. For instance to
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="media/rich-text-bio.png" alt="rich text bio" width="500px">
+<img src="media/rich-text-bio.png" alt="rich text bio" width="969px">
 </div>
 <div class="title">Figure 1. Rich text bio field for Lea Seydoux</div>
 </div>
@@ -551,8 +551,17 @@ export const personProcessor: ComponentProcessor&lt;PageDescriptor&gt;
 };</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The ProcessHtml function (part of React4XP) outputs a format that the RichText component can use, as you will see below:</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <a href="appendix/library.ahtml#processhtml">processHtml</a> function from <code>lib-react4xp</code> transforms raw data into a format that the <code>RichText</code> component can use.
+</td>
+</tr>
+</table>
 </div>
 </li>
 <li>
@@ -799,7 +808,7 @@ dataFetcher.addMacro('factbox', {processor: factboxProcessor});</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

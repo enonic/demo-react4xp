@@ -497,7 +497,7 @@ apis: <i class="conum" data-value="3"></i><b>(3)</b>
 </table>
 </div>
 <div class="paragraph">
-<p>On Enonic XP 8, mounting the <code>react4xp</code> API is required wherever React4XP renders - see <a href="api.ahtml#mount-api">Mount the API</a>.</p>
+<p>On Enonic XP 8, mounting the <code>react4xp</code> API is required wherever React4XP renders - see <a href="library.ahtml#mount-api">Mount the API</a>.</p>
 </div>
 </div>
 </div>
@@ -714,7 +714,7 @@ Most of these static assets are content-hashed, and optimized for client-side ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

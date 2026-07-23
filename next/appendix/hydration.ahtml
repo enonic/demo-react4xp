@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Hydration - server and clientside rendering</title>
+<title>Hydration - Advanced client side rendering</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,7 +437,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Hydration - server and clientside rendering</h1>
+<h1>Hydration - Advanced client side rendering</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -450,7 +450,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4XP allows entries to render server-side, client-side or both (the default).</p>
+<p>By default, React4XP renders entries both <a href="ssr.ahtml">server-side</a> and client-side: the HTML is rendered on the server first, then hydrated (activated) in the browser. You can also switch to server-side only, or client-side only.</p>
 </div>
 </div>
 </div>
@@ -490,7 +490,7 @@ return output;</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>Visit the <a href="api.ahtml">API documentation</a> for more details.</p>
+<p>Visit the <a href="library.ahtml">library reference</a> for more details.</p>
 </div>
 </div>
 </div>
@@ -535,7 +535,7 @@ return output;</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

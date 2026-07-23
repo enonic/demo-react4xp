@@ -538,11 +538,12 @@ But we can still create it with <code>DataFetcher.addLayout()</code> method if w
 </li>
 <li>
 <p><strong>The result</strong>:
-By combining layout, part and text we are starting to see the potential of the page editor.
-Navigate to Movies folder:
-<span class="image"><img src="media/layout-filled.png" alt="layout filled" width="900px" title="2-column layout with text"></span></p>
+Here in the form of the <code>movies</code> folder, where a page with <code>2-column</code> layout and various parts have been configured.</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/layout-filled.png" alt="layout filled" width="900px" title="2-column layout with text"></span></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -584,7 +585,7 @@ Create a new <code>folder</code> within the site structure, click the preview fi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

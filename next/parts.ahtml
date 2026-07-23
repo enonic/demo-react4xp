@@ -441,18 +441,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#intro">Intro</a></li>
 <li><a href="#child_list_component">Child list component</a></li>
 <li><a href="#bonus_task_heading">Bonus task: Heading</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="intro"><a class="link" href="#intro">Intro</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Parts are highly flexible components which may be used to enrich your pages. Each part is like a content type, with an optional form that can be used to create content.</p>
+<p>Parts are highly flexible page components which may be used to enrich your pages. Similar to content types, parts support an optional content form.</p>
 </div>
 </div>
 </div>
@@ -460,8 +458,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="child_list_component"><a class="link" href="#child_list_component">Child list component</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Take a look at the <code>Person</code> folder. You may see something like this:
-<span class="image"><img src="media/child-list-no-render.png" alt="child list no render" width="900px" title="Parts in the person folder"></span></p>
+<p>Have a look at the <code>Person</code> folder. You may see something like this:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="media/child-list-no-render.png" alt="child list no render" width="900px" title="Parts in the person folder"></span></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -686,7 +686,7 @@ dataFetcher.addPart('com.enonic.app.hmdb:heading', {processor: headingProcessor}
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

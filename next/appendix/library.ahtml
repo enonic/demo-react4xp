@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>API reference</title>
+<title>Library reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,49 +437,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>API reference</h1>
+<h1>Library reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#getting_started">Getting started</a>
+<li><a href="#usage">Usage</a>
 <ul class="sectlevel2">
-<li><a href="#install">Install</a></li>
+<li><a href="#add_library_dependency">Add library dependency</a></li>
 <li><a href="#import_library">Import library</a></li>
 <li><a href="#mount-api">Mount the API</a></li>
+<li><a href="#invocation_example">Invocation example</a></li>
 </ul>
 </li>
-<li><a href="#react4xp_render">React4xp.render</a>
+<li><a href="#functions">Functions</a>
 <ul class="sectlevel2">
-<li><a href="#signature">Signature</a></li>
-<li><a href="#react4xp_render_parameters">Parameters</a></li>
-<li><a href="#returns">Returns</a></li>
-<li><a href="#render_request">Request and automated behavior</a></li>
-<li><a href="#examples">Examples</a></li>
+<li><a href="#react4xp_render">render</a></li>
+<li><a href="#processhtml">processHtml</a></li>
 </ul>
 </li>
-<li><a href="#react4xp_object">React4xp object: custom flow</a>
+<li><a href="#classes">Classes</a>
 <ul class="sectlevel2">
-<li><a href="#constructor">Object constructor</a></li>
-<li><a href="#main_object_attributes">Main object attributes</a></li>
-<li><a href="#setter_methods">Setter methods</a></li>
-<li><a href="#rendering_methods">Rendering methods</a></li>
-<li><a href="#react4xp_object_request">Request and automated behavior</a></li>
-<li><a href="#custom_flow_examples">Custom flow examples</a></li>
-</ul>
-</li>
-<li><a href="#processhtml">processHtml</a>
-<ul class="sectlevel2">
-<li><a href="#signature_2">Signature</a></li>
-<li><a href="#parameters_2">Parameters</a></li>
-<li><a href="#returns_3">Returns</a></li>
-<li><a href="#example">Example</a></li>
-</ul>
-</li>
-<li><a href="#ssr">SSR engine</a>
-<ul class="sectlevel2">
-<li><a href="#renderers">Renderers</a></li>
-<li><a href="#warmup">Warmup time</a></li>
-<li><a href="#performance">SSR performance</a></li>
+<li><a href="#react4xp_object">React4xp</a></li>
 </ul>
 </li>
 </ul>
@@ -489,84 +467,96 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div id="api" class="paragraph">
-<p>The React4xp library (<a href="https://market.enonic.com/vendors/enonic/react4xp-lib">Enonic Market</a>) exposes a couple of methods that can be run from XP controllers.</p>
+<p>The React4xp library (<a href="https://market.enonic.com/vendors/enonic/react4xp-lib">Enonic Market</a>) exposes a few functions and a <code>React4xp</code> object that can be used in your Enonic app.</p>
 </div>
 <div class="paragraph">
-<p>This chapter also covers the <a href="#ssr">SSR engine</a>, compilation, and <a href="config.ahtml">configuration</a> of those.</p>
+<p>For the <a href="ssr.ahtml">SSR engine</a> and <a href="hydration.ahtml">hydration</a>, and for compilation and runtime <a href="config.ahtml">configuration</a>, see the respective chapters.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting_started"><a class="link" href="#getting_started">Getting started</a></h2>
+<h2 id="usage"><a class="link" href="#usage">Usage</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="install"><a class="link" href="#install">Install</a></h3>
+<h3 id="add_library_dependency"><a class="link" href="#add_library_dependency">Add library dependency</a></h3>
 <div class="paragraph">
-<p>Instructions on how to install the library locally or insert it into your project are at <a href="https://github.com/enonic/lib-react4xp#readme">the library docs</a> at github.</p>
+<p>Add the <code>lib-react4xp</code> dependency to your project with a single line:</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlight"><code class="language-gradle" data-lang="gradle">dependencies {
+  include "com.enonic.lib:lib-react4xp:${libVersion}"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Replace <code>${libVersion}</code> with the desired version of lib-react4xp. For a full project setup (including the <code>@enonic/react4xp</code> build integration), see <a href="https://github.com/enonic/lib-react4xp#readme">the library docs</a> on GitHub.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="import_library"><a class="link" href="#import_library">Import library</a></h3>
-<div class="listingblock">
-<div class="title">In an XP controller:</div>
-<div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">const React4xp = require('/lib/enonic/react4xp');</code></pre>
+<div class="paragraph">
+<p>Add the import statement to your script file.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">import {React4xp} from '/lib/enonic/react4xp';</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Individual functions can also be imported directly, e.g. <code>import {render, processHtml} from '/lib/enonic/react4xp'</code>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="mount-api"><a class="link" href="#mount-api">Mount the API</a></h3>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Required from Enonic XP 8.
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
-<p>React4XP serves its compiled assets and SSR endpoints through a dedicated <code>react4xp</code> API.
-From XP 8, that API must be explicitly <strong>mounted</strong> in the descriptor of every context that renders React4XP - otherwise the browser cannot load the assets and rendering fails.</p>
-</div>
-<div class="paragraph">
-<p>Add the <code>react4xp</code> API to the <code>apis</code> list of the <code>site</code> descriptor:</p>
+<p>React4XP 7 (and newer) uses XP 8&#8217;s universal API functionality, serving its compiled assets and SSR endpoints through a <code>react4xp</code> web API. This API must be <strong>mounted</strong> in the context descriptor (i.e. site, <code>webapp</code> or <code>admin tool</code> where React4XP is used). Parts, layouts and pages inherit it from their context and don&#8217;t declare it themselves. Without it, the browser can&#8217;t load React4XP&#8217;s assets and rendering won&#8217;t work.</p>
 </div>
 <div class="listingblock">
-<div class="title">Site - src/main/resources/cms/site.yaml</div>
+<div class="title">Adding API to src/main/resources/cms/site.yaml</div>
 <div class="content">
 <pre class="highlight"><code class="language-yaml" data-lang="yaml">apis:
   - "react4xp"</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="invocation_example"><a class="link" href="#invocation_example">Invocation example</a></h3>
+<div class="paragraph">
+<p>A minimal controller passes an <a href="entries.ahtml">entry</a>, <code>props</code>, and the <code>request</code> to <code>render</code>. The return value is an XP response object you return directly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">import {React4xp} from '/lib/enonic/react4xp';
+import type {Request} from '@enonic-types/core';
+
+export function get(request: Request) {
+    // 'my-entry' is a JsxPath to a compiled react component
+    return React4xp.render('my-entry', {greeting: 'Hello world'}, request);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>render</code> returns a <code>{body, pageContributions}</code> response object, so returning it straight from the controller both renders server-side and adds everything the browser needs to activate the react app. Each function and its options are documented below.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="react4xp_render"><a class="link" href="#react4xp_render">React4xp.render</a></h2>
+<h2 id="functions"><a class="link" href="#functions">Functions</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="react4xp_render"><a class="link" href="#react4xp_render">render</a></h3>
 <div class="paragraph">
 <p>All-in-one shorthand function for a lot of use cases. Covers both client- and serverside rendering.</p>
 </div>
 <div class="paragraph">
 <p>Inserts a react component into an (optional) pre-existing HTML string and adds any necessary page contributions to make all work: links to assets, both shared and specific to the entry, and a client-side JS call (<code>render</code> or <code>hydrate</code> in the client wrapper) that activates the react component in the browser.</p>
 </div>
-<div class="sect2">
-<h3 id="signature"><a class="link" href="#signature">Signature</a></h3>
-<div class="paragraph">
-<p>The signature is analogous to thymeleaf&#8217;s familiar <code>render(view, model)</code>. But there are two extra parameters, and a full XP response object is returned:</p>
+<div id="react4xp_render_parameters" class="paragraph lead">
+<p>Parameters</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">{body, pageContributions} = React4xp.render(entry, props, request, options);</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="react4xp_render_parameters"><a class="link" href="#react4xp_render_parameters">Parameters</a></h3>
 <table class="tableblock frame-none grid-none stretch">
 <colgroup>
 <col style="width: 1%;">
@@ -583,124 +573,36 @@ From XP 8, that API must be explicitly <strong>mounted</strong> in the descripto
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>entry</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string or component object, mandatory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string | component object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Reference to an <a href="entries.ahtml">entry</a>: the react component to be rendered. <a href="jsxpath.ahtml">JsxPath</a> reference - or if the entry is a TSX/JSX file with the <em>same name</em> in the <em>same folder</em> as the controller, you can use a <code>portal.getComponent()</code> object here. Corresponds to the template argument in <code>thymeleaf.render</code>.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>props</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object, optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Data model passed into the react component. JS object must be serializable (no functions can be passed). Corresponds to the model argument in <code>thymeleaf.render</code>.</p>
+<p><strong>Optional.</strong> Data model passed into the react component. JS object must be serializable (no functions can be passed). Corresponds to the model argument in <code>thymeleaf.render</code>.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>request</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/xp/stable/framework/http">XP request object</a>, optional (but <em>mandatory for react activation</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/code/stable/web/request-response">XP request object</a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Include to detect the rendering mode inside/outside Content Studio: inside Content Studio there should be only a static serverside-rendering, no browser react activation (or client-side rendering), only returning get an HTML visualization with the initial <code>props</code>. Special case: if <code>request</code> is not an object but omitted/falsy, page-contributions rendering is <em>completely skipped</em>. In this case, the <em>options</em> argument (below) is still valid: any added <code>body</code> there will still serve as a container for the rendered output from this call, and any <code>pageContributions</code> inside <em>options</em> are still added and returned.</p>
+<p><strong>Optional</strong> (but <em>required for react activation</em>). Include to detect the rendering mode inside/outside Content Studio: inside Content Studio there should be only a static serverside-rendering, no browser react activation (or client-side rendering), only returning get an HTML visualization with the initial <code>props</code>. Special case: if <code>request</code> is not an object but omitted/falsy, page-contributions rendering is <em>completely skipped</em>. In this case, the <em>options</em> argument (below) is still valid: any added <code>body</code> there will still serve as a container for the rendered output from this call, and any <code>pageContributions</code> inside <em>options</em> are still added and returned.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object, optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Additional options to control the rendering. All of them are optional within this object:</p>
-</div>
-<table class="tableblock frame-ends grid-none stretch">
-<caption class="title">Properties</caption>
-<colgroup>
-<col style="width: 1.0101%;">
-<col style="width: 1.0101%;">
-<col style="width: 1.0101%;">
-<col style="width: 96.9697%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Default</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Generated unique string</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>ID of the component, targeting the ID of an element in <code>body</code> (below): react will render into that container element. Should be a unique ID within the entire HTML document.</p>
-</div>
-<div class="paragraph">
-<p>If no matching element ID is found in <code>body</code>, this sets the ID of a generated element in the HTML output. If <code>id</code> is missing, a unique ID is generated, either random or generated from the content.</p>
+<p><strong>Optional.</strong> Additional options to control the rendering (see below).</p>
 </div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>body</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string: valid HTML</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;div&gt;</code> with matching <code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>HTML to serve as container for the react content. Can be a hardcoded string, come from a thymeleaf/mustache/XSLT render, or any source.  When server-side rendering, the rendered output will be inserted into the matching-<code>id</code> element inside here (replacing whatever was already in that element), and everything (container <code>body</code> with rendered content in it) is returned as one HTML string. When client-side rendering, this insertion happens in the browser.</p>
-</div>
-<div class="paragraph">
-<p>If no <code>body</code> is supplied, an empty <code>&lt;div&gt;</code> element with an ID matching <code>id</code> is generated and used as container.</p>
-</div>
-<div class="paragraph">
-<p>If a <code>body</code> is supplied but it doesn&#8217;t contain any element with a matching <code>id</code>, an extra matching-<code>id</code> <code>&lt;div&gt;</code> element will be generated and inserted into <code>body</code> - as a child of the root element of <code>body</code> and after any other content that&#8217;s already there.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageContributions</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object: valid <a href="https://developer.enonic.com/docs/xp/stable/framework/contributions">XP page contributions</a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>If you already have some page contributions you want to add to the output of this rendering, add them here. These added page contributions will be added <em>before</em> the ones that will be rendered (within each section <code>headBegin</code>, <code>bodyEnd</code> etc).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hydrate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.hydrate'] or true</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>When SSR is true, choose whether you want hydration or not.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ssr</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.ssr'] or true</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Switch between clientside and servierside rendering, on this particular rendering. Other renderings are not affected, even within the same controller or using the same entry more than once.</p>
-</div>
-<div class="paragraph">
-<p>If <code>false</code> / falsy or omitted, you get serverside rendering and the returned object will contain an HTML representation of the react component with the initial <code>props</code>, and page contributions will make the client call <code>.hydrate</code>.</p>
-</div>
-<div class="paragraph">
-<p>If <code>true</code> / truthy, the server-side rendering is skipped for this particular rendering. The client will call <code>.render</code>.</p>
-</div>
-<div class="paragraph">
-<p>This <strong>only applies in live mode and previews</strong>: inside <em>edit</em> or <em>browse</em> modes in Content Studio, you still only get a static server-side rendered representation).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>urlType</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">server | absolute</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.urlType'] or server</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>URL type. Either server (server-relative URL) or absolute. Default is server. Available from <code>React4xp-5.1.0</code>.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table></div></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect2">
-<h3 id="returns"><a class="link" href="#returns">Returns</a></h3>
 <div class="paragraph">
-<p>Returns an <a href="https://developer.enonic.com/docs/xp/stable/framework/http">XP response object</a> with these main attributes:</p>
+<p>The <code>options</code> object accepts these properties, all optional:</p>
 </div>
 <table class="tableblock frame-none grid-none stretch">
 <colgroup>
@@ -710,7 +612,85 @@ From XP 8, that API must be explicitly <strong>mounted</strong> in the descripto
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> ID of the component, targeting the ID of an element in <code>body</code>: react renders into that container element. Should be unique within the HTML document. If no matching element ID is found in <code>body</code>, this sets the ID of a generated element. Defaults to a generated unique ID (random or derived from the content).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>body</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Valid HTML to serve as container for the react content. On server-side rendering the output is inserted into the matching-<code>id</code> element; on client-side rendering the insertion happens in the browser. If no <code>body</code> is supplied, an empty <code>&lt;div&gt;</code> with a matching <code>id</code> is generated. If <code>body</code> has no matching-<code>id</code> element, one is generated and appended. Defaults to a <code>&lt;div&gt;</code> with matching <code>id</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageContributions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Existing <a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a> to add. These are added <em>before</em> the ones rendered by this call (within each section <code>headBegin</code>, <code>bodyEnd</code>, etc).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hydrate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> When SSR is true, choose whether to hydrate. Defaults to <code>app.config['react4xp.hydrate']</code> or <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ssr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Switch between client-side and server-side rendering for this particular rendering; other renderings are not affected. If falsy, you get server-side rendering and the client calls <code>.hydrate</code>; if truthy, SSR is skipped and the client calls <code>.render</code>. Only applies in live mode and previews. Defaults to <code>app.config['react4xp.ssr']</code> or <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>wrapper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Whether to render the surrounding container element around the target element.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>urlType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>server</code> | <code>absolute</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> URL type for assets: server-relative or absolute. Defaults to <code>app.config['react4xp.urlType']</code> or <code>server</code>. Available from <code>React4xp-5.1.0</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>uniqueId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean | string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Force a unique target id. Pass a string to set the id explicitly, or <code>true</code> to append a random suffix to the generated id. Alternative to <code>id</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph lead">
+<p>Returns</p>
+</div>
+<div class="paragraph">
+<p>Returns an <a href="https://developer.enonic.com/docs/code/stable/web/request-response">XP response object</a> with these main attributes:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 1%;">
+<col style="width: 1%;">
+<col style="width: 98%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
@@ -733,19 +713,18 @@ From XP 8, that API must be explicitly <strong>mounted</strong> in the descripto
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageContributions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Regular <a href="https://developer.enonic.com/docs/xp/stable/cms/contributions">XP page contributions</a>. Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating client-wrapper call. Urls point to React4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
+<p>Regular <a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a>. Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating client-wrapper call. Urls point to React4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect2">
-<h3 id="render_request"><a class="link" href="#render_request">Request and automated behavior</a></h3>
+<div class="sect3">
+<h4 id="render_request"><a class="link" href="#render_request">Request and automated behavior</a></h4>
 <div class="paragraph">
 <p><code>.render</code> is intended to be convenient to work with and safely wrap around some common corner cases. It automates a little bit of behavior, depending on the <code>request</code> object argument (which stems from the XP controller):</p>
 </div>
-<div class="sect3">
-<h4 id="render_with_request"><a class="link" href="#render_with_request"><code>render</code> with <code>request</code>:</a></h4>
+<div class="sect4">
+<h5 id="render_with_request"><a class="link" href="#render_with_request"><code>render</code> with <code>request</code>:</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">React4xp.render(entry, props, request);
@@ -769,8 +748,8 @@ React4xp.render(entry, props, request, options); // ...etc etc</code></pre>
 <p>Also, when <code>request</code> is used, <code>.render</code> will output <strong>error messages from SSR</strong> in error containers and browser consoles (except in live view mode, where error containers and browser log are more generic: shown without the specific messages).</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="render_without_request"><a class="link" href="#render_without_request"><code>render</code> without <code>request</code>:</a></h4>
+<div class="sect4">
+<h5 id="render_without_request"><a class="link" href="#render_without_request"><code>render</code> without <code>request</code>:</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">React4xp.render(entry, props);
@@ -787,19 +766,125 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 <div class="paragraph">
 <p>When <code>request</code> is omitted, <code>.render</code> will <strong> never output error messages from SSR</strong> in error containers or browser console.</p>
 </div>
+<div class="paragraph lead">
+<p>Examples</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="examples"><a class="link" href="#examples">Examples</a></h3>
 <div class="paragraph">
 <p>Most of the lessons in the guide use <code>React4xp.render</code> (except the "custom flow" ones). For example <a href="../hello-react.ahtml#first_helloreact_jsx">here</a> or <a href="../pages-parts-and-regions.ahtml#color_part_controller">here</a>.</p>
 </div>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="processhtml"><a class="link" href="#processhtml">processHtml</a></h3>
+<div class="paragraph">
+<p>Transforms raw rich text HTML (typically the value of an <code>HtmlArea</code> input) into the <code>RichTextData</code> format consumed by the <code>RichText</code> component from <code>@enonic/react-components</code> - resolving links, sizing images and preparing macros for rendering.
+Typically used inside a data processor, like in the <a href="../pages.ahtml">Pages</a> chapter.</p>
+</div>
+<div class="paragraph lead">
+<p>Parameters</p>
+</div>
+<div class="paragraph">
+<p>The <code>params</code> object accepts the same parameters as XP&#8217;s <a href="https://developer.enonic.com/docs/code/stable/libraries/lib-portal#processhtml">portal.processHtml</a>, plus <code>dataFetcher</code> and <code>component</code>:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 1%;">
+<col style="width: 1%;">
+<col style="width: 98%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The raw HTML string to process.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dataFetcher</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DataFetcher</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The dataFetcher instance - inside a processor, pass <code>params.dataFetcher</code> along.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>component</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">component object</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> The component currently being processed (<code>params.component</code>).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imageWidths</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">number[]</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Widths (in pixels) of scaled image variants to generate, used for the <code>srcset</code> attribute of images.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imageSizes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Value for the <code>sizes</code> attribute of images, mapping media conditions to the image widths above.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>server</code> | <code>absolute</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> URL type of the processed links. Either server (server-relative URL, default) or absolute.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph lead">
+<p>Returns</p>
+</div>
+<div class="paragraph">
+<p>Returns a <code>RichTextData</code> object, ready to be passed to the <code>data</code> prop of the <code>RichText</code> react component.</p>
+</div>
+<div class="paragraph lead">
+<p>Example</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/react4xp/components/parts/ParagraphProcessor.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-typescript" data-lang="typescript">import {PartComponent} from '@enonic-types/core';
+import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
+import {processHtml} from '/lib/enonic/react4xp';
+
+export const paragraphProcessor: ComponentProcessor&lt;'com.enonic.app.hmdb:paragraph'&gt; = (params) =&gt; {
+    const component = params.component as PartComponent;
+    const text = component.config?.text as string;
+
+    return {
+        text: text ? processHtml({
+            value: text,
+            imageWidths: [200, 400, 800],
+            dataFetcher: params.dataFetcher,
+            component: params.component
+        }) : '',
+    };
+
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="react4xp_object"><a class="link" href="#react4xp_object">React4xp object: custom flow</a></h2>
+<h2 id="classes"><a class="link" href="#classes">Classes</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="react4xp_object"><a class="link" href="#react4xp_object">React4xp</a></h3>
 <div class="paragraph">
 <p>More flexible and controllable than <code>React4xp.render</code>: create a data-holding react4xp object with the React4xp contructor, manipulate it or extract data from it, combine with other objects, and then later render it to an HTML body string and/or page contributions, separately. This is actually what <code>React4xp.render</code> does behind the scenes.</p>
 </div>
@@ -834,8 +919,11 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 <div class="paragraph">
 <p>See the <a href="../custom-flow-syntax.ahtml">custom flow syntax</a> lesson to go more in depth.</p>
 </div>
-<div class="sect2">
-<h3 id="constructor"><a class="link" href="#constructor">Object constructor</a></h3>
+<div class="paragraph">
+<p>The setter methods (below) are all optional; if not used, the object renders with empty values or placeholders where needed, along the same logic as <a href="#react4xp_render"><code>render</code></a>. They all <strong>return the data object itself</strong>, so you can chain them in a <strong>builder pattern</strong>: <code>myComponent.setProps(&#8230;&#8203;).setId(&#8230;&#8203;)</code>. The order doesn&#8217;t matter - except for <code>setId</code> and <code>uniqueId</code>, which affect each other.</p>
+</div>
+<div class="sect3">
+<h4 id="constructor"><a class="link" href="#constructor">Constructor</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">const myComponent = new React4xp(entry);</code></pre>
@@ -852,7 +940,7 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
@@ -860,7 +948,7 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>entry</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string or component object, mandatory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string | component object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Reference to an <a href="entries.ahtml">entry</a>: the react component to be rendered. Direct <a href="jsxpath.ahtml">JsxPath</a> string, or a <code>portal.getComponent()</code> object. If you use a component object like that, the entry must be a TSX/JSX file with the <em>same name</em> in the <em>same folder</em> as the controller, and react4xp will try to generate an ID from the content.</p>
 </div></div></td>
@@ -868,11 +956,11 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p><strong>Constructs</strong> a react4xp data object, which exposes the attributes and methods below:</p>
+<p><strong>Constructs</strong> a react4xp data object, which exposes the attributes and methods below.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="main_object_attributes"><a class="link" href="#main_object_attributes">Main object attributes</a></h3>
+<div class="sect3">
+<h4 id="object_attributes"><a class="link" href="#object_attributes">Object attributes</a></h4>
 <div class="paragraph">
 <p>Extract from the object the data that has been generated or set in it.</p>
 </div>
@@ -920,34 +1008,8 @@ React4xp.render(entry, props, undefined, options); // ...etc etc</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="setter_methods"><a class="link" href="#setter_methods">Setter methods</a></h3>
-<div class="paragraph">
-<p>Use these to set the object&#8217;s properties. All of them are optional; if not used, the object will render with empty values or placeholders where needed, along the same logic as for <a href="#react4xp_render">React4xp.render</a> above.</p>
-</div>
-<div class="paragraph">
-<p>All the setter methods <strong>return</strong> the data object itself, so that you can use a <strong>builder pattern</strong> where&#8230;&#8203;</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">myComponent.firstSetter("a").secondSetter("b").thirdSetter("c");</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;is equivalent to:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">myComponent.firstSetter("a");
-myComponent.secondSetter("b");
-myComponent.thirdSetter("c");</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The order between the setters doesn&#8217;t matter - except for <code>setId</code> and <code>uniqueId</code>, which affect each other.</p>
-</div>
 <div class="sect3">
-<h4 id="setprops"><a class="link" href="#setprops">.setProps</a></h4>
+<h4 id="setprops"><a class="link" href="#setprops">setProps</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">myComponent.setProps(props);</code></pre>
@@ -964,7 +1026,7 @@ myComponent.thirdSetter("c");</code></pre>
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
@@ -972,7 +1034,7 @@ myComponent.thirdSetter("c");</code></pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>props</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object, mandatory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>props</code> passed into the react component for initial rendering. JS object must be serializable (no functions can be passed).</p>
 </div></div></td>
@@ -981,7 +1043,7 @@ myComponent.thirdSetter("c");</code></pre>
 </table>
 </div>
 <div class="sect3">
-<h4 id="set_id"><a class="link" href="#set_id">.setId</a></h4>
+<h4 id="set_id"><a class="link" href="#set_id">setId</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">myComponent.setId(id);</code></pre>
@@ -1013,7 +1075,7 @@ If <code>render</code> or <code>renderBody</code> are called without an ID havin
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
@@ -1021,16 +1083,16 @@ If <code>render</code> or <code>renderBody</code> are called without an ID havin
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string, optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>ID of both the target HTML element and the data object itself.</p>
+<p><strong>Optional.</strong> ID of both the target HTML element and the data object itself.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="uniqueid"><a class="link" href="#uniqueid">.uniqueId</a></h4>
+<h4 id="uniqueid"><a class="link" href="#uniqueid">uniqueId</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">myComponent.uniqueId();</code></pre>
@@ -1044,7 +1106,7 @@ If <code>render</code> or <code>renderBody</code> are called without an ID havin
 </div>
 </div>
 <div class="sect3">
-<h4 id="setjsxpath"><a class="link" href="#setjsxpath">.setJsxPath</a></h4>
+<h4 id="setjsxpath"><a class="link" href="#setjsxpath">setJsxPath</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">myComponent.setJsxPath(jsxPath);</code></pre>
@@ -1061,7 +1123,7 @@ If <code>render</code> or <code>renderBody</code> are called without an ID havin
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
@@ -1069,19 +1131,15 @@ If <code>render</code> or <code>renderBody</code> are called without an ID havin
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>jsxPath</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string, mandatory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>New <a href="jsxpath.ahtml">jsxPath</a> to a different entry.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rendering_methods"><a class="link" href="#rendering_methods">Rendering methods</a></h3>
 <div class="paragraph">
-<p>These methods perform specific rendering tasks independently, using the data object as a basis, the way it&#8217;s set up with the <a href="#setter_methods">setters</a> and with the entry from the <a href="#constructor">constructor</a> (or the <code>setJsxPath</code> setter).</p>
+<p>The two rendering methods below perform specific rendering tasks independently, using the data object as set up with the setters and constructor (or <code>setJsxPath</code>).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1090,20 +1148,21 @@ If <code>render</code> or <code>renderBody</code> are called without an ID havin
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Most of these rendering methods will lock down the jsxPath and ID if the react4xp data object, the first time one of them is run. After this, the setters will prevent these from being changed so that another conflicting rendering can&#8217;t be performed from the same data object.
+Most of these rendering methods will lock down the jsxPath and ID of the react4xp data object the first time one of them is run. After this, the setters will prevent these from being changed so that another conflicting rendering can&#8217;t be performed from the same data object.
 </td>
 </tr>
 </table>
 </div>
+</div>
 <div class="sect3">
-<h4 id="render_body"><a class="link" href="#render_body">.renderBody</a></h4>
+<h4 id="render_body"><a class="link" href="#render_body">renderBody</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">const responseBody = myComponent.renderBody(options);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Similar to <a href="#react4xp_render">React4xp.render</a> above, but <code>renderBody</code> in itself <strong><em>only</em> renders a static HTML output</strong>.</p>
+<p>Similar to <a href="#react4xp_render"><code>render</code></a> above, but <code>renderBody</code> in itself <strong><em>only</em> renders a static HTML output</strong>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1128,8 +1187,12 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <div class="paragraph">
 <p>Just like <code>render</code> does, <code>renderBody</code> ensures that the output HTML will always contain a matching-ID target element for react-rendering/hydrating the entry into (in the browser). And if serverside rendering is switched on (that is, <code>ssr</code> is not false, or safe context-dependent rendering is enforced by adding <code>request</code> - <a href="#react4xp_object_request">see the summary</a>), the target element will contain the static HTML rendering.</p>
 </div>
-<div class="sect4">
-<h5 id="parameters"><a class="link" href="#parameters">Parameters</a></h5>
+<div class="paragraph lead">
+<p>Parameters</p>
+</div>
+<div class="paragraph">
+<p><code>renderBody()</code> takes a single <code>options</code> object; all properties are optional. Other renderings are not affected, <em>even from the same data object</em>, so make sure a different rendering from the same data object uses the same mode.</p>
+</div>
 <table class="tableblock frame-none grid-none stretch">
 <colgroup>
 <col style="width: 1%;">
@@ -1138,72 +1201,47 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object, optional</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Options to control the rendering, all of them optional:</p>
-</div>
-<table class="tableblock frame-ends grid-none stretch">
-<caption class="title">Properties</caption>
-<colgroup>
-<col style="width: 1.0101%;">
-<col style="width: 1.0101%;">
-<col style="width: 4.0404%;">
-<col style="width: 93.9394%;">
-</colgroup>
-<thead>
-<tr>
 <th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Default</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>body</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string: valid HTML</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;div&gt;</code> with matching <code>id</code> (same as <code>react4xpId</code> in the data object)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Same as the <code>options.body</code> in <a href="#react4xp_render_parameters">React4xp.render</a> above.</p>
+<p><strong>Optional.</strong> Valid HTML to serve as container - same as <code>body</code> in <code>render&#8217;s options. Defaults to a `&lt;div&gt;</code> with matching <code>id</code> (same as <code>react4xpId</code> in the data object).</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ssr</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.ssr'] or true</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Switch between clientside and servierside rendering, on this particular rendering.</p>
+<p><strong>Optional.</strong> Switch between client-side and server-side rendering for this particular rendering. Defaults to <code>app.config['react4xp.ssr']</code> or <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>wrapper</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Whether to render the surrounding container element around the target element.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>request</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/xp/stable/framework/http">XP request object</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">undefined</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/code/stable/web/request-response">XP request object</a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Including this here (<em>and</em> in the corresponding <a href="#render_pgcontr"><code>renderPageContributions</code></a> call) is the easiest way to handle <a href="#react4xp_object_request">view-context dependent behavior</a>.</p>
+<p><strong>Optional.</strong> Including this here (<em>and</em> in the corresponding <a href="#render_pgcontr"><code>renderPageContributions</code></a> call) is the easiest way to handle <a href="#react4xp_object_request">view-context dependent behavior</a>.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Other renderings are not affected, <em>even from the same data object</em> (so you usually want to make sure a different rendering from the same data object uses the same mode).</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph lead">
+<p>Returns</p>
 </div>
-<div class="sect4">
-<h5 id="returns_2"><a class="link" href="#returns_2">Returns</a></h5>
 <div class="paragraph">
-<p>Returns an HTML string ready to return as the <code>body</code> attribute in an <a href="https://developer.enonic.com/docs/xp/stable/framework/http#http-response">XP response object</a> from the controller.</p>
+<p>Returns an HTML string ready to return as the <code>body</code> attribute in a <a href="https://developer.enonic.com/docs/code/stable/web/request-response">response object</a> from the controller.</p>
 </div>
 <div class="paragraph">
 <p>The root of the returned HTML is always a <strong>surrounding container</strong> HTML that will have a matching-ID <strong>target element</strong> in it somewhere (an element matching the data object&#8217;s ID (<code>react4xpId</code>), either from the <a href="#set_id">ID setter methods</a>, or a generated ID if they haven&#8217;t been run). This surrounding structure is <code>options.body</code>, unchanged if that already contained a matching-ID element, or with a new target element generated and inserted at the end if it didn&#8217;t have one. If there is no <code>options.body</code>, the surrounding container is just a generated target element.</p>
@@ -1212,16 +1250,15 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <p>Inside that matching-ID element, there will be a serverside rendering of the entry (with the initial props from <code>.setProps</code>) if <code>options.ssr</code> is not false.</p>
 </div>
 </div>
-</div>
 <div class="sect3">
-<h4 id="render_pgcontr"><a class="link" href="#render_pgcontr">.renderPageContributions</a></h4>
+<h4 id="render_pgcontr"><a class="link" href="#render_pgcontr">renderPageContributions</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">const outputPageContributions = myComponent.renderPageContributions(options);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Similar to <a href="#react4xp_render">React4xp.render</a> above, but <em>only</em> renders the <a href="https://developer.enonic.com/docs/xp/stable/framework/contributions">page contributions</a> needed to run and activate the react component in the browser:</p>
+<p>Similar to <a href="#react4xp_render"><code>render</code></a> above, but <em>only</em> renders the <a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a> needed to run and activate the react component in the browser:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1256,8 +1293,11 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 </tr>
 </table>
 </div>
+<div class="paragraph lead">
+<p>Parameters</p>
+</div>
 <div class="paragraph">
-<p><strong>Parameters:</strong></p>
+<p><code>renderPageContributions()</code> takes a single <code>options</code> object; all properties are optional. Other renderings are not affected, <em>even from the same data object</em>, so make sure a different rendering from the same data object uses the same mode.</p>
 </div>
 <table class="tableblock frame-none grid-none stretch">
 <colgroup>
@@ -1267,80 +1307,54 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>options</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object, optional</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Options to control the rendering, all of them optional:</p>
-</div>
-<table class="tableblock frame-ends grid-none stretch">
-<caption class="title">Properties</caption>
-<colgroup>
-<col style="width: 1.0101%;">
-<col style="width: 1.0101%;">
-<col style="width: 4.0404%;">
-<col style="width: 93.9394%;">
-</colgroup>
-<thead>
-<tr>
 <th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Default</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pageContributions</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">object: valid <a href="https://developer.enonic.com/docs/xp/stable/cms/contributions">XP page contributions</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">empty object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>If you already have some page contributions you want to add to the output of this rendering, add them here. These added page contributions will be added <em>before</em> the ones that will be rendered (within each section <code>headBegin</code>, <code>bodyEnd</code> etc).</p>
+<p><strong>Optional.</strong> Existing page contributions to add <em>before</em> the ones rendered here (within each section <code>headBegin</code>, <code>bodyEnd</code>, etc). Defaults to an empty object.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>hydrate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.hydrate'] or true</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>When SSR is true, choose whether you want hydration or not.</p>
+<p><strong>Optional.</strong> When SSR is true, choose whether to hydrate. Defaults to <code>app.config['react4xp.hydrate']</code> or <code>true</code>.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ssr</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">app.config['react4xp.ssr'] or true</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Switch between clientside and servierside rendering, on this particular rendering.</p>
+<p><strong>Optional.</strong> Switch between client-side and server-side rendering for this particular rendering. Defaults to <code>app.config['react4xp.ssr']</code> or <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>urlType</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>server</code> | <code>absolute</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> URL type for assets: server-relative or absolute. Defaults to <code>app.config['react4xp.urlType']</code> or <code>server</code>.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>request</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/xp/stable/framework/http">XP request object</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">undefined</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.enonic.com/docs/code/stable/web/request-response">XP request object</a></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Including this here (<em>and</em> in the corresponding <a href="#render_body"><code>renderPageContributions</code></a> call) is the easiest way to handle <a href="#react4xp_object_request">view-context dependent behavior</a>.</p>
-</div>
-<div class="paragraph">
-<p>Other renderings are not affected, <em>even from the same data object</em> (so you usually want to make sure a different rendering from the same data object uses the same mode).</p>
+<p><strong>Optional.</strong> Including this here (<em>and</em> in the corresponding <a href="#render_body"><code>renderBody</code></a> call) is the easiest way to handle <a href="#react4xp_object_request">view-context dependent behavior</a>.</p>
 </div></div></td>
 </tr>
 </tbody>
-</table></div></td>
-</tr>
-</tbody>
 </table>
-<div class="paragraph">
-<p><strong>Returns:</strong></p>
+<div class="paragraph lead">
+<p>Returns</p>
 </div>
 <div class="paragraph">
-<p>A regular <a href="https://developer.enonic.com/docs/xp/stable/cms/contributions">XP page contributions</a> object, ready to be used as the <code>pageContributions</code> attribute in an <a href="https://developer.enonic.com/docs/xp/stable/framework/http#http-response">XP response object</a> from the controller.</p>
+<p>A regular <a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a> object, ready to be used as the <code>pageContributions</code> attribute in an <a href="https://developer.enonic.com/docs/code/stable/web/request-response">response object</a> from the controller.</p>
 </div>
 <div class="paragraph">
 <p>Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating trigger call to the client wrapper. Urls point to react4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
@@ -1349,9 +1363,8 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <p>With a serverside rendering (<code>options.ssr</code> is not false), the client will expect an existing target element with a pre-rendered entry in the response <code>body</code>, and call <code>hydrate</code>. If <code>options.ssr</code> is false, an empty target element is expected in the response <code>body</code>, and the rendering is left to the client with <code>render</code>.</p>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="react4xp_object_request"><a class="link" href="#react4xp_object_request">Request and automated behavior</a></h3>
+<div class="sect3">
+<h4 id="react4xp_object_request"><a class="link" href="#react4xp_object_request">Request and automated behavior</a></h4>
 <div class="paragraph">
 <p>The <a href="custom-flow-syntax.ahtml">"custom flow"</a> (<code>.renderBody</code> in tandem with <code>.renderPageContributions</code>) is intended as a more low-level approach: less hand-holding, more control to the developer for cases where that&#8217;s needed.</p>
 </div>
@@ -1361,8 +1374,8 @@ Most of these rendering methods will lock down the jsxPath and ID if the react4x
 <div class="paragraph">
 <p>Omitting <code>request</code> will still work the same way as before, leaving more to developers.</p>
 </div>
-<div class="sect3">
-<h4 id="custom_flow_with_request"><a class="link" href="#custom_flow_with_request">Custom flow with <code>request</code></a></h4>
+<div class="sect4">
+<h5 id="custom_flow_with_request"><a class="link" href="#custom_flow_with_request">Custom flow with <code>request</code></a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">const body = myComponent.renderBody({
@@ -1383,8 +1396,8 @@ const pageContributions = myComponent.renderPageContributions({
 <p>As with <code>render</code>, error message details are held back in live view mode.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="custom_flow_without_request"><a class="link" href="#custom_flow_without_request">Custom flow without <code>request</code>:</a></h4>
+<div class="sect4">
+<h5 id="custom_flow_without_request"><a class="link" href="#custom_flow_without_request">Custom flow without <code>request</code>:</a></h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-javascript" data-lang="javascript">const body = myComponent.renderBody({ /* ssr, etc */ });
@@ -1431,246 +1444,10 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="custom_flow_examples"><a class="link" href="#custom_flow_examples">Custom flow examples</a></h3>
+<div class="sect3">
+<h4 id="custom_flow_examples"><a class="link" href="#custom_flow_examples">Custom flow examples</a></h4>
 <div class="paragraph">
 <p>Custom flow usage in is demonstrated <a href="custom-flow-syntax.ahtml">here</a>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="processhtml"><a class="link" href="#processhtml">processHtml</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Transforms raw rich text HTML (typically the value of an <code>HtmlArea</code> input) into the <code>RichTextData</code> format consumed by the <code>RichText</code> component from <code>@enonic/react-components</code> - resolving links, sizing images and preparing macros for rendering.
-Typically used inside a data processor, like in the <a href="../pages.ahtml">Pages</a> chapter.</p>
-</div>
-<div class="sect2">
-<h3 id="signature_2"><a class="link" href="#signature_2">Signature</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-typescript" data-lang="typescript">import {processHtml} from '/lib/enonic/react4xp';
-
-const data = processHtml(params);</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="parameters_2"><a class="link" href="#parameters_2">Parameters</a></h3>
-<div class="paragraph">
-<p>The <code>params</code> object accepts the same parameters as XP&#8217;s <a href="https://developer.enonic.com/docs/xp/stable/api/lib-portal#processhtml" target="_blank" rel="noopener">portal.processHtml</a>, plus <code>dataFetcher</code> and <code>component</code>:</p>
-</div>
-<table class="tableblock frame-none grid-none stretch">
-<colgroup>
-<col style="width: 1%;">
-<col style="width: 1%;">
-<col style="width: 98%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string, mandatory</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The raw HTML string to process.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dataFetcher</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DataFetcher, mandatory</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The dataFetcher instance - inside a processor, pass <code>params.dataFetcher</code> along.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>component</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">component object, optional</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The component currently being processed (<code>params.component</code>).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imageWidths</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">number[], optional</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Widths (in pixels) of scaled image variants to generate, used for the <code>srcset</code> attribute of images.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imageSizes</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">string, optional</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Value for the <code>sizes</code> attribute of images, mapping media conditions to the image widths above.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">server | absolute, optional</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>URL type of the processed links. Either server (server-relative URL, default) or absolute.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="returns_3"><a class="link" href="#returns_3">Returns</a></h3>
-<div class="paragraph">
-<p>Returns a <code>RichTextData</code> object, ready to be passed to the <code>data</code> prop of the <code>RichText</code> react component.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="example"><a class="link" href="#example">Example</a></h3>
-<div class="listingblock">
-<div class="title">src/main/resources/react4xp/components/parts/ParagraphProcessor.ts</div>
-<div class="content">
-<pre class="highlight"><code class="language-typescript" data-lang="typescript">import {PartComponent} from '@enonic-types/core';
-import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
-import {processHtml} from '/lib/enonic/react4xp';
-
-export const paragraphProcessor: ComponentProcessor&lt;'com.enonic.app.hmdb:paragraph'&gt; = (params) =&gt; {
-    const component = params.component as PartComponent;
-    const text = component.config?.text as string;
-
-    return {
-        text: text ? processHtml({
-            value: text,
-            imageWidths: [200, 400, 800],
-            dataFetcher: params.dataFetcher,
-            component: params.component
-        }) : '',
-    };
-
-};</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="ssr"><a class="link" href="#ssr">SSR engine</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The default running mode of React4xp is <a href="https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/">serverside rendering (SSR)</a> (although <code>ssr</code> can override this).</p>
-</div>
-<div class="paragraph">
-<p>In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp&#8217;s SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens to two different steps, using either <a href="#react4xp_render"><code>render</code></a> (which wraps both steps for convenience) or the <a href="#react4xp_object">"custom flow"</a>.</p>
-</div>
-<div class="paragraph">
-<p>The aim of react4xp is <a href="https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905">isomorphic rendering</a>: after the react component(s) are serverside rendered, they are activated (hydrated) in the browser, turning them into running, active react apps. It&#8217;s <em>the same react code</em> that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).</p>
-</div>
-<div class="sect2">
-<h3 id="renderers"><a class="link" href="#renderers">Renderers</a></h3>
-<div class="paragraph">
-<p>Starting from version 1.5.0, react4xp handles multithreaded rendering. This is done by setting up a number of renderers where each one is ready to answer to rendering requests in parallel, independently.</p>
-</div>
-<div class="paragraph">
-<p>The number of renderer workers is <a href="config.ahtml#ssrMaxThreads">determined in java but can be overriden</a>.</p>
-</div>
-<div class="paragraph">
-<p>When a renderer runs into an error during SSR, that renderer is torn down and a new one is initialized (see warmup time below). This happens as far as possible during idle time.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="warmup"><a class="link" href="#warmup">Warmup time</a></h3>
-<div class="paragraph">
-<p>After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the renderers will load the <em>compiled assets</em> necessary for the rendering, into the engine memory:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>react and reactDOM (<code>globals.*.js</code>),</p>
-</li>
-<li>
-<p>packages from <em>node_modules</em> (<code>vendors.*.js</code>),</p>
-</li>
-<li>
-<p>dependency assets imported by the react components (aka. <a href="chunks.ahtml">chunks</a>),</p>
-</li>
-<li>
-<p>and finally, the <a href="entries.ahtml">entry assets</a> themselves.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>This causes some warmup time</strong> when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the <em>compiled</em> assets involved. This will happen on every restart of the app (and every <a href="#renderers">renderer</a> must be initialized, but they do this in parallel).</p>
-</div>
-<div class="paragraph">
-<p>But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.</p>
-</div>
-<div class="sect3">
-<h4 id="improving_warmup_time_for_development"><a class="link" href="#improving_warmup_time_for_development">Improving warmup time for development</a></h4>
-<div class="paragraph">
-<p>Since development can involve repeated app/server restarts, here is one way to improve initial loading time when developing large projects:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Don&#8217;t build React4xp components with <code>NODE_ENV = development</code>, but use <code>production</code> (which is the default - see <a href="build.ahtml#NODE_ENV">Build environment</a>). Assets built with <code>development</code> are much more verbose, and this size difference - although functionally equal - actually makes a difference.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>(Other optimizations and approaches are under consideration, to shorten the warmup time even more).</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="performance"><a class="link" href="#performance">SSR performance</a></h3>
-<div class="paragraph">
-<p>Apart from when assets are initialized during the engine <a href="#warmup">warmup</a>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a <a href="https://developer.enonic.com/docs/cache-library">cache</a> in the controller.</p>
-</div>
-<div class="paragraph">
-<p>Be sure to use any value that can change the rendering output - usually from <code>props</code> (and <code>options</code>?) or a subset of them - as a <strong>key</strong> in the cache.</p>
-</div>
-<div class="paragraph">
-<p>For example:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">const cacheLib = require('/lib/cache');
-
-// Set the cache up with a size that's reasonable
-// for the most used props combinations
-// and the size of the rendered output HTML string:
-const cache = cacheLib.newCache({
-    size:   100,
-    expire: 3600
-});
-
-
-const makeKey = props =&gt; {
-    // ...return a string that's reliably determined by the relevant values from props
-};
-
-
-exports.get = request =&gt; {
-    const props = {
-        // ... build props from whatever sources are needed
-    };
-
-    const key = makeKey(props);
-
-    // Now render is only called when the key is new.
-    // If the key is cached before, just returns the output for that key.
-    return cache.get(
-        key,
-        () =&gt; React4xp.render(
-            myEntry,
-            props,
-            request,
-            options
-        )
-    );
-
-};</code></pre>
 </div>
 </div>
 </div>
@@ -1679,7 +1456,7 @@ exports.get = request =&gt; {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

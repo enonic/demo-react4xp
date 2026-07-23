@@ -504,7 +504,7 @@ To learn the details behind how this front-end was built, head on to the <a href
 <li>
 <p>Publish the changes</p>
 <div class="paragraph">
-<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1390px" title="React4xp front-end rendering the Headless Movie DB"></span></p>
+<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1620px" title="React4xp front-end rendering the Headless Movie DB"></span></p>
 </div>
 </li>
 </ol>
@@ -584,7 +584,7 @@ If the live site is showing the default preview of Headless Movie DB, you have n
 <p>Edit the <code>Headless Movie DB</code> site, add the <code>React4XP Demo</code> application and press <b class="button">Save</b></p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1390px" title="React4xp front-end rendering the Headless Movie DB"></span></p>
+<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1620px" title="React4xp front-end rendering the Headless Movie DB"></span></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -609,7 +609,7 @@ The live version of the site can be found on <a href="http://localhost:8080/site
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

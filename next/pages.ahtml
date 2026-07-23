@@ -559,7 +559,7 @@ dataFetcher.addMacro('factbox', {processor: factboxProcessor});</code></pre>
 <p>The HMDB dataset already contains sample content with pages. By selecting the front-page in Content Studio, you should immediately see something like this:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1390px" title="First page rendering with text component"></span></p>
+<p><span class="image"><img src="media/paragraph-descriptor.png" alt="paragraph descriptor" width="1622px" title="Page rendering with missing paragraph descriptor"></span></p>
 </div>
 <div class="paragraph">
 <p>That means that the page is now working, and contains a single component, the <code>Paragraph</code> part that we need to define too.</p>
@@ -639,18 +639,6 @@ export const paragraphProcessor: ComponentProcessor&lt;'com.enonic.app.hmdb:para
 };</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<a href="appendix/api.ahtml#processhtml"><code>processHtml</code></a> function from <code>lib-react4xp</code> transforms raw data into the <a href="rich-text.ahtml">RichText</a> format.
-</td>
-</tr>
-</table>
-</div>
 </li>
 <li>
 <p><strong>Register its dataFetcher</strong> by adding following lines to the dataFetcher file:</p>
@@ -694,7 +682,7 @@ dataFetcher.addPart('com.enonic.app.hmdb:paragraph', {processor: paragraphProces
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

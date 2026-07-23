@@ -474,7 +474,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="paragraph">
-<p>React4XP is designed for React devs looking to use Enonic&#8217;s JS framework and natively, rather than introducing a 3rd party front-end framework like <a href="https://developer.enonic.com/docs/next.xp">Next.js</a> in the stack.</p>
+<p>React4XP is designed for React devs looking to use Enonic&#8217;s JS framework natively, rather than introducing a 3rd party front-end framework like <a href="https://developer.enonic.com/learn/next.xp">Next.js</a> in the stack.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -521,7 +521,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="900px" title="React4xp front-end rendering the Headless Movie DB"></span></p>
+<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1620px" title="React4xp front-end rendering content from the Headless Movie DB"></span></p>
 </div>
 <div class="paragraph">
 <p>In this tutorial you will complete the following steps:</p>
@@ -585,7 +585,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>

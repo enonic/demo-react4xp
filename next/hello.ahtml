@@ -469,7 +469,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>This tutorial is dedicated to front-end development. To make it as compact as possible, the <a href="https://market.enonic.com/vendors/enonic/headless-movie-site">Headless Movie DB</a> dataset was installed in the setup. This contains several pre-defined content schemas as well as sample content and mock previews. We&#8217;ll be using this dataset extensively throughout the tutorial.</p>
 </div>
 <div class="paragraph">
-<p>To learn about content modeling, visit our <a href="https://developer.enonic.com/start" target="_blank" rel="noopener">getting started guide</a>, or the <a href="https://developer.enonic.com/docs/developer-101" target="_blank" rel="noopener">developer 101 tutorial</a>.</p>
+<p>To learn about content modeling, visit our <a href="https://developer.enonic.com/start" target="_blank" rel="noopener">getting started guide</a>, or the <a href="https://developer.enonic.com/learn/developer-101" target="_blank" rel="noopener">developer 101 tutorial</a>.</p>
 </div>
 </div>
 </div>
@@ -695,7 +695,7 @@ Dive deeper by learning how the basic boot-strapping and routing works in the <a
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 10:03:37 UTC
+Last updated 2026-07-23 17:03:29 UTC
 </div>
 </div>
 </body>
