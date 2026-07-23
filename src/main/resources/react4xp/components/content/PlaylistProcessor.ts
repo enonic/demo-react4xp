@@ -68,7 +68,7 @@ function fetchMovies(movieIds: string[]) {
 }
 
 export const playlistProcessor: ComponentProcessor<PageDescriptor> = params => {
-    const footerUrl = assetUrl({path: 'images/React4XP.svg'});
+    const footerUrl = assetUrl({path: 'react4xp.svg'});
     const content = params.content;
     const playlistData = content.data;
 
