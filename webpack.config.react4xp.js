@@ -42,20 +42,6 @@ module.exports = function(env, config) {
 			type: 'css/auto'
 		},
 		{
-			test: /\.s[ac]ss$/i,
-			type: 'css/auto',
-			use: [
-				{
-					loader: 'sass-loader',
-					options: {
-						sassOptions: {
-							outputStyle: 'compressed'
-						}
-					}
-				}
-			]
-		},
-		{
 			test: /\.(woff|woff2|eot|ttf|otf)$/i,
 			type: 'asset/resource', // ends up as auxiliaryAssets in stats.components.json
 		},
