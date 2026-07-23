@@ -8,7 +8,7 @@ In this chapter you'll learn how to render rich text content.
 
 == Background
 
-Enonic boasts a https://developer.enonic.com/docs/xp/stable/cms/schemas/input-types/htmlarea[rich text input type].
+Enonic boasts a https://developer.enonic.com/docs/cms/stable/schemas/form-items/htmlarea[rich text form item].
 Unlike basic text fields, rich-text may contain more complex concepts such as tables, images, links and even custom components (aka macros).
 Each of these typically need custom processing during rendering. For instance to ensure contextually correct URLs, image sizes etc.
 
@@ -16,7 +16,7 @@ Each of these typically need custom processing during rendering. For instance to
 
 The `Bio` field in the person content type is exactly what we're looking for:
 
-image::rich-text-bio.png[title="Rich text bio field for Lea Seydoux",width=500px]
+image::rich-text-bio.png[title="Rich text bio field for Lea Seydoux",width=969px]
 
 == Rich text rendering
 
@@ -32,7 +32,8 @@ Follow the steps below:
 include::{sourcedir}react4xp/components/content/PersonProcessor.ts[]
 ----
 +
-The ProcessHtml function (part of React4XP) outputs a format that the RichText component can use, as you will see below:
+NOTE: The <<appendix/library#processhtml, processHtml>> function from `lib-react4xp` transforms raw data into a format that the `RichText` component can use.
+
 +
 . *Update the Person component* with the following content:
 +

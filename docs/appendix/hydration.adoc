@@ -1,8 +1,8 @@
-= Hydration - server and clientside rendering
+= Hydration - Advanced client side rendering
 :toc: right
 :imagesdir: media/
 
-React4XP allows entries to render server-side, client-side or both (the default).
+By default, React4XP renders entries both <<ssr#, server-side>> and client-side: the HTML is rendered on the server first, then hydrated (activated) in the browser. You can also switch to server-side only, or client-side only.
 
 == Usage
 
@@ -12,10 +12,10 @@ The mode is controlled when the entry (React App) is initialized via react4xp.re
 ----
 const output = render(
   'MyComponent',
-  props, 
+  props,
   request,
   {
-    body: myHtmlBody, 
+    body: myHtmlBody,
     id: myId,
     ssr: true // <1>
     hydrate: true // <2>
@@ -27,7 +27,7 @@ return output;
 <1> Set to `false` to disable server-side rendering
 <2> Set to `false` to disable client-side rendering
 
-Visit the <<api#, API documentation>> for more details.
+Visit the <<library#, library reference>> for more details.
 
 == SSR vs client side gotchas
 

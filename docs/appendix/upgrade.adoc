@@ -1,4 +1,4 @@
-= Recommended upgrade
+= Upgrading to React4XP 7.x
 :toc: right
 :imagesdir: media/
 :sourcedir: ../src/main/resources/
@@ -6,12 +6,12 @@
 
 == Step by step
 
-This describes upgrading to the full feature set of react4xp 7 (for Enonic XP 8), including migrating pages and layouts to react.
+This describes upgrading from R4XP 6.x to R4XP 7, which introduces compatibility with XP8.
 
 . Create an app using the link:../setup#create-starter[starter^] and give it a new name.
 . <<migrating-parts, Migrate>> each react component to the new app.
 . Migrate your <<migrate-page, page>> and <<migrate-layout, layout>> to react components
-. On Enonic XP 8, <<api#mount-api, mount the React4XP API>> in each descriptor that renders React4XP (site, admin tool, webapp).
+. On Enonic XP 8, <<library#mount-api, mount the React4XP API>> in each descriptor that renders React4XP (site, admin tool, webapp).
 . link:./legacy-upgrade#build-deploy[Deploy^] the application on your existing site.
 
 You will now have one application with your schemas, and one containing your frontend.

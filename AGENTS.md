@@ -83,13 +83,83 @@ The documentation relies on GitHub Actions for building and publishing, while th
     First run downloads `mermaid-cli` and a headless Chromium (~1.4 GB) into `~/.npm/_npx` and `~/.cache/puppeteer` — a one-time cost, nothing is added to the repo. Re-render and commit both the `.mmd` and the `.svg` after any edit.
   - The exact source file and re-render command are also kept in an AsciiDoc comment directly above each diagram's `image::` line, so the recipe travels with the page.
 - **Documenting library functions and types:** Most library functions take a *single object argument*. Document them with flat, linked tables — never nested tables.
+  - **Page itinerary — fixed top-level sections, in this order:** `== Usage`, `== Functions`, `== Classes`, `== Type Definitions`, then `== Events` and `== Constants` *only if the library has them*. This mirrors what API-doc generators (TypeDoc/JSDoc/JavaDoc/rustdoc) emit, so every library reads the same and a missing bucket unambiguously means "none of that kind." Group strictly by kind: functions as `=== fnName` under `== Functions`; a class as `=== ClassName` under `== Classes` with its members as `==== memberName`; each *reused* type as `=== TypeName` under `== Type Definitions` (single-use `params`/`options` objects are inlined in their function instead — see below, so `== Type Definitions` is omitted when there are no shared types). Within a function or method, use `[.lead]` labels (`Parameters`, `Returns`, `Example`) rather than sub-headings.
   - **Single-object parameter:** lead in with *"``<fn>()`` takes a single `params` object with these properties:"* followed by **one flat table** with columns `Name | Type | Description`. Do *not* add an outer `params | object | …` row, do *not* use nested AsciiDoc tables (`!===`), and do *not* flatten sub-objects with dot-notation (`schedule.value`).
   - **Optionality — required by default.** There is no "Attributes"/"required" column. A field is *required* unless its Description begins with `*Optional.*`. Conditional requirements are stated in prose (e.g. "*Optional.* … Required when `type` is `CRON`."). Put any default value in the Description too — e.g. "*Optional.* Root path to serve from. Defaults to `+/static+`."
-  - **Nested objects are broken out and linked, not nested.** In the Type column, reference a named type (e.g. `<<schedule-type, Schedule>>`); define that type once in the `== Type Definitions` section as its own flat table with an explicit anchor (`[#schedule-type]`). Reuse a single definition across request and response when the shape is shared (DRY).
+  - **Inline single-use objects; break out only when reused.** A `params`/`options` object used by *one* function is documented *inline* in that function — its properties become the function's flat Parameters table (never a nested `!===` table, never dot-notation). Only when the *same* object shape is reused across multiple functions do you break it out into `== Type Definitions` as its own flat table with an explicit anchor (`[#schedule-type]`) and reference it from the Type column (`<<schedule-type, Schedule>>`). So a `== Type Definitions` section exists **only if the library has shared/reused types** — otherwise omit it entirely (e.g. `docs/appendix/library.adoc` has none: each option type is single-use and inlined).
   - **Return objects** use the same flat-table style under `== Type Definitions`; the function's `Returns` line links to the type — e.g. `*object* : (<<scheduled_job,`ScheduledJob`>>) …`. Do *not* wrap the whole line in single-plus passthrough (`+…+`): that disables the `*bold*` type, the `<<…>>` cross-reference, and the `` `monospace` `` all at once, so it renders as literal `*object*` / `<<…>>` text. Only wrap an individual substring that genuinely contains underscores.
   - **Table style:** borderless three-column tables — `[%header,cols="1%,1%,98%a"]` with `[frame="none"]` and `[grid="none"]`. Parameter, return, and type tables all share this one shape.
   - Keep the existing `Example` / `Return value` code blocks — they double as the concrete sample payloads.
-  - **Reference example:** `docs/libraries/lib-scheduler.adoc` (all functions + the `ScheduledJob`/`Schedule` types follow this pattern).
+  - **Reference examples:** `docs/libraries/lib-scheduler.adoc` (functions + the `ScheduledJob`/`Schedule` types) and `docs/appendix/library.adoc` (the full itinerary, including a `== Classes` section).
+  - **Skeleton to copy for a new library reference:**
+
+    ```adoc
+    = <Name> library
+    :toc: right
+
+    <one-line summary of what the library does>
+
+    == Usage
+
+    // Add the dependency (build.gradle) + the import statement, plus any required setup/mount.
+
+    == Functions
+
+    === <fnName>
+
+    <what it does>
+
+    [.lead]
+    Parameters
+
+    [%header,cols="1%,1%,98%a"]
+    [frame="none"]
+    [grid="none"]
+    |===
+    | Name | Type | Description
+    | <name> | <type> | <description; prefix "*Optional.*" if not required>
+    |===
+
+    [.lead]
+    Returns
+
+    *object* : (<<some-type, SomeType>>) <what is returned>
+
+    [.lead]
+    Example
+
+    // a [source] code block
+
+    == Classes
+
+    === <ClassName>
+
+    <what it is / when to use it>
+
+    ==== <methodName>
+
+    // same [.lead] Parameters / Returns / Example sub-structure as a function
+
+    // == Type Definitions  — ONLY for object shapes REUSED across multiple functions.
+    //                         A single-use params/options object is inlined in its
+    //                         function's Parameters table instead (as above). Omit this
+    //                         whole section if there are no shared types.
+    == Type Definitions
+
+    [#some-type]
+    === SomeType
+
+    [%header,cols="1%,1%,98%a"]
+    [frame="none"]
+    [grid="none"]
+    |===
+    | Name | Type | Description
+    | <field> | <type> | <description>
+    |===
+
+    // == Events      — only if the library emits events
+    // == Constants   — only if the library exposes constants
+    ```
 - **Menu Updates:** When adding new documentation pages, you MUST update `docs/menu.json` to ensure they appear in the docs navigation.
 - **Links:**
   - Use relative links between `.adoc` files (e.g., `<<path/to/doc#,Label>>`).

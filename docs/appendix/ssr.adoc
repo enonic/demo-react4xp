@@ -1,0 +1,93 @@
+= Server Side Rendering (SSR)
+:toc: right
+:imagesdir: media/
+
+By default React4XP will render your React components on the server, and send the resulting HTML to the browser
+
+== How it works
+The default running mode of React4xp is https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/[serverside rendering (SSR)] (although `ssr` can override this).
+
+In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp's SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens to two different steps, using either <<library#react4xp_render, `render`>> (which wraps both steps for convenience) or the <<library#react4xp_object, "custom flow">>.
+
+The aim of react4xp is https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905[isomorphic rendering]: after the react component(s) are serverside rendered, they are activated (<<hydration#, hydrated>>) in the browser, turning them into running, active react apps. It's _the same react code_ that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).
+
+[[renderers]]
+== Renderers
+
+React4xp handles multithreaded rendering. This is done by setting up a number of renderers where each one is ready to answer to rendering requests in parallel, independently.
+
+The number of renderer workers is <<config#ssrMaxThreads, determined in java but can be overriden>>.
+
+When a renderer runs into an error during SSR, that renderer is torn down and a new one is initialized (see warmup time below). This happens as far as possible during idle time.
+
+[[warmup]]
+== Warmup time
+
+After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the renderers will load the _compiled assets_ necessary for the rendering, into the engine memory:
+
+- react and reactDOM (`globals.*.js`),
+- packages from _node_modules_ (`vendors.*.js`),
+- dependency assets imported by the react components (aka. <<chunks#, chunks>>),
+- and finally, the <<entries#, entry assets>> themselves.
+
+*This causes some warmup time* when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the _compiled_ assets involved. This will happen on every restart of the app (and every <<#renderers, renderer>> must be initialized, but they do this in parallel).
+
+But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.
+
+=== Improving warmup time for development
+
+Since development can involve repeated app/server restarts, here is one way to improve initial loading time when developing large projects:
+
+- Don't build React4xp components with `NODE_ENV = development`, but use `production` (which is the default - see <<build#NODE_ENV,Build environment>>). Assets built with `development` are much more verbose, and this size difference - although functionally equal - actually makes a difference.
+
+
+(Other optimizations and approaches are under consideration, to shorten the warmup time even more).
+
+[[performance]]
+== SSR performance
+
+Apart from when assets are initialized during the engine <<#warmup, warmup>>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a https://developer.enonic.com/docs/cache-library[cache] in the controller.
+
+Be sure to use any value that can change the rendering output - usually from `props` (and `options`?) or a subset of them - as a *key* in the cache.
+
+For example:
+
+[source,javascript]
+----
+const cacheLib = require('/lib/cache');
+
+// Set the cache up with a size that's reasonable
+// for the most used props combinations
+// and the size of the rendered output HTML string:
+const cache = cacheLib.newCache({
+    size:   100,
+    expire: 3600
+});
+
+
+const makeKey = props => {
+    // ...return a string that's reliably determined by the relevant values from props
+};
+
+
+exports.get = request => {
+    const props = {
+        // ... build props from whatever sources are needed
+    };
+
+    const key = makeKey(props);
+
+    // Now render is only called when the key is new.
+    // If the key is cached before, just returns the output for that key.
+    return cache.get(
+        key,
+        () => React4xp.render(
+            myEntry,
+            props,
+            request,
+            options
+        )
+    );
+
+};
+----

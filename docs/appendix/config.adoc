@@ -21,7 +21,7 @@ react4xp.urlType = server|absolute // <5>
 
 <1> Set `hydrate` to `false` to disable hydration
 <2> Set `ssr` to `false` in order to disable SSR by default. This setting can be overridden on a per-component basis in your code.
-<3> `maxThreads` specifies the number of (<<api#renderers, renderers>>) used for simultaneous SSR requests. Defaults to the number of processors cores available to XP. Be careful about setting this option
+<3> `maxThreads` specifies the number of (<<ssr#renderers, renderers>>) used for simultaneous SSR requests. Defaults to the number of processors cores available to XP. Be careful about setting this option
 <4>  React4xp creates a globals bundle, which MUST contain all assets NEEDED to render server-side. By default it contains react and react-dom, but more assets can be added. By default the globals bundle is also provided to the client-side, setting `serveGlobals` to `false` will prevent globals from being delivered to the client.
 +
 NOTE: Keep in mind the assets in the globals bundle are still REQUIRED for

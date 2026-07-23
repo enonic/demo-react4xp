@@ -17,7 +17,7 @@
       "document": "common"
     },
     {
-      "title": "4 - Content rendering",
+      "title": "4 - Render by type",
       "document": "content-type"
     },
     {
@@ -73,12 +73,16 @@
           "document": "appendix/hydration"
         },
         {
+          "title": "SSR engine",
+          "document": "appendix/ssr"
+        },
+        {
           "title": "Chunks",
           "document": "appendix/chunks"
         },
         {
-          "title": "API",
-          "document": "appendix/api"
+          "title": "Library",
+          "document": "appendix/library"
         },
         {
           "title": "Release Notes",

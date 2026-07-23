@@ -1,6 +1,26 @@
 = Appendix
 :toc: right
 
-In this section you'll find chapters that dive deeper into React4XP, such as build, configuration, entries and jsxPath - including the React4XP API.
+React4XP lets front-end developers build *Enonic XP applications with React*. React components are rendered <<appendix/ssr#, server-side>> and then <<appendix/hydration#, hydrated>> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).
 
+NOTE: This documentation covers *React4XP 7.x*, which builds on *React 19* and requires *Enonic XP 8*.
 
+== How React4XP is distributed
+
+React4XP comes in two parts:
+
+*Library* (`lib-react4xp`)::
+The Enonic XP library that does the rendering. It exposes the `render` and `processHtml` functions and the `React4xp` object - all documented in the <<appendix/library#, Library reference>>. Available on link:https://market.enonic.com/vendors/enonic/react4xp-lib[Enonic Market] and link:https://github.com/enonic/lib-react4xp[GitHub]. Your React sources are compiled by the companion npm build tool `@enonic/react4xp` (link:https://www.npmjs.com/package/@enonic/react4xp[npm]).
+
+*Starter* (`starter-react4xp`)::
+A ready-to-run project that bundles the library, the `@enonic/react4xp` build integration, and a small demo - so `enonic project create` gives you a working React4XP setup in one step. Source on link:https://github.com/enonic/starter-react4xp[GitHub].
+
+The demo bundled in the starter is the *Headless Movie DB*, a complete example application also published on link:https://market.enonic.com/vendors/enonic/headless-movie-site[Enonic Market].
+
+== In this appendix
+
+- <<appendix/library#, Library reference>> - the `render` / `processHtml` functions and the `React4xp` object.
+- <<appendix/ssr#, SSR engine>> and <<appendix/hydration#, Hydration>> - how server- and client-side rendering work.
+- <<appendix/config#, Configuration>>, <<appendix/build#, Build>>, <<appendix/chunks#, Chunks>> and <<appendix/entries#, Entries>> - compilation and runtime internals.
+- <<appendix/controller#, App.ts>> and <<appendix/macro-data#, Macros>> - controllers and macro data.
+- <<appendix/release#, Release notes>> and <<appendix/upgrade#, Upgrade notes>>.
