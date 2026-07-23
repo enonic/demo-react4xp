@@ -1,4 +1,4 @@
-= React4XP 6 Release notes
+= React4XP 7 Release notes
 :toc: right
 
 New features and improvements since version 5

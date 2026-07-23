@@ -4,14 +4,13 @@
 :sourcedir: ../src/main/resources/
 :snippet: ../code-samples/code-snippets/
 
-
-== Intro
-Parts are highly flexible components which may be used to enrich your pages. Each part is like a content type, with an optional form that can be used to create content.
+Parts are highly flexible page components which may be used to enrich your pages. Similar to content types, parts support an optional content form.
 
 
 == Child list component
 
-Take a look at the `Person` folder. You may see something like this:
+Have a look at the `Person` folder. You may see something like this:
+
 image:child-list-no-render.png[title="Parts in the person folder",width=900px]
 
 . *Add the `child-list` component* to your front-end:

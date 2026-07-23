@@ -48,7 +48,7 @@ include::{snippet}pages/dataFetcher.ts[]
 
 The HMDB dataset already contains sample content with pages. By selecting the front-page in Content Studio, you should immediately see something like this:
 
-image:r4xp-demo.png[title="First page rendering with text component",width=1390px]
+image:paragraph-descriptor.png[title="Page rendering with missing paragraph descriptor",width=1622px]
 
 That means that the page is now working, and contains a single component, the `Paragraph` part that we need to define too.
 
@@ -79,8 +79,6 @@ include::{snippet}pages/componentRegistry-paragraph.tsx[]
 ----
 include::{sourcedir}react4xp/components/parts/ParagraphProcessor.ts[]
 ----
-+
-NOTE: <<appendix/api#processhtml, `processHtml`>> function from `lib-react4xp` transforms raw data into the <<rich-text#, RichText>> format.
 +
 . *Register its dataFetcher* by adding following lines to the dataFetcher file:
 +

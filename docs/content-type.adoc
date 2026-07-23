@@ -18,35 +18,41 @@ Click a person, and then selecting the JSON preview, which allows you to study t
 [source,JSON]
 ----
 {
-    "_id": "a8b374a2-c532-45eb-9aa1-73d1c37cd681",
-    "_name": "lea-seydoux",
-    "_path": "/hmdb/persons/lea-seydoux",
+    "_id": "3a7b833f-3c37-4d55-88ae-cea21c556c68",
+    "_name": "brad-pittless",
+    "_path": "/hmdb/persons/brad-pittless",
     "creator": "user:system:su",
     "modifier": "user:system:su",
-    "createdTime": "2021-11-23T10:01:16.711Z",
-    "modifiedTime": "2021-11-23T13:06:38.493Z",
+    "createdTime": "2018-07-03T06:47:46.379Z",
+    "modifiedTime": "2018-07-03T06:50:07.268Z",
     "owner": "user:system:su",
     "type": "com.enonic.app.hmdb:person",
-    "displayName": "Léa Seydoux",
-    "hasChildren": true,
+    "displayName": "Brad Pittless",
     "language": "en",
     "valid": true,
     "childOrder": "modifiedtime DESC",
     "data": {
-        "photos": "09b3af0e-6da3-4bcf-88d9-11cbe9c41283",
-        "bio": "French actress Léa Seydoux was born in 1985 in Paris, France, to Valérie Schlumberger, a philanthropist, and Henri Seydoux, a businessman.",
-        "dateofbirth": "1985-07-01"
+        "photos": "c4b38a24-7857-4a56-bf92-a6bc17369a15",
+        "bio": "Brad Pittless is a Golden Pump-winner whose memorable role as Tyler Daydern in Inflation Club (1999) cemented his place among Headless Hollywood's most magnetic leading balloons.",
+        "dateofbirth": "1963-12-18"
     },
-    "x": {},
+    "x": {
+        "com-enonic-app-hmdb": {
+            "SoMe": {
+                "imdb": "https://www.imdb.com/name/nm0000093/"
+            }
+        }
+    },
     "page": {},
+    "validationErrors": [],
     "attachments": {},
     "publish": {
-        "from": "2024-11-13T13:32:39.427Z",
-        "first": "2024-11-13T13:32:39.427Z"
+        "from": "2026-07-23T06:14:12.822Z",
+        "first": "2026-05-05T12:36:16.195Z",
+        "time": "2026-07-23T06:14:14.172Z"
     },
     "workflow": {
-        "state": "READY",
-        "checks": {}
+        "state": "READY"
     }
 }
 ----
