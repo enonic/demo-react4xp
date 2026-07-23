@@ -5,10 +5,6 @@
       "checkout": "5.x"
     },
     {
-      "label": "6.x",
-      "checkout": "6.x"
-    },
-    {
       "label": "stable",
       "checkout": "6.x",
       "latest": true,
