@@ -1,40 +1,42 @@
 = React4XP 7 Release notes
 :toc: right
 
-New features and improvements since version 5
+New features and improvements since version 6
 
-== Detached front-end
-Previous versions were using XP's site engine directly, meaning that rendering was built and shipped together with the CMS schemas.
+== Enonic XP 8
 
-V6 severs the tie beween CMS schema definitions and the rendering. This means you may implement the front-end (R4XP) code separately from the CMS schema definition(s). As such, you may deploy front-end and back-end/model as two (or more) separate applications.
+React4XP 7 targets Enonic XP 8. XP 8 is a major platform release that, among other things, replaces XML component descriptors with YAML, introduces a Gradle settings plugin with a dependency catalog, and requires Gradle 9. React4XP 7 aligns with all of this out of the box.
 
-== Updated build system
-React4XP is now fully aligned with the https://market.enonic.com/starters/typescript-starter[TypeScript Starter]. This means full support for "enonic dev" mode and continuous compilation, fast builds with RSpack and Jest testing support.
+NOTE: React4XP 7 requires Enonic XP 8. If you are still on XP 7, stay on React4XP 6.
 
-== Single React app
-React4XP now renders pages as a single React app (aka entry), vs one React app/entry per component in version 5. This allows for a cleaner React developer experience, and more flexibility.
+== YAML descriptors
 
-This also means that the <Region> component (part of @enonic/react-components) has been changed, and is now a pure React component, handling the rendering of its sub-components directly, rather than relying on the Site engine's placeholder and iterative rendering technique.
+Component descriptors (site, parts, layouts, pages, admin tools and so on) are now written in YAML using the new `kind:` format, replacing the previous XML descriptors.
+CMS schemas and their controllers also move from the `site/` folder to `cms/`.
 
-The latter is a breaking change. However, React4XP is still able to render multiple entries on a page (i.e. only render your parts with React4XP) if needed. Check out the xref:legacy-upgrade.adoc# [legacy mode upgrade].
+== New server build with tsdown
 
-== Optimized asset serving
-React4XP automatically hashes and serves static assets with optmized cache headers. This way, clients will only need to download files that have changed since their last visit. Assets are automatically cached in CDN if it is available.
+Server-side TypeScript is now compiled with https://tsdown.dev[tsdown] (powered by SWC), giving faster and simpler server builds.
+React entries (`.tsx`) are still compiled by React4XP with Rspack.
 
-== Component registry
-React4XP uses the brand new componentRegistry (part of @enonic/react-components) to render content. The componentRegistry handles dynamic component rendering, based on what your content looks like.
+== Native CSS with Rspack
 
-The componentRegistry works in combination with the dataFetcher (part of React4XP). The dataFetcher executes server-side controllers to understand your page composition, then fetches props for each respective component to render. The result is passed to the componentRegistry for rendering.
+React4XP 7 uses Rspack's native CSS support.
+CSS Modules work out of the box for `*.module.css` and `*.module.scss` files, and the old `mini-css-extract-plugin` setup is gone.
 
-== Response processing
+== Unified Enonic types
 
-React4XP still runs on top of the site engine, which means multiple XP apps can contribute to the request processing via page contributions and response processors. For instance the https://market.enonic.com/vendors/enonic/seo-metafields[SEO Metafields applications^] will inject custom tags to the HTML response - without interfering with the React4XP front-end. Applications that deliver standalone HTML may also be used - but will naturally need their own mapping.
+React4XP 7 builds on `@enonic-types/core`, delivered through `@enonic-types/global` 8. The `Request` type now comes from `@enonic-types/core` instead of `@enonic/js-utils`.
 
-TIP: Remember, you may still bundle both CMS model and front-end in the same app.
+== Modernized toolchain
 
-== Booster compatible
-React4XP is fully compatible with https://market.enonic.com/vendors/enonic/booster[Booster]. Booster automatically caches public and non-personalized HTML produced by React4XP. We recommend using Booster for public sites.
+The build runs on Gradle 9 with the XP settings plugin and the `xplibs` dependency catalog, alongside current Node and npm.
+See the upgrade notes for the exact versions.
+
+== Still included from version 6
+
+The version 6 architecture carries over unchanged: a detached front-end, a single React app per page, the componentRegistry and dataFetcher rendering model, hashed and cache-optimized asset serving, and full https://market.enonic.com/vendors/enonic/booster[Booster] compatibility.
 
 == Upgrading
 
-To migrate a legacy React4XP application we have written detailed xref:upgrade.adoc# [upgrade notes].
+To migrate an existing React4XP application, follow the detailed xref:upgrade.adoc# [upgrade notes].

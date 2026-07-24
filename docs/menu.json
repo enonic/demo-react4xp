@@ -90,13 +90,7 @@
         },
         {
           "title": "Upgrade notes",
-          "document": "appendix/upgrade",
-          "menuItems": [
-            {
-              "title": "Legacy mode",
-              "document": "appendix/legacy-upgrade"
-            }
-          ]
+          "document": "appendix/upgrade"
         }
       ]
     }

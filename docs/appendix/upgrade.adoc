@@ -1,248 +1,216 @@
-= Upgrading to React4XP 7.x
+= Upgrade from XP 7 to XP 8
 :toc: right
-:imagesdir: media/
-:sourcedir: ../src/main/resources/
-:snippet: ../../code-samples/code-snippets/
 
-== Step by step
+React4XP 7 runs on Enonic XP 8. A React4XP 6 application runs on Enonic XP 7 and cannot run on XP 8, so moving to version 7 means upgrading the application itself from XP 7 to XP 8. This is a source-level upgrade, not an in-place version bump.
 
-This describes upgrading from R4XP 6.x to R4XP 7, which introduces compatibility with XP8.
+The upgrade has two parts:
 
-. Create an app using the link:../setup#create-starter[starter^] and give it a new name.
-. <<migrating-parts, Migrate>> each react component to the new app.
-. Migrate your <<migrate-page, page>> and <<migrate-layout, layout>> to react components
-. On Enonic XP 8, <<library#mount-api, mount the React4XP API>> in each descriptor that renders React4XP (site, admin tool, webapp).
-. link:./legacy-upgrade#build-deploy[Deploy^] the application on your existing site.
+. The standard *XP 7 to XP 8 application upgrade* - YAML descriptors, the new Gradle build and the code-level breaking changes.
+This is the same for any XP application.
+. A handful of *React4XP-specific* changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.
 
-You will now have one application with your schemas, and one containing your frontend.
-If you prefer having a single application, follow these steps:
+== Recommended: Claude upgrader skill
 
-. Move the cms schemas and other files you want to keep to the new application.
-. Rename it to the same name as your old application.
-. Make a production build and link:./legacy-upgrade#build-deploy[Deploy^] it.
-. The old application can now be discarded.
+The fastest way through the XP 7 to XP 8 part of the upgrade is the *xp-app-upgrader* skill for https://claude.com/claude-code[Claude Code^].
+It inspects your application, presents an upgrade plan, runs the https://github.com/enonic/xp8migrator[xp8migrator^], rewrites the Gradle build files, applies the code-level breaking changes and validates the build - pausing for your approval before it changes anything.
 
-[[migrating-parts]]
-== Migrating parts
+Install the Enonic skills once, from Claude Code:
 
-Now let’s go a little bit deeper and use the example component as a part along with our new components.
-To do this we need to do the following:
-
-. Make a YAML descriptor file for it so XP knows that it exists, here we can also give it a good description.
-+
-.src/main/resources/cms/parts/example/example.yaml
-[source,YAML]
+[source]
 ----
-include::{snippet}appendix/upgrade/example.yaml[]
+/plugin marketplace add enonic/ai-enonic-marketplace
+/plugin install enonic-skills@enonic-marketplace
 ----
 
-. Move the example component to the `parts/example` folder and update as follows.
-+
-.src/main/resources/react4xp/components/parts/example/example.tsx
-[source,TypeScript]
+Then, from your application's project directory, ask Claude to upgrade it:
+
+[source]
 ----
-include::{snippet}appendix/upgrade/example.tsx[]
+Upgrade this app to XP 8
 ----
-+
-Notice how the Example component receives `ComponentProps<PartData>` type props.
-This is going to be true for any other component as well, except that `PartData`, specifying type of the component field, will be `LayoutData` for layouts, or `PageData` for pages:
-+
-[source,TypeScript]
+
+The skill covers the standard XP upgrade only - the steps in the next section document what it does, in case you prefer to upgrade by hand.
+
+TIP: For the full XP 8 breaking-change list, see the https://developer.enonic.com/docs/xp/stable/release/upgrade[Upgrading to XP8^] guide.
+
+When the skill has finished, complete the upgrade by applying the <<react4xp-specifics, React4XP specifics>> - these are not part of the generic skill.
+
+== Manual XP 7 to XP 8 upgrade
+
+=== Convert descriptors to YAML
+
+XP 8 replaces XML component descriptors with YAML, identified by a `kind:` field.
+Run the https://github.com/enonic/xp8migrator[xp8migrator^] from the project root to convert them automatically:
+
+[source,shell]
 ----
-interface ComponentProps<T extends ComponentData = ComponentData> {
-    meta: MetaData;                         // <1>
-    component: T;                           // <2>
-    data?: Record<string, unknown>;         // <3>
-    common?: Record<string, unknown>;       // <4>
+curl -fsSL https://raw.githubusercontent.com/enonic/xp8migrator/main/migrator-install.sh | sh
+./migrator -e overwrite
+----
+
+The migrator handles, among other things:
+
+* `src/main/resources/application.xml` -> `enonic.yaml` (`kind: "Application"`)
+* `src/main/resources/site/` -> `src/main/resources/cms/` - the whole tree, with `site.xml` split into `cms/site.yaml` and `cms/cms.yaml`, and every part, layout, page and content type converted to YAML with the appropriate `kind:`.
+* Admin tools, APIs, services and webapp descriptors -> YAML.
+
+NOTE: The migrator leaves the original `site/` folder and `application.xml` in place so you can verify the result.
+Delete them once the build passes.
+
+=== Update the build
+
+XP 8 centers the build on the `com.enonic.xp.settings` Gradle settings plugin, which supplies the app-plugin version and the `xplibs` dependency catalog.
+
+.settings.gradle
+[source,groovy]
+----
+plugins {
+    id 'com.enonic.xp.settings' version '4.1.0'
+}
+
+rootProject.name = projectName
+----
+
+In `build.gradle`, drop the version from the `com.enonic.xp.app` plugin (the settings plugin now supplies it) and reference XP libraries through the `xplibs` catalog:
+
+.build.gradle
+[source,groovy]
+----
+plugins {
+    id 'maven-publish'
+    id 'com.enonic.xp.app'
+    id 'com.enonic.defaults' version '2.1.6'
+    id 'com.github.node-gradle.node' version '7.1.0'
+}
+
+dependencies {
+    include xplibs.content
+    include xplibs.context
+    include xplibs.portal
+    include xplibs.auth
+
+    include 'com.enonic.lib:lib-asset:2.0.1'
+    include 'com.enonic.lib:lib-react4xp:7.0.0'
 }
 ----
 
-<1> Runtime metadata, such as the current content path, id and type as well as request mode.
-<2> Enonic XP component data that contains type, descriptor and some extra data based on the type (i.e. regions for layouts and pages).
-<3> Component data fetched by the associated data processor, if any.
-<4> Common data fetched by the common processor, if any.
-+
-. Now, instead of fetching in get(), create a processor that returns its data and React4xp will forward it to your view along with some additional data like meta and component.
-+
-.src/main/resources/react4xp/components/parts/example/exampleProcessor.ts
-[source,TypeScript]
+NOTE: XP libraries (`com.enonic.xp:lib-*`) are referenced through the `xplibs.*` catalog aliases (`lib-content` becomes `xplibs.content`, and so on).
+Third-party libraries such as `lib-asset` and `lib-react4xp` keep their full coordinates.
+
+Bump `xpVersion` in `gradle.properties`:
+
+.gradle.properties
+[source,properties]
 ----
-include::{snippet}appendix/upgrade/exampleProcessor.ts[]
+xpVersion=8.0.3
 ----
 
-. Add it to the componentRegistry and dataFetcher with the same descriptor as in previous task.
-+
-.src/main/resources/react4xp/componentRegistry.tsx
-[source,TypeScript]
+The XP 8 app plugin requires Gradle 9. Bump the wrapper:
+
+[source,shell]
 ----
-include::{snippet}appendix/upgrade/componentRegistry.tsx[]
-----
-+
-.src/main/resources/react4xp/dataFetcher.ts
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/dataFetcher.ts[]
+./gradlew wrapper --gradle-version 9.6.1
 ----
 
-[[page-layout]]
-[[migrate-page]]
-== Pages
+=== Handle code-level breaking changes
 
-Your current page part might look something like this:
+XP 8 tightens a number of APIs.
+The most common ones to look out for:
 
-.src/main/resources/site/pages/default/default.tsx
-[source,TypeScript]
+* The default context is no longer implicit - pass `branch` and `repository` explicitly.
+* `delete*` renames: `deleteContent`, `deleteProject`, `deleteRepo`, `deleteJob`.
+* `modify*` methods are replaced by `update*`.
+* HTTP method names are uppercase (`GET`, `POST`, `DELETE`).
+* In `logback.xml`, remove `<withJansi>true</withJansi>`.
+
+See the https://developer.enonic.com/docs/xp/stable/release/upgrade[Upgrading to XP8^] guide for the complete list.
+
+With the standard XP 8 upgrade done, complete the upgrade by applying the <<react4xp-specifics, React4XP specifics>> below.
+
+[[react4xp-specifics]]
+== React4XP specifics
+
+On top of the standard XP 8 upgrade, a React4XP application needs the following.
+
+=== Mount the React4XP API
+
+XP 8 requires each descriptor that renders React4XP to mount the `react4xp` API.
+Add it to the `apis:` list of your site - and of any webapp or admin tool that renders React4XP:
+
+.src/main/resources/cms/site.yaml
+[source,yaml]
 ----
-include::{snippet}appendix/upgrade/pages/pagev5/default.tsx[]
-----
-
-with a controller like this:
-
-.src/main/resources/site/pages/default/default.ts
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/pages/pagev5/default.ts[]
-----
-
-And an xml like this:
-
-.src/main/resources/site/pages/default/default.xml
-
-[source,xml]
-----
-include::{snippet}appendix/upgrade/pages/pagev5/default.xml[]
-----
-
-This is how we migrate it to a react4xp v7 component:
-
-First let's handle the controller which becomes a processor, the most important prop to pass from the processor used to be the regionsData.
-We can still get regions from component and return it, but this is not necessary anymore!
-
-IMPORTANT: Component gets passed to the view automatically now, so you don't have to define a processor function if it's only regions you want to access.
-
-.src/main/resources/react4xp/components/page/PageProcessor.ts
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/pages/pagev6/PageProcessor.ts[]
+kind: "Site"
+apis:
+  - "asset"
+  - "react4xp"
 ----
 
-Next we need to change out the part `default.tsx` with a component `Page.tsx`, which is very similar except that we pass `component` to the `Regions` react component, because it contains regions now.
+=== Update the dependencies
 
-.src/main/resources/react4xp/components/page/Page.tsx
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/pages/pagev6/Page.tsx[]
-----
+Move to the version 7 React4XP packages and the XP 8 types.
 
-In this example there is also a css module that is used to style the page.
-
-.src/main/resources/react4xp/components/page/Page.module.css
-[source,css]
+.package.json
+[source,json]
 ----
-include::{snippet}appendix/upgrade/pages/pagev6/Page.module.css[]
+"@enonic/react4xp": "7.0.0",
+"@enonic/react-components": "^7.0.0",
+"@enonic-types/lib-react4xp": "^7.0.0",
+"@enonic-types/global": "^8.0.3",
 ----
 
-For XP to see it we need a descriptor file - in XP 8 this is a YAML file named `Page.yaml`.
-This way we can call on it using a descriptor in the component registry and data fetcher.
+NOTE: `@enonic-types/global` 8 brings in `@enonic-types/core`, which replaces the old `@enonic/js-utils` request type - see <<update-types, Update to the new types>> below.
 
-.src/main/resources/cms/pages/Page/Page.yaml
-[source,YAML]
+In `build.gradle` (shown above), use `com.enonic.lib:lib-react4xp:7.0.0`.
+
+=== Switch to the new build tooling
+
+React4XP 7 changes how the application is compiled:
+
+* Server-side TypeScript is compiled with https://tsdown.dev[tsdown^] - add `tsdown` and `@swc/core` to `devDependencies`.
+React entries (`.tsx`) are still compiled by React4XP with Rspack.
+* React4XP uses Rspack's native CSS support, so the old `mini-css-extract-plugin` is gone.
+CSS Modules work out of the box for `*.module.css` and `*.module.scss` files.
+
+TIP: The easiest way to get the exact, up-to-date build configuration (`tsdown.config.ts`, `react4xp.config.js`, `webpack.config.react4xp.js` and the `tsconfig.json` files) is to copy them from the https://github.com/enonic/starter-react4xp[React4XP starter^].
+
+Update the npm scripts so the build runs tsdown (server code and client assets) and React4XP (the `.tsx` entries), with the type checks split into the React4XP and server projects:
+
+.package.json
+[source,json]
 ----
-include::{snippet}appendix/upgrade/pages/pagev6/Page.yaml[]
-----
-
-Let's add it to componentRegistry and dataFetcher, this is done in the same way as we did with the part.
-
-.src/main/resources/react4xp/componentRegistry.tsx
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/pages/pagev6/componentRegistry.tsx[]
-----
-
-.src/main/resources/react4xp/dataFetcher.ts
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/pages/pagev6/dataFetcher.ts[]
-----
-
-Now we have a fully functional page component that is using the new regions and component registry.
-
-[[migrate-layout]]
-== Layouts
-
-Lastly we need to migrate the layout, this is done in a similar way to the page.
-
-Your current layout part might look something like this:
-
-.src/main/resources/site/layouts/twoColumns/twoColumns.tsx
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.tsx[]
+"scripts": {
+  "build":                "tsdown",
+  "build:react4xp":       "npm explore @enonic/react4xp -- npm run build:react4xp",
+  "check":                "concurrently -c auto -g --timings npm:check:types:*",
+  "check:types:react4xp": "npx tsc --noEmit -p src/main/resources/react4xp/tsconfig.json",
+  "check:types:server":   "npx tsc --noEmit -p src/main/resources/tsconfig.json"
+}
 ----
 
-with a controller like this:
+[[update-types]]
+=== Update to the new types
 
-.src/main/resources/site/layouts/twoColumns/twoColumns.ts
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.ts[]
-----
+React4XP 7 builds on `@enonic-types/core`.
+In your controllers and processors, replace `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` with `Request` from `@enonic-types/core`.
 
-And an xml like this:
+== Build and deploy
 
-.src/main/resources/site/layouts/twoColumns/twoColumns.xml
-[source,xml]
-----
-include::{snippet}appendix/upgrade/layouts/layoutv5/twoColumns.xml[]
-----
+Make a production build and deploy it to your sandbox:
 
-Similar to the page, we need to implement a processor, and a component.
-
-.src/main/resources/react4xp/components/layouts/TwoColumnProcessor.ts
-[source,TypeScript]
+[source,shell]
 ----
-include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumnProcessor.ts[]
+enonic project build
 ----
 
-The Layout component is depending on regions like the page, but let's use `Region` built-in component this time to render every region manually.
-We need to pass list of components as data to each `Region` component:
-
-.src/main/resources/react4xp/components/layouts/TwoColumn.tsx
-[source,TypeScript]
+[source,shell]
 ----
-include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.tsx[]
+enonic project deploy
 ----
 
-NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
+You can also run the project in development mode, which watches for changes and automatically deploys them to the sandbox:
 
-.src/main/resources/react4xp/components/layouts/TwoColumn.module.css
-[source,css]
+[source,shell]
 ----
-include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumn.module.css[]
+enonic dev
 ----
-
-We need to add the layout to the component registry and data fetcher, this is done in the same way as we did with the part and page.
-
-.src/main/resources/react4xp/componentRegistry.tsx
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/layouts/layoutv6/componentRegistry.tsx[]
-----
-
-.src/main/resources/react4xp/dataFetcher.ts
-[source,TypeScript]
-----
-include::{snippet}appendix/upgrade/layouts/layoutv6/dataFetcher.ts[]
-----
-
-And finally we need to update the descriptor file to match the descriptor name, this is done in the same way as the page.
-
-.src/main/resources/cms/layouts/TwoColumn/TwoColumn.yaml
-[source,YAML]
-----
-include::{snippet}appendix/upgrade/layouts/layoutv6/TwoColumns.yaml[]
-----
-
-Now we have a fully functional layout component that is using the new regions and component registry.
-
-And just like that we have not only upgraded the old component, but also made it compatible with the new ones!
