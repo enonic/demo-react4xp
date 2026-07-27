@@ -1,20 +1,22 @@
 = Upgrade from XP 7 to XP 8
 :toc: right
 
-React4XP 7 runs on Enonic XP 8. A React4XP 6 application runs on Enonic XP 7 and cannot run on XP 8, so moving to version 7 means upgrading the application itself from XP 7 to XP 8. This is a source-level upgrade, not an in-place version bump.
+React4XP 7 runs on Enonic XP 8, which React4XP 6 applications runs on XP 7. Moving to React4XP 7 means upgrading the application itself from XP 7 to XP 8. This is a source-level upgrade, not an in-place version bump.
 
 The upgrade has two parts:
 
-. The standard *XP 7 to XP 8 application upgrade* - YAML descriptors, the new Gradle build and the code-level breaking changes.
-This is the same for any XP application.
+. The standard *XP 7 to XP 8 application upgrade* - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.
 . A handful of *React4XP-specific* changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.
 
-== Recommended: Claude upgrader skill
+This page documents only part 2. Do the standard upgrade first, then apply the <<react4xp-specifics, React4XP specifics>> below.
 
-The fastest way through the XP 7 to XP 8 part of the upgrade is the *xp-app-upgrader* skill for https://claude.com/claude-code[Claude Code^].
-It inspects your application, presents an upgrade plan, runs the https://github.com/enonic/xp8migrator[xp8migrator^], rewrites the Gradle build files, applies the code-level breaking changes and validates the build - pausing for your approval before it changes anything.
+== Standard XP 7 to XP 8 upgrade
 
-Install the Enonic skills once, from Claude Code:
+Upgrade the application to XP 8 exactly as you would any other XP app - convert the XML descriptors to YAML, move to the new Gradle build, and apply the code-level breaking changes. The complete, up-to-date procedure and breaking-change list live in the canonical guide, so follow that rather than repeating it here:
+
+TIP: https://developer.enonic.com/docs/code/stable/upgrade[Upgrading to XP 8^] - the generic XP 7 to XP 8 upgrade guide.
+
+The fastest path through it is the *xp-app-upgrader* skill for https://claude.com/claude-code[Claude Code^]. 
 
 [source]
 ----
@@ -24,127 +26,12 @@ Install the Enonic skills once, from Claude Code:
 
 Then, from your application's project directory, ask Claude to upgrade it:
 
-[source]
-----
-Upgrade this app to XP 8
-----
-
-The skill covers the standard XP upgrade only - the steps in the next section document what it does, in case you prefer to upgrade by hand.
-
-TIP: For the full XP 8 breaking-change list, see the https://developer.enonic.com/docs/xp/stable/release/upgrade[Upgrading to XP8^] guide.
-
-When the skill has finished, complete the upgrade by applying the <<react4xp-specifics, React4XP specifics>> - these are not part of the generic skill.
-
-== Manual XP 7 to XP 8 upgrade
-
-=== Convert descriptors to YAML
-
-XP 8 replaces XML component descriptors with YAML, identified by a `kind:` field.
-Run the https://github.com/enonic/xp8migrator[xp8migrator^] from the project root to convert them automatically:
-
-[source,shell]
-----
-curl -fsSL https://raw.githubusercontent.com/enonic/xp8migrator/main/migrator-install.sh | sh
-./migrator -e overwrite
-----
-
-The migrator handles, among other things:
-
-* `src/main/resources/application.xml` -> `enonic.yaml` (`kind: "Application"`)
-* `src/main/resources/site/` -> `src/main/resources/cms/` - the whole tree, with `site.xml` split into `cms/site.yaml` and `cms/cms.yaml`, and every part, layout, page and content type converted to YAML with the appropriate `kind:`.
-* Admin tools, APIs, services and webapp descriptors -> YAML.
-
-NOTE: The migrator leaves the original `site/` folder and `application.xml` in place so you can verify the result.
-Delete them once the build passes.
-
-=== Update the build
-
-XP 8 centers the build on the `com.enonic.xp.settings` Gradle settings plugin, which supplies the app-plugin version and the `xplibs` dependency catalog.
-
-.settings.gradle
-[source,groovy]
-----
-plugins {
-    id 'com.enonic.xp.settings' version '4.1.0'
-}
-
-rootProject.name = projectName
-----
-
-In `build.gradle`, drop the version from the `com.enonic.xp.app` plugin (the settings plugin now supplies it) and reference XP libraries through the `xplibs` catalog:
-
-.build.gradle
-[source,groovy]
-----
-plugins {
-    id 'maven-publish'
-    id 'com.enonic.xp.app'
-    id 'com.enonic.defaults' version '2.1.6'
-    id 'com.github.node-gradle.node' version '7.1.0'
-}
-
-dependencies {
-    include xplibs.content
-    include xplibs.context
-    include xplibs.portal
-    include xplibs.auth
-
-    include 'com.enonic.lib:lib-asset:2.0.1'
-    include 'com.enonic.lib:lib-react4xp:7.0.0'
-}
-----
-
-NOTE: XP libraries (`com.enonic.xp:lib-*`) are referenced through the `xplibs.*` catalog aliases (`lib-content` becomes `xplibs.content`, and so on).
-Third-party libraries such as `lib-asset` and `lib-react4xp` keep their full coordinates.
-
-Bump `xpVersion` in `gradle.properties`:
-
-.gradle.properties
-[source,properties]
-----
-xpVersion=8.0.3
-----
-
-The XP 8 app plugin requires Gradle 9. Bump the wrapper:
-
-[source,shell]
-----
-./gradlew wrapper --gradle-version 9.6.1
-----
-
-=== Handle code-level breaking changes
-
-XP 8 tightens a number of APIs.
-The most common ones to look out for:
-
-* The default context is no longer implicit - pass `branch` and `repository` explicitly.
-* `delete*` renames: `deleteContent`, `deleteProject`, `deleteRepo`, `deleteJob`.
-* `modify*` methods are replaced by `update*`.
-* HTTP method names are uppercase (`GET`, `POST`, `DELETE`).
-* In `logback.xml`, remove `<withJansi>true</withJansi>`.
-
-See the https://developer.enonic.com/docs/xp/stable/release/upgrade[Upgrading to XP8^] guide for the complete list.
-
-With the standard XP 8 upgrade done, complete the upgrade by applying the <<react4xp-specifics, React4XP specifics>> below.
+NOTE: Neither the generic guide nor the skill covers the React4XP-specific steps below - apply them once the standard XP 8 upgrade builds cleanly.
 
 [[react4xp-specifics]]
 == React4XP specifics
 
 On top of the standard XP 8 upgrade, a React4XP application needs the following.
-
-=== Mount the React4XP API
-
-XP 8 requires each descriptor that renders React4XP to mount the `react4xp` API.
-Add it to the `apis:` list of your site - and of any webapp or admin tool that renders React4XP:
-
-.src/main/resources/cms/site.yaml
-[source,yaml]
-----
-kind: "Site"
-apis:
-  - "asset"
-  - "react4xp"
-----
 
 === Update the dependencies
 
@@ -159,9 +46,30 @@ Move to the version 7 React4XP packages and the XP 8 types.
 "@enonic-types/global": "^8.0.3",
 ----
 
+And the React4XP library in the Gradle build:
+
+.build.gradle
+[source,groovy]
+----
+dependencies {
+    include 'com.enonic.lib:lib-react4xp:7.0.0'
+}
+----
+
 NOTE: `@enonic-types/global` 8 brings in `@enonic-types/core`, which replaces the old `@enonic/js-utils` request type - see <<update-types, Update to the new types>> below.
 
-In `build.gradle` (shown above), use `com.enonic.lib:lib-react4xp:7.0.0`.
+=== Mount the React4XP API
+
+XP 8 serves React4XP's compiled assets and SSR endpoints through a `react4xp` web API that must be mounted in the site descriptor - and in any webapp or admin tool that renders React4XP:
+
+.src/main/resources/cms/site.yaml
+[source,yaml]
+----
+kind: "Site"
+apis:
+  - "asset"
+  - "react4xp"
+----
 
 === Switch to the new build tooling
 
