@@ -558,7 +558,7 @@ export const personProcessor: ComponentProcessor&lt;PageDescriptor&gt;
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The <a href="appendix/library.ahtml#processhtml">processHtml</a> function from <code>lib-react4xp</code> transforms raw data into a format that the <code>RichText</code> component can use.
+The <a href="https://developer.enonic.com/docs/react4xp/library#processhtml">processHtml</a> function from <code>lib-react4xp</code> transforms raw data into a format that the <code>RichText</code> component can use.
 </td>
 </tr>
 </table>
@@ -808,7 +808,7 @@ dataFetcher.addMacro('factbox', {processor: factboxProcessor});</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-23 17:03:29 UTC
+Last updated 2026-07-27 17:20:50 UTC
 </div>
 </div>
 </body>

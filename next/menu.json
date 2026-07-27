@@ -43,62 +43,6 @@
     {
       "title": "Demo",
       "document": "demo"
-    },
-    {
-      "title": "Appendix",
-      "document": "appendix",
-      "menuItems": [
-        {
-          "title": "App.ts",
-          "document": "appendix/controller"
-        },
-        {
-          "title": "Macros",
-          "document": "appendix/macro-data"
-        },
-        {
-          "title": "Build",
-          "document": "appendix/build"
-        },
-        {
-          "title": "Configuration",
-          "document": "appendix/config"
-        },
-        {
-          "title": "Entries",
-          "document": "appendix/entries"
-        },
-        {
-          "title": "Hydration",
-          "document": "appendix/hydration"
-        },
-        {
-          "title": "SSR engine",
-          "document": "appendix/ssr"
-        },
-        {
-          "title": "Chunks",
-          "document": "appendix/chunks"
-        },
-        {
-          "title": "Library",
-          "document": "appendix/library"
-        },
-        {
-          "title": "Release Notes",
-          "document": "appendix/release"
-        },
-        {
-          "title": "Upgrade notes",
-          "document": "appendix/upgrade",
-          "menuItems": [
-            {
-              "title": "Legacy mode",
-              "document": "appendix/legacy-upgrade"
-            }
-          ]
-        }
-      ]
     }
   ]
 }
