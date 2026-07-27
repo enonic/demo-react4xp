@@ -112,7 +112,7 @@ componentRegistry.addContentType('portal:site', { View: Hello }); //<1>
 
 Try clicking other content items in Content Studio, and you should simply see an error message at this point.
 
-TIP: Dive deeper by learning how the basic boot-strapping and routing works in the link:https://developer.enonic.com/docs/react4xp/controller[app controller documentation].
+TIP: Dive deeper by learning how the basic boot-strapping and routing works in the link:https://developer.enonic.com/docs/react4xp/app[app controller documentation].
 
 == Next up
 
