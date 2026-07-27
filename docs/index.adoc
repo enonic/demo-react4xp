@@ -1,4 +1,4 @@
-= React4XP - React sites with the Enonic framework
+= React4XP tutorial
 :toc: right
 :imagesdir: media/
 
@@ -41,7 +41,7 @@ In this tutorial you will complete the following steps:
 Get started by <<setup#, setting up the developer environment>>.
 
 == Dive deeper
-Beyond the tutorial, visit the <<appendix#, Appendix section>>.
+Beyond the tutorial, the link:https://developer.enonic.com/docs/react4xp[React4XP reference documentation] covers the library API, SSR and hydration, build and configuration in depth.
 
 == Get in touch!
 Questions, bug reports or suggestions are welcome!
