@@ -442,9 +442,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#set_up_page_rendering">Set up page rendering</a></li>
-<li><a href="#working_with_pages">Working with pages</a>
+<li><a href="#defining_a_paragraph_part">Defining a paragraph part</a>
 <ul class="sectlevel2">
-<li><a href="#the_text_component">The Text Component</a></li>
 <li><a href="#custom_components">Custom components</a></li>
 </ul>
 </li>
@@ -554,31 +553,117 @@ dataFetcher.addMacro('factbox', {processor: factboxProcessor});</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="working_with_pages"><a class="link" href="#working_with_pages">Working with pages</a></h2>
+<h2 id="defining_a_paragraph_part"><a class="link" href="#defining_a_paragraph_part">Defining a paragraph part</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The HMDB dataset already contains sample content with pages. By selecting the front-page in Content Studio, you should immediately see something like this:</p>
 </div>
 <div class="paragraph">
-<p><span class="image"><img src="media/r4xp-demo.png" alt="r4xp demo" width="1390px" title="First page rendering with text component"></span></p>
+<p><span class="image"><img src="media/paragraph-descriptor.png" alt="paragraph descriptor" width="1622px" title="Page rendering with missing paragraph descriptor"></span></p>
 </div>
 <div class="paragraph">
-<p>By editing the front page, you will see that a page with a single region <code>main</code>, containing a single Text Component.</p>
+<p>That means that the page is now working, and contains a single component, the <code>Paragraph</code> part that we need to define too.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Deeper dive into parts and components will be covered in the <a href="parts.ahtml">next</a> chapter.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Create the part implementation</strong></p>
+<div class="listingblock">
+<div class="title">src/react4xp/components/parts/Paragraph.tsx</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import React from 'react';
+import {ComponentProps, RichText, PartData, RichTextData} from '@enonic/react-components';
+
+export const Paragraph = (props: ComponentProps&lt;PartData&gt;) =&gt; {
+    return (
+        &lt;RichText data={props.data.text as RichTextData} component={props.component} meta={props.meta}/&gt;
+    );
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>RichText</code> component (from the @enonic/react-components) takes care of resolving links, sizing images and rendering macros.</p>
+</div>
+</li>
+<li>
+<p><strong>Register the part</strong> by adding following line to the componentRegistry file:</p>
+<div class="listingblock">
+<div class="title">/src/main/resources/componentRegistry.tsx</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-TypeScript" data-lang="TypeScript">import {Paragraph} from '/react4xp/components/parts/Paragraph';
+
+...
+
+export const componentRegistry = new ComponentRegistry();
+
+...
+
+componentRegistry.addPart('com.enonic.app.hmdb:paragraph', {View: Paragraph});</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Create the ParagraphProcessor</strong>:</p>
+<div class="listingblock">
+<div class="title">/src/main/resources/react4xp/components/parts/ParagraphProcessor.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {PartComponent} from '@enonic-types/core';
+import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
+import {processHtml} from '/lib/enonic/react4xp';
+
+export const paragraphProcessor: ComponentProcessor&lt;'com.enonic.app.hmdb:paragraph'&gt; = (params) =&gt; {
+    const component = params.component as PartComponent;
+    const text = component.config?.text as string;
+
+    return {
+        text: text ? processHtml({
+            value: text,
+            imageWidths: [200, 400, 800],
+            dataFetcher: params.dataFetcher,
+            component: params.component
+        }) : '',
+    };
+
+};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Register its dataFetcher</strong> by adding following lines to the dataFetcher file:</p>
+<div class="listingblock">
+<div class="title">/src/main/resources/react4xp/dataFetcher.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {paragraphProcessor} from '/react4xp/components/parts/ParagraphProcessor';
+
+...
+
+export const dataFetcher = new DataFetcher();
+
+...
+
+dataFetcher.addPart('com.enonic.app.hmdb:paragraph', {processor: paragraphProcessor});</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you edit the front page now, you will see a page with a region <code>main</code>, containing a single Paragraph part component.</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="media/page.png" alt="page" width="1389px" title="Editing front page"></span></p>
-</div>
-<div class="sect2">
-<h3 id="the_text_component"><a class="link" href="#the_text_component">The Text Component</a></h3>
-<div class="paragraph">
-<p>Enonic provides a standard <code>Rich text component</code> that can be placed on pages. React4XP implements a default rendering of this special component.</p>
-</div>
-<div class="paragraph">
-<p>By selecting the component, in the list, or directly on the page you can start editing it.</p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="media/text-component.png" alt="text component" width="1390px" title="Editing the text component"></span></p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="custom_components"><a class="link" href="#custom_components">Custom components</a></h3>
@@ -597,7 +682,7 @@ dataFetcher.addMacro('factbox', {processor: factboxProcessor});</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:20:50 UTC
+Last updated 2026-07-27 17:50:58 UTC
 </div>
 </div>
 </body>
