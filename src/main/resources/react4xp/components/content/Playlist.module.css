@@ -1,7 +1,5 @@
 .playlist {
-  margin: 0 auto -5rem auto;
-  max-width: 90%;
-  height: 88rem;
+  margin-inline: auto;
 }
 
 .photoBanner img {
@@ -26,15 +24,24 @@
   margin-block: 1rem;
 }
 
+.flowBand {
+  background-color: #0b0425;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  display: flex;
+}
+
 .flowX {
   display: flex;
   overflow-x: auto;
   list-style: none;
-  position: absolute;
-  width: calc(100vw - 1rem);
-  left: 0;
-  padding-left: 1rem;
-  background-color: #0b0425;
+  padding-left: 0;
+  max-width: 1400px;
+  width: 90%;
+  margin: 3rem auto 1rem auto;
 }
 
 /* Individual movie item */
@@ -132,33 +139,4 @@
 
 .photoBanner img {
   border-radius: 8px;
-}
-
-.mobileFooter {
-  display: none;
-}
-
-@media screen and (max-width: 1400px) {
-
-  .playlist {
-    margin: 0 auto -5rem auto;
-  }
-
-}
-
-
-@media screen and (max-width: 720px) {
-  .mobileFooter {
-    display: block;
-  }
-
-  .flowX {
-    display: block;
-    z-index: 10;
-  }
-
-  .movieItem {
-    padding: 0 0 2rem 0;
-  }
-
 }

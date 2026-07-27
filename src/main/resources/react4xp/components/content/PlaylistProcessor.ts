@@ -1,4 +1,3 @@
-import {assetUrl} from '/lib/enonic/asset';
 import {get as getContentByKey} from '/lib/xp/content';
 import {imageUrl, pageUrl} from '/lib/xp/portal';
 import {toArray} from "/react4xp/utils/arrayUtils";
@@ -68,7 +67,6 @@ function fetchMovies(movieIds: string[]) {
 }
 
 export const playlistProcessor: ComponentProcessor<PageDescriptor> = params => {
-    const footerUrl = assetUrl({path: 'images/React4XP.svg'});
     const content = params.content;
     const playlistData = content.data;
 
@@ -87,8 +85,7 @@ export const playlistProcessor: ComponentProcessor<PageDescriptor> = params => {
             _id: content._id,
             displayName: content.displayName,
             description: playlistData.description || 'No description available.',
-            movies: movies,
-            footerUrl
+            movies: movies
         }
     };
 };

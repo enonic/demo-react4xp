@@ -12,7 +12,7 @@ const Footer = ({logoUrl}: FooterProps) => (
             <p>
                 <span className={styles.rotateRight}>©</span>
                 {` ${new Date().getFullYear()}, Built with `}
-                <a href="https://reactjs.org">React4XP</a>
+                <a href="https://developer.enonic.com/learn/react4xp">React4XP</a>
             </p>
         </div>
         {logoUrl && (
