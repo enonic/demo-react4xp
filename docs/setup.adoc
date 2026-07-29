@@ -33,7 +33,7 @@ This will create and start a sandbox containing relevant applications, including
 
 From a **new terminal window**, run the following command to create the application that will contain the React4XP front-end.
 
-  enonic project create my.first.r4xp -r starter-react4xp -s r4xptutorial -f
+  enonic project create my.first.r4xp -r starter-react4xp -b 6.x -s r4xptutorial -f
 
 [NOTE]
 ====
