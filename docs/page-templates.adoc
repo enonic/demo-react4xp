@@ -68,4 +68,4 @@ TIP: Hard-coded content type components, like the `Person` component we created 
 
 Congratulations on completing the tutorial 🙌.
 
-To dive deeper into the world of React4XP, visit the <<appendix#,Appendix section>>.
+To dive deeper into the world of React4XP, visit the link:https://developer.enonic.com/docs/react4xp/6.x[React4XP reference].

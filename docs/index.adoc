@@ -41,7 +41,7 @@ In this tutorial you will complete the following steps:
 Get started by <<setup#, setting up the developer environment>>.
 
 == Dive deeper
-Beyond the tutorial, visit the <<appendix#, Appendix section>>.
+Beyond the tutorial, visit the link:https://developer.enonic.com/docs/react4xp/6.x[React4XP reference].
 
 == Get in touch!
 Questions, bug reports or suggestions are welcome!
