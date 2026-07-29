@@ -94,7 +94,7 @@ In the sandbox log, this shows that app is running:
 
 Because the sandbox is running in dev mode, any changes to the code within your app will instantly be picked up.
 
-TIP: Dive deeper by learning more about React4XP's link:https://developer.enonic.com/docs/react4xp/build[build system].
+TIP: Dive deeper by learning more about React4XP's link:https://developer.enonic.com/docs/react4xp/stable/build[build system].
 
 In the next chapter, you'll get familiar with <<hello#, basic React4XP rendering>>.
 

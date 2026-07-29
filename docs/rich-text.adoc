@@ -32,7 +32,7 @@ Follow the steps below:
 include::{sourcedir}react4xp/components/content/PersonProcessor.ts[]
 ----
 +
-NOTE: The link:https://developer.enonic.com/docs/react4xp/library#processhtml[processHtml] function from `lib-react4xp` transforms raw data into a format that the `RichText` component can use.
+NOTE: The link:https://developer.enonic.com/docs/react4xp/stable/library#processhtml[processHtml] function from `lib-react4xp` transforms raw data into a format that the `RichText` component can use.
 
 +
 . *Update the Person component* with the following content:
