@@ -554,7 +554,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="dive_deeper"><a class="link" href="#dive_deeper">Dive deeper</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Beyond the tutorial, visit the <a href="appendix.ahtml">Appendix section</a>.</p>
+<p>Beyond the tutorial, visit the <a href="https://developer.enonic.com/docs/react4xp/6.x">React4XP reference</a>.</p>
 </div>
 </div>
 </div>
@@ -585,7 +585,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:51:27 UTC
+Last updated 2026-07-29 05:55:21 UTC
 </div>
 </div>
 </body>

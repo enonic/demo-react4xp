@@ -502,7 +502,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ol>
 </div>
 <div class="paragraph">
-<p>The component was initially rendered on the server, then <a href="appendix/hydration.ahtml">hydrated</a> to spin up as a client-side React component.</p>
+<p>The component was initially rendered on the server, then <a href="https://developer.enonic.com/docs/react4xp/6.x/ssr#hydration">hydrated</a> to spin up as a client-side React component.</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -676,7 +676,7 @@ componentRegistry.addContentType('portal:site', { View: Hello }); <i class="conu
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Dive deeper by learning how the basic boot-strapping and routing works in the <a href="appendix/controller.ahtml">app controller documentation</a>.
+Dive deeper by learning how the basic boot-strapping and routing works in the <a href="https://developer.enonic.com/docs/react4xp/6.x/app">app controller documentation</a>.
 </td>
 </tr>
 </table>
@@ -695,7 +695,7 @@ Dive deeper by learning how the basic boot-strapping and routing works in the <a
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:51:27 UTC
+Last updated 2026-07-29 05:55:21 UTC
 </div>
 </div>
 </body>

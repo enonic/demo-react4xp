@@ -999,14 +999,14 @@ Hard-coded content type components, like the <code>Person</code> component we cr
 <p>Congratulations on completing the tutorial 🙌.</p>
 </div>
 <div class="paragraph">
-<p>To dive deeper into the world of React4XP, visit the <a href="appendix.ahtml">Appendix section</a>.</p>
+<p>To dive deeper into the world of React4XP, visit the <a href="https://developer.enonic.com/docs/react4xp/6.x">React4XP reference</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:51:27 UTC
+Last updated 2026-07-29 05:55:21 UTC
 </div>
 </div>
 </body>
