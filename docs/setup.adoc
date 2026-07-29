@@ -32,7 +32,7 @@ This will create and start a sandbox containg `essential` applications.
 
 From a **new terminal window**, run the following command to create the application. 
 
-  enonic create my.first.r4xp -r starter-react4xp -s r4xptutorial -f 
+  enonic project create my.first.r4xp -r starter-react4xp -b 5.x -s r4xptutorial -f 
 
 [NOTE]
 ====
