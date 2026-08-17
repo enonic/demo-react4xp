@@ -40,7 +40,7 @@
     "@enonic-types/lib-scheduler": "^8.0.3",
     "@enonic-types/lib-schema": "^8.0.3",
     "@enonic-types/lib-task": "^8.0.3",
-    "@enonic-types/lib-value": "^8.0.3",
+    "@enonic-types/lib-value": "^8.0.4",
     "@enonic-types/lib-vhost": "^8.0.3",
     "@enonic-types/lib-websocket": "^8.0.4",
     "@enonic/react4xp": "7.0.0",
