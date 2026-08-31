@@ -38,7 +38,7 @@
     "@enonic-types/lib-react4xp": "^7.0.0",
     "@enonic-types/lib-repo": "^8.0.4",
     "@enonic-types/lib-scheduler": "^8.0.4",
-    "@enonic-types/lib-schema": "^8.0.3",
+    "@enonic-types/lib-schema": "^8.0.4",
     "@enonic-types/lib-task": "^8.0.4",
     "@enonic-types/lib-value": "^8.0.4",
     "@enonic-types/lib-vhost": "^8.0.4",
