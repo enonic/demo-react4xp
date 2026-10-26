@@ -16,7 +16,7 @@
     "react-dom": "^19"
   },
   "devDependencies": {
-    "@enonic-types/global": "^8.1.0",
+    "@enonic-types/global": "^8.1.1",
     "@enonic-types/lib-admin": "^8.1.1",
     "@enonic-types/lib-app": "^8.1.0",
     "@enonic-types/lib-asset": "^2.0.1",
