@@ -6,11 +6,12 @@ interface ChildListData
     extends Record<string, unknown> {
     names: string[];
     paths: string[];
+    contentPaths: string[];
 }
 
 export const ChildList = (props: ComponentProps) => {
 
-    const {names, paths} = props.data as ChildListData;
+    const {names, paths, contentPaths} = props.data as ChildListData;
 
     if (!names?.length) {
         return <ul className={styles.list}>
@@ -23,7 +24,7 @@ export const ChildList = (props: ComponentProps) => {
     return <ul className={styles.list}>
         {names.map((name, index) => (
             <li className={styles.listItem} key={index}>
-                <a className={styles.listLink} href={paths[index]}><p>{name}</p></a>
+                <a className={styles.listLink} href={paths[index]} data-content-path={contentPaths[index]}><p>{name}</p></a>
             </li>
         ))}
     </ul>

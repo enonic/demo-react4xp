@@ -28,7 +28,7 @@ include::{sourcedir}react4xp/components/layouts/TwoColumn.module.css[]
 ----
 . *Register the component*:
 +
-./src/main/resources/react4xp/componentRegistry.ts
+./src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}layout/componentRegistry.tsx[]

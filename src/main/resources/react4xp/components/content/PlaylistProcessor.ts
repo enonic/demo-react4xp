@@ -56,6 +56,7 @@ function fetchMovies(movieIds: string[]) {
         const abstract = movieContent.data.abstract
         return {
             _id: movieContent._id,
+            _path: movieContent._path,
             title: movieContent.displayName,
             movieUrl: pageUrl({path: movieContent._path}),
             photo: firstPhoto, // Primary photo

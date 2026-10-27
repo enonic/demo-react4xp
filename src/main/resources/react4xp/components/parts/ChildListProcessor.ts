@@ -1,5 +1,6 @@
 import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
 import {getChildren} from '/lib/xp/content';
+import {pageUrl} from '/lib/xp/portal';
 import {PartComponent} from '@enonic-types/core';
 
 export const childListProcessor: ComponentProcessor<'com.enonic.app.hmdb:child-list'> = (params) => {
@@ -15,6 +16,7 @@ export const childListProcessor: ComponentProcessor<'com.enonic.app.hmdb:child-l
 
     return {
         names: result.hits.map((content) => content.displayName),
-        paths: result.hits.map((content) => params.request.path + '/' + content._name),
+        paths: result.hits.map((content) => pageUrl({path: content._path})),
+        contentPaths: result.hits.map((content) => content._path),
     };
 };

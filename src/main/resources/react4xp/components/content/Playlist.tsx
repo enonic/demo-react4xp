@@ -16,7 +16,7 @@ export const Playlist = (props: ComponentProps) => {
                         <ul className={styles.flowX}>
                         {movies.map((movie: any, index: number) => (
                             <li className={styles.movieItem} key={movie._id || index}>
-                                <a className={styles.movie} href={movie.movieUrl}>
+                                <a className={styles.movie} href={movie.movieUrl} data-content-path={movie._path}>
                                     <h2>{movie.title}</h2>
                                     <p className={styles.subTitle}>{movie.subtitle}</p>
                                     {movie.photo ? (

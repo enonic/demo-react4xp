@@ -46,7 +46,7 @@ Let's have a look at the code:
 
 The component that rendered the page is very simple:
 
-.react4xp/hello/components/Hello.tsx
+.react4xp/components/hello/Hello.tsx
 [source,TypeScript]
 ----
 include::{sourcedir}react4xp/components/hello/Hello.tsx[]

@@ -55,6 +55,7 @@ export const movieProcessor: ComponentProcessor<'com.enonic.app.hmdb:movie-detai
             photoUrl: imageUrl({id: firstPhotoId, scale: 'block(150, 150)'}),
             character: castMember.character,
             id: actorContent._id,
+            _path: actorContent._path,
             castUrl: pageUrl({path: actorContent._path})
         };
     });
@@ -73,6 +74,7 @@ export const movieProcessor: ComponentProcessor<'com.enonic.app.hmdb:movie-detai
 
         director = {
             name: directorTitle,
+            _path: result._path,
             url: directorUrl,
             photo: imageUrl({id: firstDirectorPhoto, scale: 'block(300, 200)'})
         };
