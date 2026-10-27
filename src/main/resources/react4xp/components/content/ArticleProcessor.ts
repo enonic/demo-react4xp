@@ -24,6 +24,7 @@ export const articleProcessor: ComponentProcessor<PageDescriptor> = (params) => 
             name: spotlightContent.displayName,
             photoUrl: imageUrl({id: firstPhotoId, scale: 'block(200, 200)'}),
             id: spotlightContent._id,
+            _path: spotlightContent._path,
             url: pageUrl({path: spotlightContent._path})
         };
     });

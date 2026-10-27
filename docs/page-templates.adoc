@@ -8,7 +8,7 @@ Page templates allow editors to control how specific content types are rendered
 
 == Movies
 
-In the `HMDB` dataset, the `/hmdb/page-templates/Movie` page template already exists. This will automatically be used when attempting to render content of type `Movie`. 
+In the `HMDB` dataset, the `+/hmdb/_templates/movie+` page template already exists. This will automatically be used when attempting to render content of type `Movie`.
 
 Try selecting a Movie in Content Studio. You should see something like this:
 
@@ -42,7 +42,7 @@ include::{sourcedir}react4xp/components/parts/Movie.module.css[]
 +
 . Then *register the component and processor*:
 +
-./src/main/resources/react4xp/componentRegistry.ts
+./src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}/page-templates/componentRegistry.tsx[]

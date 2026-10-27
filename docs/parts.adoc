@@ -73,7 +73,7 @@ include::{sourcedir}react4xp/components/parts/HeadingProcessor.ts[]
 Since we are using globalStyles.css to style the heading, we don’t need to add a CSS module for this component.
 . *Add the `heading` part to your component registry and data fetcher*:
 +
-./src/main/resources/react4xp/componentRegistry.ts
+./src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}/parts/bonus/componentRegistry.tsx[]

@@ -21,11 +21,13 @@ interface MovieData
         character: string;
         photoUrl: string;
         castUrl: string;
+        _path: string;
     }[];
     director?: {
         name: string;
         photo: string;
         url: string;
+        _path: string;
     };
     subtitle?: string;
     abstract?: string;
@@ -97,7 +99,7 @@ export const Movie = (props: ComponentProps) => {
                             <ul>
                                 {cast.map((member, index) => (
                                     <li key={index}>
-                                        <a href={member.castUrl} className={styles.sneakyCastLink}>
+                                        <a href={member.castUrl} data-content-path={member._path} className={styles.sneakyCastLink}>
                                             <img
                                                 src={member.photoUrl}
                                                 alt={member.actorName}
@@ -115,7 +117,7 @@ export const Movie = (props: ComponentProps) => {
                     <div>
                         {director && <section className={styles.director}>
                             <h2>Director</h2>
-                            <a href={director.url} className={styles.sneakyLink}>
+                            <a href={director.url} data-content-path={director._path} className={styles.sneakyLink}>
                                 <h3>{director.name}</h3>
                                 <img
                                     className={styles.directorImg}

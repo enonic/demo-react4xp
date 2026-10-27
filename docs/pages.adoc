@@ -26,7 +26,7 @@ include::{sourcedir}react4xp/components/page/Page.module.css[]
 
 . *Update the componentRegistry*
 +
-./src/main/resources/componentRegistry.tsx
+./src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript]
 ----
 include::{snippet}pages/componentRegistry.tsx[]
@@ -56,7 +56,7 @@ NOTE: Deeper dive into parts and components will be covered in the <<parts#,next
 
 . **Create the part implementation**
 +
-.src/react4xp/components/parts/Paragraph.tsx
+./src/main/resources/react4xp/components/parts/Paragraph.tsx
 [source,TypeScript]
 ----
 include::{sourcedir}/react4xp/components/parts/Paragraph.tsx[]
@@ -66,7 +66,7 @@ The `RichText` component (from the @enonic/react-components) takes care of resol
 +
 . **Register the part** by adding following line to the componentRegistry file:
 +
-./src/main/resources/componentRegistry.tsx
+./src/main/resources/react4xp/componentRegistry.tsx
 [source,TypeScript,options="nowrap"]
 ----
 include::{snippet}pages/componentRegistry-paragraph.tsx[]

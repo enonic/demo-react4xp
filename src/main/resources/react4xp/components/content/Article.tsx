@@ -146,14 +146,14 @@ export const Article = (props: ComponentProps) => {
                                     {spotlight.map((spotlight, index) => (
                                         <li key={index}>
                                             <a className={styles.sneakyLink}
-                                               href={spotlight.url}><img
+                                               href={spotlight.url} data-content-path={spotlight._path}><img
                                                 src={spotlight.photoUrl}
                                                 alt={spotlight.name}
                                                 loading="lazy"
                                                 height={200}
                                                 width={200}/></a>
                                             <a className={styles.sneakyLink}
-                                               href={spotlight.url}><p>{spotlight.name}</p></a>
+                                               href={spotlight.url} data-content-path={spotlight._path}><p>{spotlight.name}</p></a>
                                         </li>
                                     ))}
                                 </ul>
